@@ -1,6 +1,7 @@
 # Bon APPetit
-
-<img src="public/img/logo.jpeg" alt="Bon APPetit Logo" title="Bon APPetit" style="max-width:100%;height:auto;" />
+<div align="center">
+  <img src="public/img/logo.jpeg>
+</div>
 
 Aplicación de recetas de cocina desarrollada como parte de la Metodología de Sistemas de la Universidad Tecnológica Nacional.
 
