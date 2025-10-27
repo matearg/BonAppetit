@@ -113,7 +113,3 @@ Facilitar que los usuarios encuentren y organicen recetas basadas en los aliment
 ## Contribuciones
 
 Este proyecto es parte de un trabajo académico. Contribuciones son bienvenidas siguiendo las pautas de la documentación.
-
-## Licencia
-
-No se especifica una licencia en la documentación. Se recomienda agregar una (ej. MIT) para uso abierto.
