@@ -1,0 +1,162 @@
+{
+  "UsuarioActivo": [],
+  "Usuarios": [
+    {
+      "id": "e237",
+      "nombreUsuario": "prueba",
+      "contrasena": "prueba123",
+      "email": "prueba@gmail.com",
+      "listas": [
+        {
+          "id": 0,
+          "nombre": "Favoritos",
+          "recetas": [
+            {
+              "vegetarian": false,
+              "vegan": false,
+              "glutenFree": false,
+              "title": "Layered Baked Eggplant Parmesan",
+              "readyInMinutes": 60,
+              "servings": 4,
+              "image": "https://img.spoonacular.com/recipes/649340-556x370.jpg",
+              "instructions": "<ol><li>Preheat oven to 375 degrees Fahrenheit. Place a sheet of aluminum foil on baking sheet. Spray with olive oil cooking spray. Slice ends off of eggplant and peel skin off with a vegetable peeler. Slice into  inch pieces.</li><li>In a shallow container, add eggs and water. Whisk to combine. In a separate container, add breadcrumbs, Italian seasoning and onion powder. Mix together. Dip eggplant slices into egg mixture. Let excess drip off and then dip into breadcrumbs. Coat evenly with breadcrumbs, pressing them onto the sides.</li><li>Place on baking sheet. Spray tops lightly with olive oil spray. Place in oven and cook for 20 minutes. Flip over and cook for another 20 minutes, until the tops are golden brown.</li><li>Remove from oven. In a 8 by 8 baking sheet, add  a cup of tomato sauce to the bottom spread evenly. Add 4 slices eggplant. Top with  cup cheese and  cup shredded Parmesan cheese. Add 3 more layers of sauce, eggplant and cheese.</li><li>Place back in oven and bake till cheese gets slightly browned on top, about 15 minutes. ENJOY!</li></ol>",
+              "spoonacularScore": 70.264892578125,
+              "id": 649340,
+              "ingredientes": [
+                {
+                  "name": "breadcrumbs",
+                  "unit": "cup",
+                  "amount": 1
+                },
+                {
+                  "name": "eggplants",
+                  "unit": "medium",
+                  "amount": 2
+                },
+                {
+                  "name": "eggs",
+                  "unit": "large",
+                  "amount": 2
+                },
+                {
+                  "name": "seasoning",
+                  "unit": "tsp",
+                  "amount": 2
+                },
+                {
+                  "name": "onion powder",
+                  "unit": "tsp",
+                  "amount": 2
+                },
+                {
+                  "name": "parmesan cheese",
+                  "unit": "cup",
+                  "amount": 1
+                },
+                {
+                  "name": "mozzarella cheese",
+                  "unit": "cups",
+                  "amount": 2
+                },
+                {
+                  "name": "tomato sauce",
+                  "unit": "oz",
+                  "amount": 25
+                },
+                {
+                  "name": "water",
+                  "unit": "TBSP",
+                  "amount": 4
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "title": "Prueba ",
+              "vegetarian": false,
+              "vegan": true,
+              "glutenFree": false,
+              "readyInMinutes": 60,
+              "servings": 1,
+              "instructions": "Prueba instrucciones creadas",
+              "image": "img/logoUltimo.jpeg",
+              "spoonacularScore": 0,
+              "listaId": 0,
+              "ingredientes": [
+                {
+                  "name": "tomate",
+                  "amount": 2,
+                  "unit": "Unidades"
+                }
+              ]
+            },
+            {
+              "vegetarian": true,
+              "vegan": true,
+              "glutenFree": true,
+              "title": "Fresh Green Bean and Tomato Salad with Creamy Garlic Dressing",
+              "readyInMinutes": 45,
+              "servings": 4,
+              "image": "https://img.spoonacular.com/recipes/643505-556x370.jpg",
+              "instructions": "<ol><li>For the dressing</li><li>Add all the ingredients to a blender and pulse until smooth. Taste the dressing and season, as needed.</li><li>Refrigerate for at least 30 minutes.</li><li>For the salad</li><li>Refrigerate the clean tomatoes until ready to assemble the salad.</li><li>Blanch the green beans in boiling water for about three minutes. Drain them and immediately place them in ice water. Once cold, drain and refrigerate until ready to assemble the salad.</li><li>When ready to serve, add the green beans and tomatoes to a large bowl.</li><li>Drizzle the chilled dressing over the salad and toss to coat.</li><li>Serve on individual plates and garnish with the toasted pecans.</li><li>Add more dressing as desired</li></ol>",
+              "spoonacularScore": 88.35020446777344,
+              "id": 643505,
+              "ingredientes": [
+                {
+                  "name": "green beans",
+                  "unit": "pounds",
+                  "amount": 2
+                },
+                {
+                  "name": "garlic",
+                  "unit": "cloves",
+                  "amount": 3
+                },
+                {
+                  "name": "grape tomatoes",
+                  "unit": "pint",
+                  "amount": 0.5
+                },
+                {
+                  "name": "ground pepper",
+                  "unit": "teaspoon",
+                  "amount": 0.125
+                },
+                {
+                  "name": "olive oil",
+                  "unit": "tablespoons",
+                  "amount": 2
+                },
+                {
+                  "name": "pecans )",
+                  "unit": "tablespoons",
+                  "amount": 2
+                },
+                {
+                  "name": "red wine vinegar",
+                  "unit": "tablespoons",
+                  "amount": 2
+                },
+                {
+                  "name": "salt",
+                  "unit": "teaspoon",
+                  "amount": 1
+                },
+                {
+                  "name": "shallot",
+                  "unit": "",
+                  "amount": 1
+                },
+                {
+                  "name": "spicy brown mustard",
+                  "unit": "cup",
+                  "amount": 0.25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

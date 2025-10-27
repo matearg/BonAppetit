@@ -68,7 +68,7 @@ export interface Metric {
   unitLong: string;
 }
 
-export interface CustomRcipeList {
+export interface CustomRecipeList {
   id: [number | string | undefined];
   nombre?: string;
   recetas: Recipe[];

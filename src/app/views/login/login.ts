@@ -20,12 +20,12 @@ export class Login {
 
   private formBuilder: FormBuilder = inject(FormBuilder);
 
-  loginForm = this.formBuilder.group({
+  loginForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
-  registerForm = this.formBuilder.group({
+  registerForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
