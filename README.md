@@ -1,5 +1,5 @@
 # Bon APPetit
-<div align="center">
+<div>
   <img src="public/img/logo.jpeg>
 </div>
 
