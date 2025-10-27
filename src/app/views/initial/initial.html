@@ -1,3 +1,7 @@
-<header></header>
-<main></main>
+<header (openLogin)="openLogin()"></header>
+<main>
+  @if (showLogin()) {
+  <app-login class="login-animation"></app-login>
+  }
+</main>
 <footer></footer>
