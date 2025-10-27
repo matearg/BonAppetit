@@ -45,6 +45,11 @@
   border-color: #fff;
 }
 
+.container button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
 .container form {
   background-color: #fff;
   display: flex;
