@@ -1,0 +1,35 @@
+:host {
+  height: 100%;
+}
+
+header {
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1;
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+footer {
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+.login-animation {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeIn 0.4s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
