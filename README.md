@@ -1,6 +1,6 @@
 # Bon APPetit
 
-<img src="public/img/logo.jpeg></img>
+![logo](https://github.com/user-attachments/assets/652ff453-48d1-4a07-a8df-ec9b31770730)
 
 Aplicación de recetas de cocina desarrollada como parte de la Metodología de Sistemas de la Universidad Tecnológica Nacional.
 
