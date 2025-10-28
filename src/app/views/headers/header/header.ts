@@ -1,19 +1,17 @@
-import { Component, signal, Output, EventEmitter } from '@angular/core';
+import { Component, signal, EventEmitter, Output } from '@angular/core';
+import { LoginNavBar } from '../../navbars/login-nav-bar/login-nav-bar';
 
 @Component({
   selector: 'header',
-  imports: [],
+  imports: [LoginNavBar],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
   protected readonly title = signal('BonAppetit');
-
-  showLoginButton = true;
   @Output() openLogin = new EventEmitter<void>();
 
-  goToLogin() {
-    this.showLoginButton = false;
+  onOpenLogin() {
     this.openLogin.emit();
   }
 }

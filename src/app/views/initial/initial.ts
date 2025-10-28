@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Header } from '../header/header';
+import { Header } from '../headers/header/header';
 import { Footer } from '../shared/footer/footer';
 import { Login } from '../login/login';
 import { StartPage } from './start-page/start-page';

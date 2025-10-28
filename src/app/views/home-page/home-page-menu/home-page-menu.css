@@ -1,0 +1,66 @@
+/* The card-like box holding the menu buttons */
+.menu-options {
+  display: flex;
+  flex-direction: row; /* Stack buttons horizontally */
+  justify-content: center;
+  gap: 1.5rem; /* Space between buttons */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* Semi-transparent white for a frosted glass effect */
+  padding: 1.5rem 3rem;
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  backdrop-filter: blur(10px); /* Blurs the background behind the element */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* Applying an animation similar to the one you provided */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInMenu 0.5s 0.2s ease-out forwards; /* (animation-name duration delay timing-function fill-mode) */
+}
+
+/* Keyframe animation for the menu fade-in effect */
+@keyframes fadeInMenu {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-option {
+  background-color: #f7f7f7;
+  color: #333;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  min-width: 250px; /* Ensures all buttons have the same width */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Span inside the button, in case you need to style the text directly */
+.menu-option span {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Hover effect for the buttons */
+.menu-option:hover {
+  background-color: #c9d6ff; /* Using the color from your provided gradient */
+  color: white;
+  transform: translateY(-4px); /* Lifts the button slightly */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhances the shadow on hover */
+}
+
+/* Active (on-click) effect for the buttons */
+.menu-option:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
