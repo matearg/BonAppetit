@@ -9,13 +9,13 @@ import { RandomRecipe } from '../interfaces/random-recipe';
   providedIn: 'root',
 })
 export class RecipeService {
-  constructor() {}
+  constructor() { }
 
   http = inject(HttpClient);
   private key = environment.tokenLaura2;
-  private baseUrl = 'http://localhost:3001/recetas';
+  private baseUrl = 'http://localhost:3000/recipes';
 
-  getRecetasByIngredients(ingredients: string, number: number): Observable<any> {
+  getrecipesByIngredients(ingredients: string, number: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'x-api-key': this.key,
@@ -70,16 +70,16 @@ export class RecipeService {
     // Hacer la solicitud GET con parámetros y headers
     return this.http.get<RandomRecipe>(url, { headers, params });
   }
-  getRecetas(): Observable<Recipe[]> {
+  getRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.baseUrl);
   }
 
-  postRectea(Recipe: Recipe): Observable<Recipe> {
-    return this.http.post<Recipe>(this.baseUrl, Recipe);
+  postRecipe(recipe: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(this.baseUrl, recipe);
   }
 
-  updateRecipe(idRecipe: number, Recipe: Recipe): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.baseUrl}/${idRecipe}`, Recipe);
+  updateRecipe(idRecipe: number, recipe: Recipe): Observable<Recipe> {
+    return this.http.put<Recipe>(`${this.baseUrl}/${idRecipe}`, recipe);
   }
 
   deleteRecipe(idRecipe: number): Observable<Recipe> {

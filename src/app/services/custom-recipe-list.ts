@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CustomRecipeList, RecipeInfo } from '../interfaces/recipe';
+import { CustomRecipeList } from '../interfaces/recipe';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -7,37 +7,37 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CustomRecipeListService {
-  constructor() {}
+  constructor() { }
 
-  url: string = 'http://localhost:3000/listasPersonalizadas';
+  url: string = 'http://localhost:3000/CustomRecipeList';
 
   http = inject(HttpClient);
 
   // Obtener todas las listas
-  getListas(): Observable<CustomRecipeList[]> {
+  getLists(): Observable<CustomRecipeList[]> {
     return this.http.get<CustomRecipeList[]>(this.url);
   }
 
-  getListabyId(id: string): Observable<CustomRecipeList> {
+  getListbyId(id: string): Observable<CustomRecipeList> {
     return this.http.get<CustomRecipeList>(`${this.url}/${id}`);
   }
 
   // Crear una nueva lista
-  addLista(lista: CustomRecipeList): Observable<CustomRecipeList> {
+  addList(lista: CustomRecipeList): Observable<CustomRecipeList> {
     return this.http.post<CustomRecipeList>(this.url, lista);
   }
 
-  postLista(lista: CustomRecipeList): Observable<CustomRecipeList> {
+  postList(lista: CustomRecipeList): Observable<CustomRecipeList> {
     return this.http.post<CustomRecipeList>(this.url, lista);
   }
 
   // Actualizar una lista
-  updateLista(idLista: string, lista: CustomRecipeList): Observable<CustomRecipeList> {
-    return this.http.put<CustomRecipeList>(`${this.url}/${idLista}`, lista);
+  updateList(id: string, lista: CustomRecipeList): Observable<CustomRecipeList> {
+    return this.http.put<CustomRecipeList>(`${this.url}/${id}`, lista);
   }
 
   // Eliminar una lista
-  deleteLista(idLista: string): Observable<CustomRecipeList> {
-    return this.http.delete<CustomRecipeList>(`${this.url}/${idLista}`);
+  deleteList(id: string): Observable<CustomRecipeList> {
+    return this.http.delete<CustomRecipeList>(`${this.url}/${id}`);
   }
 }

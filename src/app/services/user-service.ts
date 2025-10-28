@@ -8,11 +8,11 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class UserService {
-  constructor() {}
+  constructor() { }
 
   private activeUserSubject = new BehaviorSubject<ActiveUser | undefined>(undefined);
-  urlUsuarios = 'http://localhost:3000/Usuarios';
-  urlActivo = 'http://localhost:3000/UsuarioActivo';
+  userUrl = 'http://localhost:3000/Users';
+  activeUrl = 'http://localhost:3000/ActiveUser';
   http = inject(HttpClient);
 
   auth(): Observable<ActiveUser | undefined> {
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   login(email: string, password: string): Observable<User | null> {
-    return this.http.get<User[]>(`${this.urlUsuarios}?email=${email}`).pipe(
+    return this.http.get<User[]>(`${this.userUrl}?email=${email}`).pipe(
       map((users) => {
         const user = users.at(0);
         if (user && user.email === email && user.password === password) {
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   loginChat(username: string, password: string): Observable<User | null> {
-    return this.http.get<User[]>(`${this.urlUsuarios}?username=${username}`).pipe(
+    return this.http.get<User[]>(`${this.userUrl}?username=${username}`).pipe(
       map((users) => {
         // Buscar el usuario que coincida tanto en el nombre de usuario como en la contraseña
         const user = users.find((u) => u.email === username && u.password === password);
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   signup(user: User): Observable<boolean> {
-    return this.http.post<User>(this.urlUsuarios, user).pipe(
+    return this.http.post<User>(this.userUrl, user).pipe(
       map(({ id, email }) => {
         if (id) {
           this.activeUserSubject.next({ id, email });
@@ -68,41 +68,41 @@ export class UserService {
   }
 
   getUSerById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.urlUsuarios}/${id}`);
+    return this.http.get<User>(`${this.userUrl}/${id}`);
   }
 
   getUSer(): Observable<User[]> {
-    return this.http.get<User[]>(this.urlUsuarios);
+    return this.http.get<User[]>(this.userUrl);
   }
 
   postActiveUser(user: ActiveUser): Observable<ActiveUser> {
-    return this.http.post<ActiveUser>(this.urlActivo, user);
+    return this.http.post<ActiveUser>(this.activeUrl, user);
   }
 
   editUser(user: User): Observable<User> {
-    return this.http.put<User>(`${this.urlUsuarios}/${user.id}`, user);
+    return this.http.put<User>(`${this.userUrl}/${user.id}`, user);
   }
 
   getActiveUser(): Observable<ActiveUser[]> {
-    return this.http.get<ActiveUser[]>(this.urlActivo);
+    return this.http.get<ActiveUser[]>(this.activeUrl);
   }
 
   deleteActiveUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.urlActivo}/${id}`);
+    return this.http.delete<void>(`${this.activeUrl}/${id}`);
   }
 
   clearActiveUser(): Observable<void> {
     //limpia el array de ActiveUser cuando se renderiza iniciar sesion.
-    return this.http.get<any[]>(this.urlActivo).pipe(
-      switchMap((usuarios) => {
-        const userId = usuarios.length > 0 ? usuarios[0].id : null;
-        return userId ? this.http.delete<void>(`${this.urlActivo}/${userId}`) : of();
+    return this.http.get<any[]>(this.activeUrl).pipe(
+      switchMap((users) => {
+        const userId = users.length > 0 ? users[0].id : null;
+        return userId ? this.http.delete<void>(`${this.activeUrl}/${userId}`) : of();
       })
     );
   }
 
   checkEmailExists(email: string): Observable<boolean> {
-    return this.http.get<User[]>(`${this.urlUsuarios}?email=${email}`).pipe(
+    return this.http.get<User[]>(`${this.userUrl}?email=${email}`).pipe(
       map((users) => users.length > 0),
       catchError(() => of(false))
     );

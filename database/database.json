@@ -1,16 +1,15 @@
 {
-  "UsuarioActivo": [],
-  "Usuarios": [
+  "ActiveUser": [],
+  "Users": [
     {
       "id": "e237",
-      "nombreUsuario": "prueba",
-      "contrasena": "prueba123",
+      "password": "prueba123",
       "email": "prueba@gmail.com",
-      "listas": [
+      "recipeList": [
         {
           "id": 0,
-          "nombre": "Favoritos",
-          "recetas": [
+          "name": "Favoritos",
+          "recipes": [
             {
               "vegetarian": false,
               "vegan": false,
@@ -81,7 +80,6 @@
               "instructions": "Prueba instrucciones creadas",
               "image": "img/logoUltimo.jpeg",
               "spoonacularScore": 0,
-              "listaId": 0,
               "ingredientes": [
                 {
                   "name": "tomate",
