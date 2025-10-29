@@ -1,94 +1,141 @@
-:host {
-  height: 100vh;
-}
+/*
+ * Estilos para la sección principal y el contenedor del perfil
+*/
 
 .main-section {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  flex: 1;
-  background-color: #c9d6ff;
+  flex-grow: 1; /* Ocupa el espacio vertical disponible */
+  height: 100vh;
+}
+
+.container-section {
+  display: flex;
+  justify-content: center; /* Centra la tarjeta horizontalmente */
+  align-items: center; /* Centra la tarjeta verticalmente */
+  width: 100vw;
+  padding: 2rem;
   background: linear-gradient(to right, #e2e2e2, #c9d6ff);
 }
 
-/* Main section container */
-.contenedor-section {
+/*
+ * Estilo de la tarjeta de perfil
+*/
+.profile-card {
   display: flex;
-  justify-content: center; /* Center content horizontally */
-  padding: 3rem 1.5rem; /* Top/bottom and horizontal spacing */
-}
+  align-items: center;
+  gap: 2.5rem; /* Espacio entre la imagen y la información */
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo "frosted glass" */
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  max-width: 700px;
+  width: 100vw;
 
-/* Section that wraps all content */
-.contenedor-section section {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers child elements horizontally */
-  width: 100%;
-  max-width: 1200px; /* Maximum width for content on large screens */
-  gap: 2rem; /* Vertical gap between text, button and recipes */
-}
-
-/* Container and style for the intro paragraph */
-.cont-p {
-  text-align: center; /* Center the text */
-  padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Soft shadow */
-  backdrop-filter: blur(8px); /* Background blur effect */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-
-  /* Entrance animation similar to the previous one */
+  /* Animación de entrada para la tarjeta */
   opacity: 0;
   transform: translateY(-20px);
-  animation: fadeInText 0.5s 0.2s ease-out forwards;
+  animation: fadeInCard 0.5s 0.2s ease-out forwards;
 }
 
-.cont-p p {
-  margin: 0; /* Remove default paragraph margin */
-  font-size: 1.25rem; /* Readable font size */
-  line-height: 1.6; /* Line height */
-  color: #333;
-  font-weight: 500;
-}
-
-/* Keyframe for the text animation (if a similar one doesn't exist yet) */
-@keyframes fadeInText {
+/* Keyframe para la animación de la tarjeta (si es necesario) */
+@keyframes fadeInCard {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Style for the "View recipes" button */
-.contenedor-section button {
+/* Estilo para la imagen de perfil */
+.profile-card img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Hace la imagen circular */
+  object-fit: cover; /* Evita que la imagen se distorsione */
+  border: 4px solid white; /* Borde blanco para destacar la imagen */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/*
+ * Estilos para la sección de información
+*/
+.general-info {
+  display: flex;
+  flex-direction: column; /* Apila la info personal y los botones */
+  gap: 1.5rem; /* Espacio entre la info del email y los botones */
+  width: 100%;
+}
+
+.personal-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Espacio entre etiquetas/botones */
+}
+
+.text-info {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Estilo para el dato en sí (ej: el email del usuario) */
+.call-info {
+  font-size: 1.1rem;
+  font-weight: 600; /* Hace el dato más prominente */
+  color: #333;
+  margin: 0;
+  background-color: rgba(226, 226, 226, 0.5); /* Fondo sutil para el dato */
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+/*
+ * Estilo para los botones, manteniendo la consistencia
+*/
+.button {
   background-color: #f7f7f7;
   color: #333;
   border: none;
-  padding: 14px 28px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 12px 22px;
+  font-size: 1rem;
+  font-weight: 500;
   border-radius: 8px;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  animation: fadeInText 0.5s 0.4s ease-out forwards; /* Animation with a bit more delay */
-  opacity: 0; /* Initial state for the animation */
-  transform: translateY(-20px); /* Initial state for the animation */
 }
 
-/* Hover effect for the button */
-.contenedor-section button:hover {
-  background-color: #c9d6ff; /* Color from the original gradient */
-  color: #fff;
-  transform: translateY(-5px); /* Lifts the button */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+.button:hover {
+  background-color: #c9d6ff; /* Color principal de la paleta */
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Effect when clicking the button */
-.contenedor-section button:active {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
+/*
+ * Diseño Responsivo para pantallas pequeñas
+*/
+@media (max-width: 768px) {
+  .profile-card {
+    flex-direction: column; /* Apila la imagen encima de la info */
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  .general-info {
+    align-items: center; /* Centra el contenido cuando está en columna */
+  }
+
+  .personal-info {
+    flex-direction: column; /* Apila los botones en pantallas muy pequeñas */
+    align-items: stretch; /* Hace que los botones ocupen el mismo ancho */
+    width: 100%;
+  }
+
+  .button {
+    text-align: center;
+  }
+} /* Estilo para el texto de la información (ej: "Email:") */

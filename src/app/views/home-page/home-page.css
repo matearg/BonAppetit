@@ -7,19 +7,18 @@
   flex-direction: column;
   min-height: 100vh;
   flex: 1;
-  background-color: #c9d6ff;
   background: linear-gradient(to right, #e2e2e2, #c9d6ff);
 }
 
 /* Main section container */
-.contenedor-section {
+.container-section {
   display: flex;
   justify-content: center; /* Center content horizontally */
   padding: 1.5rem; /* Top/bottom and horizontal spacing */
 }
 
 /* Section that wraps all content */
-.contenedor-section section {
+.container-section section {
   display: flex;
   flex-direction: column;
   align-items: center; /* Centers child elements horizontally */
@@ -61,7 +60,7 @@
 }
 
 /* Style for the "View recipes" button */
-.contenedor-section button {
+.container-section button {
   background-color: #f7f7f7;
   color: #333;
   border: none;
@@ -80,7 +79,7 @@
 }
 
 /* Hover effect for the button */
-.contenedor-section button:hover {
+.container-section button:hover {
   background-color: #c9d6ff; /* Color from the original gradient */
   color: #fff;
   transform: translateY(-5px); /* Lifts the button */
@@ -88,7 +87,7 @@
 }
 
 /* Effect when clicking the button */
-.contenedor-section button:active {
+.container-section button:active {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }

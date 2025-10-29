@@ -10,7 +10,7 @@ export interface Recipe {
   instructions: string;
   spoonacularScore: number;
   anotaciones?: string;
-  ingredientes: Ingredients[];
+  ingredients: Ingredients[];
 }
 
 export interface Ingredients {

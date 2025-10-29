@@ -1,0 +1,89 @@
+/*
+ * Estilos para la tarjeta de receta individual (`.recipes-ind`)
+ * Mantiene la coherencia con el diseño general.
+*/
+
+/* Contenedor principal de la tarjeta. Este es el elemento que se animará y tendrá la sombra. */
+.recipes-ind {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.65
+  ); /* Fondo blanco semitransparente para el efecto de vidrio */
+  border-radius: 16px; /* Esquinas redondeadas pronunciadas */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+  backdrop-filter: blur(10px); /* Desenfoque del fondo detrás del elemento */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden; /* Muy importante: recorta la imagen para que respete las esquinas redondeadas */
+  display: flex;
+  flex-direction: column; /* Apila la imagen y el texto verticalmente */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Transición suave para el efecto hover */
+}
+
+/* Efecto hover para la tarjeta completa */
+.recipes-ind:hover {
+  transform: translateY(-8px); /* Eleva la tarjeta ligeramente */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Aumenta la sombra para un efecto más notorio */
+}
+
+/* Contenedor de la imagen */
+.img-cont {
+  width: 100%;
+  height: 200px; /* Altura fija para que todas las tarjetas sean uniformes */
+  background-color: #e0e0e0; /* Color de fondo mientras carga la imagen */
+}
+
+/* Estilo de la imagen de la receta */
+.recipe-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Clave para que la imagen llene el contenedor sin deformarse. La imagen se recortará para encajar. */
+}
+
+/* Contenedor para el texto y el botón */
+.card-text {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el título y el botón */
+  gap: 1rem; /* Espacio entre el título y el botón */
+  flex-grow: 1; /* Permite que esta sección crezca para rellenar el espacio si es necesario */
+}
+
+/* Estilo para el título de la receta (usando la etiqueta <li>) */
+.card-text li {
+  list-style: none; /* Elimina el punto de la lista */
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center; /* Centra el texto del título */
+}
+
+/* Estilo para el botón "Ver detalles" */
+.card-text .button {
+  background-color: #f7f7f7;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Efecto hover para el botón dentro de la tarjeta */
+.card-text .button:hover {
+  background-color: #c9d6ff; /* El color principal de la paleta */
+  color: white;
+}

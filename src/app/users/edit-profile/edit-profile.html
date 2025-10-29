@@ -1,0 +1,20 @@
+<app-home-page-header> </app-home-page-header>
+<main class="main-container">
+  <h3 class="title">Editar Perfil</h3>
+  <div class="profile-card">
+    <form class="edit-form" [formGroup]="editForm">
+      <div class="info-edit">
+        <label for="email">Nuevo email</label>
+        <input type="text" formControlName="email" />
+      </div>
+
+      <div class="info-edit">
+        <label for="password">Nueva contraseña</label>
+        <input type="text" formControlName="password" />
+      </div>
+
+      <button class="button" (click)="editProfile()" [disabled]="editForm.invalid">Guardar</button>
+    </form>
+  </div>
+</main>
+<footer></footer>

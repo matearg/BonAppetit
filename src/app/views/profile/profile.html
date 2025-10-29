@@ -1,7 +1,23 @@
 <app-home-page-header></app-home-page-header>
 
 <main class="main-section">
-  <div class="contenedor-section"></div>
+  <div class="container-section">
+    <div class="profile-card">
+      <img src="{{ profileImage }}" alt="" />
+      <div class="general-info">
+        <div class="personal-info">
+          <p class="text-info">Email:</p>
+          <p class="call-info">{{ commonUser.email }}</p>
+        </div>
+        <div class="personal-info">
+          <button class="button" [routerLink]="['/my-lists']">Mis Recetarios</button>
+          <button class="button" [routerLink]="['/edit-profile', activeUser.id]">
+            Editar Perfil
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer></footer>

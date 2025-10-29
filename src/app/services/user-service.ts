@@ -8,7 +8,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class UserService {
-  constructor() {}
+  constructor() { }
 
   private activeUserSubject = new BehaviorSubject<ActiveUser | undefined>(undefined);
   userUrl = 'http://localhost:3000/Users';
@@ -67,11 +67,11 @@ export class UserService {
     );
   }
 
-  getUSerById(id: number | string | undefined): Observable<User> {
+  getUserById(id: number | string | undefined): Observable<User> {
     return this.http.get<User>(`${this.userUrl}/${id}`);
   }
 
-  getUSer(): Observable<User[]> {
+  getUser(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl);
   }
 

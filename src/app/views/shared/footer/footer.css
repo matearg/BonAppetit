@@ -5,12 +5,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.footer .social {
-  position: absolute;
-  left: 20px;
+  justify-content: space-between;
 }
 
 .footer ul {
