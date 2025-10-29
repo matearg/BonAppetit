@@ -114,8 +114,9 @@ Facilitar que los usuarios encuentren y organicen recetas basadas en los aliment
 
 1. Clona el repositorio: `git clone <https://github.com/matearg/BonAppetit.git>`.
 2. Instala dependencias: `npm install`.
-3. Ejecuta el servidor de desarrollo: `ng serve`.
-4. Accede a la aplicación en `http://localhost:4200`.
+3. Instala dependencias externas: `npm install sweetalert2`.
+4. Ejecuta el servidor de desarrollo: `ng serve`.
+5. Accede a la aplicación en `http://localhost:4200`.
 
 ---
 

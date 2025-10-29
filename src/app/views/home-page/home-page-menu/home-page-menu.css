@@ -54,7 +54,7 @@
 /* Hover effect for the buttons */
 .menu-option:hover {
   background-color: #c9d6ff; /* Using the color from your provided gradient */
-  color: white;
+  color: #fff;
   transform: translateY(-4px); /* Lifts the button slightly */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhances the shadow on hover */
 }

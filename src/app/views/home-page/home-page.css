@@ -2,8 +2,7 @@
   height: 100vh;
 }
 
-/* Main container */
-.main-container {
+.main-section {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -83,7 +82,7 @@
 /* Hover effect for the button */
 .contenedor-section button:hover {
   background-color: #c9d6ff; /* Color from the original gradient */
-  color: white;
+  color: #fff;
   transform: translateY(-5px); /* Lifts the button */
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
 }
@@ -95,7 +94,7 @@
 }
 
 /* Container for the recipe cards */
-.cont-recetas {
+.cont-recipes {
   display: grid;
   /* Creates flexible columns. They'll adjust between 300px and 1fr (fraction of the space) */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

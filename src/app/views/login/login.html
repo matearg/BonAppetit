@@ -1,9 +1,28 @@
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
 <div class="container" [class.active]="isActive">
   <div class="form-container sign-up">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
       <h1>Crear Cuenta</h1>
       <input type="email" formControlName="email" placeholder="Email" />
-      <input type="password" formControlName="password" placeholder="Contraseña" />
+      <input
+        #registerPassword
+        type="password"
+        formControlName="password"
+        placeholder="Contraseña"
+      />
+      <button
+        class="reveal"
+        type="button"
+        [class.activeButton]="revealIsActive"
+        (click)="onRevealPassword(registerPassword)"
+      >
+        Ver
+      </button>
       <button type="submit" [disabled]="!registerForm.valid">Registrase</button>
     </form>
   </div>
@@ -12,7 +31,15 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
       <h1>Acceso</h1>
       <input type="email" formControlName="email" placeholder="Email" />
-      <input type="password" formControlName="password" placeholder="Contraseña" />
+      <input #password type="password" formControlName="password" placeholder="Contraseña" />
+      <button
+        class="reveal"
+        type="button"
+        [class.activeButton]="revealIsActive"
+        (click)="onRevealPassword(password)"
+      >
+        Ver
+      </button>
       <button type="submit" [disabled]="!loginForm.valid">Acceder</button>
     </form>
   </div>
