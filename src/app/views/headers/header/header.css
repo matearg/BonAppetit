@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
-  border-radius: 0 0 8px 8px;
 }
 
 .header .container:first-child {
@@ -33,4 +32,5 @@
   transition: transform 320ms ease, opacity 320ms ease, color 320ms ease;
   transform-origin: left center;
   opacity: 1;
+  max-width: fit-content;
 }

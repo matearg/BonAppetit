@@ -8,7 +8,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class UserService {
-  constructor() { }
+  constructor() {}
 
   private activeUserSubject = new BehaviorSubject<ActiveUser | undefined>(undefined);
   userUrl = 'http://localhost:3000/Users';
@@ -67,7 +67,7 @@ export class UserService {
     );
   }
 
-  getUSerById(id: number): Observable<User> {
+  getUSerById(id: number | string | undefined): Observable<User> {
     return this.http.get<User>(`${this.userUrl}/${id}`);
   }
 
@@ -87,7 +87,7 @@ export class UserService {
     return this.http.get<ActiveUser[]>(this.activeUrl);
   }
 
-  deleteActiveUser(id: string): Observable<void> {
+  deleteActiveUser(id: number | string | undefined): Observable<void> {
     return this.http.delete<void>(`${this.activeUrl}/${id}`);
   }
 

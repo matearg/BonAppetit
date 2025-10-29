@@ -1,5 +1,4 @@
 .footer {
-  background-color: #512da8;
   background: linear-gradient(to right, #5c6bc0, #512da8);
   color: #fff;
   padding: 10px 20px;
@@ -7,7 +6,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px 8px 0 0;
 }
 
 .footer .social {

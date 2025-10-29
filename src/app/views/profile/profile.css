@@ -15,7 +15,7 @@
 .contenedor-section {
   display: flex;
   justify-content: center; /* Center content horizontally */
-  padding: 1.5rem; /* Top/bottom and horizontal spacing */
+  padding: 3rem 1.5rem; /* Top/bottom and horizontal spacing */
 }
 
 /* Section that wraps all content */
@@ -91,14 +91,4 @@
 .contenedor-section button:active {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Container for the recipe cards */
-.cont-recipes {
-  display: grid;
-  /* Creates flexible columns. They'll adjust between 300px and 1fr (fraction of the space) */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem; /* Gap between the cards */
-  width: 100%;
-  padding-top: 1rem; /* Additional top spacing above the cards */
 }

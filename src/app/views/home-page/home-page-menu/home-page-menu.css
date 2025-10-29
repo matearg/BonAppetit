@@ -1,25 +1,40 @@
 /* The card-like box holding the menu buttons */
 .menu-options {
   display: flex;
-  flex-direction: row; /* Stack buttons horizontally */
+  flex-direction: row;
+  flex-wrap: wrap; /* allow buttons to wrap instead of overflowing */
   justify-content: center;
-  gap: 1.5rem; /* Space between buttons */
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.6
-  ); /* Semi-transparent white for a frosted glass effect */
-  padding: 1.5rem 3rem;
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  backdrop-filter: blur(10px); /* Blurs the background behind the element */
+  gap: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1.5rem 1rem; /* reduced horizontal padding for small viewports */
+  max-width: 100vw;
+  box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-
+  margin: 10px 10px 0 10px;
   /* Applying an animation similar to the one you provided */
   opacity: 0;
   transform: translateY(-20px);
-  animation: fadeInMenu 0.5s 0.2s ease-out forwards; /* (animation-name duration delay timing-function fill-mode) */
+  animation: fadeInMenu 0.5s 0.2s ease-out forwards;
+}
+
+/* On very small screens allow horizontal scroll or tighter layout */
+@media (max-width: 640px) {
+  .menu-options {
+    gap: 1rem;
+    justify-content: center;
+    overflow-x: auto; /* prevents container from overflowing viewport */
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding: 1rem;
+  }
+
+  .menu-option {
+    flex: 0 0 auto; /* keep a usable button size when scroll is enabled */
+    min-width: 180px;
+  }
 }
 
 /* Keyframe animation for the menu fade-in effect */
