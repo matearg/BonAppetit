@@ -118,7 +118,7 @@
 /*
  * Diseño Responsivo para pantallas pequeñas
 */
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .profile-card {
     flex-direction: column; /* Apila la imagen encima de la info */
     padding: 2rem;

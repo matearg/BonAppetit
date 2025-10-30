@@ -59,7 +59,7 @@
   line-height: 1.5;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .main-container {
     margin: 16px;
     padding: 16px;

@@ -21,7 +21,7 @@
 }
 
 /* On very small screens allow horizontal scroll or tighter layout */
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .menu-options {
     gap: 1rem;
     justify-content: center;

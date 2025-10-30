@@ -9,7 +9,9 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: opacity 280ms ease, transform 280ms ease;
+  transition:
+    opacity 280ms ease,
+    transform 280ms ease;
 }
 
 .access-btn:hover {
@@ -24,12 +26,11 @@
 }
 
 /* On very small screens allow horizontal scroll or tighter layout */
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .access-btn {
     font-size: 11px;
     padding: 8px 26px;
     border-radius: 6px;
     letter-spacing: 0.4px;
-    -webkit-overflow-scrolling: touch;
   }
 }

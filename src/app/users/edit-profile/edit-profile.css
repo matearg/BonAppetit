@@ -107,7 +107,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .main-container {
     /* Reduce el padding para dar más espacio al contenido */
     padding: 1rem;

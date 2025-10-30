@@ -10,7 +10,9 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: opacity 280ms ease, transform 280ms ease;
+  transition:
+    opacity 280ms ease,
+    transform 280ms ease;
 }
 
 .nav-button:hover {
@@ -18,7 +20,7 @@
   transform: translateY(-2px);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .nav-button {
     padding: 5px 10px;
     margin: 0 0 0 6px;

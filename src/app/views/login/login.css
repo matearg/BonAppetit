@@ -198,7 +198,7 @@
   transform: translateX(200%);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   :host {
     padding: 20px 12px;
     height: auto;

@@ -1,0 +1,13 @@
+<main class="recipe-ind">
+  <div>
+    <img [src]="recipe.image" alt="{{ recipe.image }}" class="recipe-ind" />
+  </div>
+
+  <div class="text-card">
+    <li>
+      <button class="button" (click)="onDelete()">Eliminar</button>
+      <button class="button" (click)="onUpdate()">Modificar</button>
+      <button class="button" (click)="onDetails()">Ver Receta</button>
+    </li>
+  </div>
+</main>
