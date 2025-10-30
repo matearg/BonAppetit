@@ -43,7 +43,7 @@ __screenshots__/
 Thumbs.db
 
 # Environment files
-/src/environments/environments.*
+environments/*
 
 # Database files
-database.json
+database/*
