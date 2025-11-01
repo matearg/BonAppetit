@@ -1,0 +1,54 @@
+<app-home-page-header></app-home-page-header>
+
+<main>
+  @if (recipe) {
+  <div class="recipe-container">
+    <h2 class="recipe-title">{{ recipe.title }}</h2>
+    <div class="img-container">
+      <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image" />
+    </div>
+
+    <div class="recipe-info">
+      <p><strong>Tiempo de preparación:</strong> {{ recipe.readyInMinutes }} minutos</p>
+      <p><strong>Calificación:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
+    </div>
+
+    <div class="ingredients-container">
+      <h3>Ingredientes</h3>
+      <div class="ingredients-info">
+        <ul class="ingredient-list">
+          @for (ingredient of recipe.ingredients; track ingredient) {
+          <li>
+            {{ ingredient.amount.toFixed(1) }}
+            {{ ingredient.name }}
+            {{ ingredient.unit }}
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="instructions-container">
+      <h3>Instrucciones</h3>
+      <ul>
+        @for (step of getInstructions(); track $index) {
+        <li>{{ step }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="form">
+      <form [formGroup]="form" (ngSubmit)="saveAnotations()">
+        <div class="anotation-title">Anotaciones</div>
+        <div class="anotation-input">
+          <textarea name="form" id="anotation" formControlName="anotation">
+Escribe aqui...</textarea
+          >
+        </div>
+        <button type="submit" [disabled]="form.invalid">Guardar</button>
+      </form>
+    </div>
+  </div>
+  }
+</main>
+<footer></footer>

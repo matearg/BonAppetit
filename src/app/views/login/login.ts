@@ -4,7 +4,7 @@ import { UserService } from '../../services/user-service';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user';
 import { ActiveUser } from '../../interfaces/active-user';
-import { CustomRecipeList } from '../../interfaces/recipe';
+import { CustomRecipeLists } from '../../interfaces/recipe';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,7 +17,7 @@ export class Login {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private authService = inject(UserService);
   private router = inject(Router);
-  urlUsers = "http://localhost:3000/Users";
+  urlUsers = 'http://localhost:3000/Users';
   isActive = false;
 
   activeLogin() {
@@ -38,25 +38,25 @@ export class Login {
       next: (user) => {
         if (user) {
           this.asignActiveUser(user);
-          this.loginAlertSucces()
+          this.loginAlertSucces();
           this.router.navigate(['home']);
         } else {
           this.loginForm.controls['password'].setErrors({ incorrect: true });
           this.loginAlertError();
         }
-      }
-    })
+      },
+    });
   }
 
   asignActiveUser(user: User) {
     const activeUser: ActiveUser = { id: user.id!, email: user.email };
     this.authService.postActiveUser(activeUser).subscribe({
       next: (user) => {
-        console.log("Usuario en sesión:", user);
+        console.log('Usuario en sesión:', user);
       },
       error: (e: Error) => {
         console.log(e.message);
-      }
+      },
     });
   }
 
@@ -69,13 +69,13 @@ export class Login {
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
-  initialList: CustomRecipeList = {
+  initialList: CustomRecipeLists = {
     id: 0,
-    name: "Favoritos",
-    recipes: []
-  }
+    name: 'Favoritos',
+    recipes: [],
+  };
 
-  initialLists: CustomRecipeList[] = [this.initialList];
+  initialLists: CustomRecipeLists[] = [this.initialList];
 
   onSubmitRegister() {
     if (this.registerForm.invalid) {
@@ -93,8 +93,8 @@ export class Login {
           const user: User = {
             email: formValues.email ?? '',
             password: formValues.password ?? '',
-            recipeList: this.initialLists
-          }
+            recipeLists: this.initialLists,
+          };
 
           this.authService.signup(user).subscribe({
             next: () => {
@@ -106,15 +106,15 @@ export class Login {
               console.log('Redirecting to Home');
               setTimeout(() => {
                 this.router.navigate(['/']);
-              }, 1500)
-            }
-          })
+              }, 1500);
+            },
+          });
         }
       },
       error: (error) => {
         console.error('Error checking email: ', error);
-      }
-    })
+      },
+    });
   }
 
   revealIsActive = false;
@@ -132,62 +132,62 @@ export class Login {
   loginAlertSucces() {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       timer: 1400,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
         toast.onmouseleave = Swal.resumeTimer;
-      }
+      },
     });
     Toast.fire({
-      icon: "success",
-      title: "Acceso correcto"
+      icon: 'success',
+      title: 'Acceso correcto',
     });
   }
 
   loginAlertError() {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
         toast.onmouseleave = Swal.resumeTimer;
-      }
+      },
     });
     Toast.fire({
-      icon: "error",
-      title: "Usuario o contraseña incorrectos"
+      icon: 'error',
+      title: 'Usuario o contraseña incorrectos',
     });
   }
 
   registerAlertCreated() {
     Swal.fire({
-      title: "Usuario creado con exito",
-      text: "",
-      icon: "success"
+      title: 'Usuario creado con exito',
+      text: '',
+      icon: 'success',
     });
   }
 
   registerAlertUsedEmail() {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
         toast.onmouseleave = Swal.resumeTimer;
-      }
+      },
     });
     Toast.fire({
-      icon: "error",
-      title: "Este correo ya esta en uso"
+      icon: 'error',
+      title: 'Este correo ya esta en uso',
     });
   }
 }

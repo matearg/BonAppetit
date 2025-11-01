@@ -9,7 +9,7 @@ export interface Recipe {
   image: string;
   instructions: string;
   spoonacularScore: number;
-  anotaciones?: string;
+  anotations?: string | null;
   ingredients: Ingredients[];
 }
 
@@ -68,7 +68,7 @@ export interface Metric {
   unitLong: string;
 }
 
-export interface CustomRecipeList {
+export interface CustomRecipeLists {
   id: number | string | undefined;
   name?: string;
   recipes: Recipe[];

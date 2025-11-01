@@ -14,18 +14,18 @@ import { User } from '../../interfaces/user';
 })
 export class Profile implements OnInit {
   private service = inject(UserService);
-  profileImage = 'img/user-profile.webp'
+  profileImage = 'img/user-profile.webp';
 
   activeUser: ActiveUser = {
     id: 0,
-    email: ''
-  }
+    email: '',
+  };
 
   commonUser: User = {
     email: '',
     password: '',
-    recipeList: []
-  }
+    recipeLists: [],
+  };
 
   ngOnInit(): void {
     this.service.getActiveUser().subscribe({
@@ -37,12 +37,12 @@ export class Profile implements OnInit {
           },
           error: (error: Error) => {
             console.log(error.message);
-          }
-        })
+          },
+        });
       },
       error: (error: Error) => {
         console.log(error.message);
-      }
-    })
+      },
+    });
   }
 }

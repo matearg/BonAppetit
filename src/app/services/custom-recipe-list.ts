@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CustomRecipeList } from '../interfaces/recipe';
+import { CustomRecipeLists } from '../interfaces/recipe';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -7,37 +7,37 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CustomRecipeListService {
-  constructor() { }
+  constructor() {}
 
   url: string = 'http://localhost:3000/CustomRecipeList';
 
   http = inject(HttpClient);
 
   // Obtener todas las listas
-  getLists(): Observable<CustomRecipeList[]> {
-    return this.http.get<CustomRecipeList[]>(this.url);
+  getLists(): Observable<CustomRecipeLists[]> {
+    return this.http.get<CustomRecipeLists[]>(this.url);
   }
 
-  getListbyId(id: string): Observable<CustomRecipeList> {
-    return this.http.get<CustomRecipeList>(`${this.url}/${id}`);
+  getListbyId(id: string): Observable<CustomRecipeLists> {
+    return this.http.get<CustomRecipeLists>(`${this.url}/${id}`);
   }
 
   // Crear una nueva lista
-  addList(lista: CustomRecipeList): Observable<CustomRecipeList> {
-    return this.http.post<CustomRecipeList>(this.url, lista);
+  addList(lista: CustomRecipeLists): Observable<CustomRecipeLists> {
+    return this.http.post<CustomRecipeLists>(this.url, lista);
   }
 
-  postList(lista: CustomRecipeList): Observable<CustomRecipeList> {
-    return this.http.post<CustomRecipeList>(this.url, lista);
+  postList(lista: CustomRecipeLists): Observable<CustomRecipeLists> {
+    return this.http.post<CustomRecipeLists>(this.url, lista);
   }
 
   // Actualizar una lista
-  updateList(id: string, lista: CustomRecipeList): Observable<CustomRecipeList> {
-    return this.http.put<CustomRecipeList>(`${this.url}/${id}`, lista);
+  updateList(id: string, lista: CustomRecipeLists): Observable<CustomRecipeLists> {
+    return this.http.put<CustomRecipeLists>(`${this.url}/${id}`, lista);
   }
 
   // Eliminar una lista
-  deleteList(id: string): Observable<CustomRecipeList> {
-    return this.http.delete<CustomRecipeList>(`${this.url}/${id}`);
+  deleteList(id: string): Observable<CustomRecipeLists> {
+    return this.http.delete<CustomRecipeLists>(`${this.url}/${id}`);
   }
 }

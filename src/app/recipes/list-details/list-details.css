@@ -1,0 +1,98 @@
+/*
+ * General styles for the main content area
+*/
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/*
+ * Title style for "Recetas"
+*/
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInTitle 0.5s 0.1s ease-out forwards;
+}
+
+@keyframes fadeInTitle {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * The main "frosted glass" card containing the list
+*/
+.recipe-info {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 100%;
+  max-width: 1200px; /* Allows for a wider layout for the recipe list */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInTitle 0.5s 0.2s ease-out forwards;
+}
+
+/*
+ * Style for the name of the recipe list
+*/
+.list-name {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #c9d6ff; /* Accent border */
+}
+
+/*
+ * Remove default list styling
+*/
+.recipe-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/*
+ * Grid container for the recipe cards (`app-delete-update-output`)
+ * This will create a responsive grid.
+*/
+.buttons {
+  display: grid;
+  /*
+   * Creates responsive columns:
+   * - Tries to fit as many columns as possible.
+   * - Each column will have a minimum width of 400px.
+   * - The available space is distributed equally among them.
+  */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem; /* Spacing between the recipe cards */
+}
+
+/*
+ * Responsive adjustments for smaller screens
+*/
+@media (max-width: 480px) {
+  .buttons {
+    /* On very small screens, switch to a single column layout */
+    grid-template-columns: 1fr;
+  }
+}

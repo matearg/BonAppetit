@@ -18,13 +18,13 @@ export class EditProfile implements OnInit {
   private router = inject(Router);
   private activeUser: ActiveUser = {
     id: 0,
-    email: ''
+    email: '',
   };
 
   private commonUser: User = {
     email: '',
     password: '',
-    recipeList: []
+    recipeLists: [],
   };
 
   private formBuilder: FormBuilder = inject(FormBuilder);
@@ -44,18 +44,18 @@ export class EditProfile implements OnInit {
             this.commonUser = user;
             this.editForm.patchValue({
               email: this.commonUser.email,
-              password: this.commonUser.password
+              password: this.commonUser.password,
             });
           },
           error: (error: Error) => {
             console.log(error.message);
-          }
-        })
+          },
+        });
       },
       error: (error: Error) => {
         console.log(error.message);
-      }
-    })
+      },
+    });
   }
 
   editProfile(): void {
@@ -63,7 +63,7 @@ export class EditProfile implements OnInit {
       const updatedUser: User = {
         ...this.commonUser,
         email: this.editForm.value.email!,
-        password: this.editForm.value.password!
+        password: this.editForm.value.password!,
       };
 
       this.userService.editUser(updatedUser).subscribe({
@@ -74,7 +74,7 @@ export class EditProfile implements OnInit {
         },
         error: (error: Error) => {
           console.log('Error on profile update: ', error.message);
-        }
+        },
       });
     } else {
       console.log('Invalid form');
@@ -84,18 +84,18 @@ export class EditProfile implements OnInit {
   alertProfileEdit() {
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
         toast.onmouseleave = Swal.resumeTimer;
-      }
+      },
     });
     Toast.fire({
-      icon: "success",
-      title: "Cambios guardados"
+      icon: 'success',
+      title: 'Cambios guardados',
     });
   }
 }

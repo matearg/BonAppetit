@@ -4,6 +4,9 @@ import { HomePage } from './views/home-page/home-page';
 import { authUsersGuard } from './users/auth-users-guard';
 import { Profile } from './views/profile/profile';
 import { EditProfile } from './users/edit-profile/edit-profile';
+import { MyRecipeDetails } from './recipes/my-recipe-details/my-recipe-details';
+import { ListDetails } from './recipes/list-details/list-details';
+import { CustomRecipeList } from './recipes/custom-recipe-list/custom-recipe-list';
 
 export const routes: Routes = [
   {
@@ -35,11 +38,11 @@ export const routes: Routes = [
   //   component: RecipeList,
   //   canActivate: [authUsersGuard]
   // },
-  // {
-  //   path: 'add-list',
-  //   component: CustomRecipeList,
-  //   canActivate: [authUsersGuard]
-  // },
+  {
+    path: 'add-list',
+    component: CustomRecipeList,
+    canActivate: [authUsersGuard],
+  },
   {
     path: 'profile',
     component: Profile,
@@ -48,23 +51,23 @@ export const routes: Routes = [
   {
     path: 'edit-profile/:id',
     component: EditProfile,
-    canActivate: [authUsersGuard]
+    canActivate: [authUsersGuard],
   },
   // {
   //   path: 'my-lists',
   //   component: MyLists,
   //   canActivate: [authUsersGuard]
   // },
-  // {
-  //   path: 'list/:id',
-  //   component: ListDetails,
-  //   canActivate: [authUsersGuard]
-  // },
-  // {
-  //   path: 'recipe-list-details/:idList/:idRecipe',
-  //   component: MyRecipeDetails,
-  //   canActivate: [authUsersGuard]
-  // },
+  {
+    path: 'list/:id',
+    component: ListDetails,
+    canActivate: [authUsersGuard],
+  },
+  {
+    path: 'recipe-list-details/:idList/:idRecipe',
+    component: MyRecipeDetails,
+    canActivate: [authUsersGuard],
+  },
   {
     path: '**',
     redirectTo: '',
