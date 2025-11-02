@@ -7,6 +7,7 @@ import { EditProfile } from './users/edit-profile/edit-profile';
 import { MyRecipeDetails } from './recipes/my-recipe-details/my-recipe-details';
 import { ListDetails } from './recipes/list-details/list-details';
 import { CustomRecipeList } from './recipes/custom-recipe-list/custom-recipe-list';
+import { MyLists } from './recipes/my-lists/my-lists';
 
 export const routes: Routes = [
   {
@@ -53,11 +54,11 @@ export const routes: Routes = [
     component: EditProfile,
     canActivate: [authUsersGuard],
   },
-  // {
-  //   path: 'my-lists',
-  //   component: MyLists,
-  //   canActivate: [authUsersGuard]
-  // },
+  {
+    path: 'my-lists',
+    component: MyLists,
+    canActivate: [authUsersGuard],
+  },
   {
     path: 'list/:id',
     component: ListDetails,

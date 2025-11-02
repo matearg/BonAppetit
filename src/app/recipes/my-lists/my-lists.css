@@ -1,0 +1,150 @@
+/*
+ * General styles for the main content area
+*/
+.main-container {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/*
+ * The main "frosted glass" card that holds all the content
+*/
+.content {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Spacing between title, button, and list */
+
+  /* Smooth fade-in animation */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInContent 0.5s 0.2s ease-out forwards;
+}
+
+@keyframes fadeInContent {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * Style for the main title "Mis recetarios"
+*/
+.gerenal-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin: 0;
+}
+
+/*
+ * Container for the "Crear nuevo recetario" button
+*/
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/*
+ * General button styling
+*/
+.button {
+  background-color: #f7f7f7;
+  color: #333;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #c9d6ff;
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/*
+ * List container and item styling
+*/
+.info-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between each list item */
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.list-name {
+  flex-grow: 1; /* Pushes buttons to the right */
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+/* Specific hover effect for the delete button */
+.list-item .button:nth-of-type(2):hover {
+  background-color: #ef5350; /* Soft red color for delete */
+  color: white;
+}
+
+/*
+ * Styling for the empty state message
+*/
+.no-list-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+}
+
+.no-lists {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 0;
+}
+
+/*
+ * Responsive Design for smaller screens
+*/
+@media (max-width: 768px) {
+  .list-item {
+    flex-direction: column;
+    align-items: stretch; /* Makes buttons take full width */
+    text-align: center;
+  }
+
+  .list-name {
+    margin-bottom: 1rem;
+  }
+}

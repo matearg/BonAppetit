@@ -1,3 +1,19 @@
 <app-home-page-header></app-home-page-header>
-<main></main>
+<main>
+  <div class="main-container">
+    <h2>Crea tus propias listas</h2>
+    <form [formGroup]="form" (ngSubmit)="listPost()" class="form">
+      <div class="input-container">
+        <label for="listName" class="form-label">Nombre del recetario:</label>
+        <input
+          type="text"
+          formControlName="listName"
+          class="form-input"
+          placeholder="Introduce el nombre del nuevo recetario"
+        />
+      </div>
+      <button type="submit" class="submit-button" [disabled]="form.invalid">Crear lista</button>
+    </form>
+  </div>
+</main>
 <footer></footer>
