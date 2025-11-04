@@ -1,0 +1,60 @@
+<app-home-page-header></app-home-page-header>
+<main>
+  @if (recipe) {
+  <div class="recipe-container">
+    <h2 class="recipe-title">{{ recipe.title }}</h2>
+    <div class="image-container">
+      <img [src]="recipe.image" alt="Imagen de {{ recipe.title }}" class="recipe-image" />
+    </div>
+
+    <div class="recipe-info">
+      <p><strong>Tiempo de preparación:</strong> {{ recipe.readyInMinutes }} minutos</p>
+      <p><strong>Calificación:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
+    </div>
+
+    <div class="ingredient-container">
+      <h3>Ingredientes</h3>
+      <div class="ingredient-info">
+        <ul class="ingredient-list">
+          @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
+          <li>
+            {{ ingredient.amount.toFixed(1) }}
+            {{ ingredient.name }}
+            {{ ingredient.unit }}
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="instructions-container">
+      <h3>Instrucciones</h3>
+      <ul>
+        @for (step of getInstructions(); track $index) {
+        <li>
+          {{ step }}
+        </li>
+        }
+      </ul>
+    </div>
+
+    <button class="add-to-list-button" (click)="listAddActive = true">Agregar a una lista</button>
+    <div class="add-to-list">
+      @if(listAddActive) {
+      <form [formGroup]="form" (ngSubmit)="addRecipe()">
+        <div class="select-button-container">
+          <label for="listId"></label>
+          <select id="listId" formControlName="listId">
+            @for (list of commonUser.recipeLists; track list.id) {
+            <option [value]="list.id">{{ list.name }}</option>
+            }
+          </select>
+          <button type="submit" class="add-button">Agregar</button>
+        </div>
+      </form>
+      }
+    </div>
+  </div>
+  }
+</main>
+<footer></footer>

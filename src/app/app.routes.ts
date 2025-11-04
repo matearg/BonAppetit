@@ -8,6 +8,9 @@ import { MyRecipeDetails } from './recipes/my-recipe-details/my-recipe-details';
 import { ListDetails } from './recipes/list-details/list-details';
 import { CustomRecipeList } from './recipes/custom-recipe-list/custom-recipe-list';
 import { MyLists } from './recipes/my-lists/my-lists';
+import { RecipeDetail } from './recipes/recipe-detail/recipe-detail';
+import { RecipeForm } from './recipes/recipe-form/recipe-form';
+import { RecipeList } from './recipes/recipe-list/recipe-list';
 
 export const routes: Routes = [
   {
@@ -19,26 +22,26 @@ export const routes: Routes = [
     component: HomePage,
     canActivate: [authUsersGuard],
   },
-  // {
-  //   path: 'recipes-details/:id',
-  //   component: RecipesDetails,
-  //   canActivate: [authUsersGuard]
-  // },
-  // {
-  //   path: 'add-recipe',
-  //   component: RecipeForm,
-  //   canActivate: [authUsersGuard]
-  // },
-  // {
-  //   path: 'update-recipe',
-  //   component: RecipeUpdate,
-  //   canActivate: [authUsersGuard]
-  // },
-  // {
-  //   path: 'recipes',
-  //   component: RecipeList,
-  //   canActivate: [authUsersGuard]
-  // },
+  {
+    path: 'recipes-details/:id',
+    component: RecipeDetail,
+    canActivate: [authUsersGuard],
+  },
+  {
+    path: 'add-recipe',
+    component: RecipeForm,
+    canActivate: [authUsersGuard],
+  },
+  {
+    path: 'update-recipe',
+    component: RecipeUpdate,
+    canActivate: [authUsersGuard],
+  },
+  {
+    path: 'recipes',
+    component: RecipeList,
+    canActivate: [authUsersGuard],
+  },
   {
     path: 'add-list',
     component: CustomRecipeList,

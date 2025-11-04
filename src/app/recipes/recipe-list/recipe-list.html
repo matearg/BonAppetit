@@ -1,0 +1,31 @@
+<app-home-page-header></app-home-page-header>
+<main>
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="setIngredients()" class="search-form">
+      <h2>Buscador de recetas</h2>
+      <input
+        type="text"
+        name="ingredients"
+        id="ingredients"
+        formControlName="ingredients"
+        placeholder="Escribe ingredientes..."
+      />
+      <button type="submit" class="button" (click)="recipeContainerActive = true">Buscar</button>
+    </form>
+
+    @if (recipeContainerActive) {
+    <div class="recipes-container">
+      @for (item of recipeList; track $index) {
+      <div>
+        <app-recipe-card
+          [recipe]="item"
+          (viewDetails)="navigateToDetails($event)"
+        ></app-recipe-card>
+      </div>
+      }
+      <button class="similars" (click)="updateRecipes()">Ver recetas similares</button>
+    </div>
+    }
+  </div>
+</main>
+<footer></footer>
