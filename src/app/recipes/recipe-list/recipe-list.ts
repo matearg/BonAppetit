@@ -21,7 +21,7 @@ export class RecipeList {
   recipeList: RecipeInfo[] = [];
   ingredients: string = '';
   recipeContainerActive = false;
-  modelRecipeId: number | string | undefined = 0;
+  modelRecipeId: number = 0;
 
   form = this.formBuilder.nonNullable.group({
     ingredients: ['', Validators.required],
@@ -86,7 +86,7 @@ export class RecipeList {
     });
   }
 
-  navigateToDetails(id: number | string | undefined) {
+  navigateToDetails(id: number) {
     this.router.navigate([`/recipes-details/${id}`]);
   }
 }

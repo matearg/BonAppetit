@@ -11,6 +11,7 @@ import { MyLists } from './recipes/my-lists/my-lists';
 import { RecipeDetail } from './recipes/recipe-detail/recipe-detail';
 import { RecipeForm } from './recipes/recipe-form/recipe-form';
 import { RecipeList } from './recipes/recipe-list/recipe-list';
+import { RecipeUpdate } from './recipes/recipe-update/recipe-update';
 
 export const routes: Routes = [
   {

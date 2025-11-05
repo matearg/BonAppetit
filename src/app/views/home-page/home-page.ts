@@ -24,10 +24,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   user: ActiveUser = {
     id: 0,
-    email: "invited@invited.com"
-  }
+    email: 'invited@invited.com',
+  };
 
-  recipeList: Array<Recipe> = []
+  recipeList: Array<Recipe> = [];
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
@@ -37,10 +37,10 @@ export class HomePage implements OnInit, OnDestroy {
     this.sub = this.userService.auth().subscribe({
       next: (activeUser) => {
         if (activeUser) {
-          this.user = activeUser
-          this.getRandomRecipes()
+          this.user = activeUser;
+          this.getRandomRecipes();
         }
-      }
+      },
     });
   }
 
@@ -52,11 +52,11 @@ export class HomePage implements OnInit, OnDestroy {
       },
       error: (error: Error) => {
         console.log(error.message);
-      }
+      },
     });
   }
 
-  navigateToDetails(id: number | string | undefined) {
-    this.ruotes.navigate([`recipes-details/${id}`])
+  navigateToDetails(id: number) {
+    this.ruotes.navigate([`recipes-details/${id}`]);
   }
 }

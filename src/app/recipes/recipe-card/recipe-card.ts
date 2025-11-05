@@ -9,7 +9,7 @@ import { RecipeInfo } from '../../interfaces/recipe';
 })
 export class RecipeCard {
   @Input() recipe!: RecipeInfo;
-  @Output() viewDetails = new EventEmitter<number | string | undefined>();
+  @Output() viewDetails = new EventEmitter<number>();
 
   onViewDetails() {
     this.viewDetails.emit(this.recipe.id);

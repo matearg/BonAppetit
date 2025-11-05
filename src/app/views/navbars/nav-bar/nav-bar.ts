@@ -28,7 +28,7 @@ export class NavBar {
     });
   }
 
-  logOut(id: number | string | undefined) {
+  logOut(id: string) {
     this.userService.deleteActiveUser(id).subscribe({
       next: () => {
         console.log('Active user deleted successfully.');

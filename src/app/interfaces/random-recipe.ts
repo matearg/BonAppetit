@@ -23,7 +23,7 @@ export interface Recipe {
   sourceName: string;
   pricePerServing: number;
   extendedIngredients: ExtendedIngredient[];
-  id: number | string | undefined;
+  id: number;
   title: string;
   readyInMinutes: number;
   servings: number;
@@ -55,14 +55,14 @@ export interface Step {
 }
 
 export interface Ent {
-  id: number | string | undefined;
+  id: number;
   name: string;
   localizedName: string;
   image: string;
 }
 
 export interface ExtendedIngredient {
-  id: number | string | undefined;
+  id: number;
   aisle: string;
   image: string;
   consistency: Consistency;

@@ -2,7 +2,7 @@ export interface Recipe {
   vegetarian: boolean;
   vegan: boolean;
   glutenFree: boolean;
-  id?: number | string | undefined;
+  id?: number;
   title: string;
   readyInMinutes: number;
   servings: number;
@@ -14,7 +14,7 @@ export interface Recipe {
 }
 
 export interface Ingredients {
-  id?: number | string | undefined;
+  id?: number;
   name: string;
   amount: number;
   unit: string;
@@ -27,7 +27,7 @@ export interface RecipeInfo {
   aggregateLikes: number;
   healthScore: number;
   extendedIngredients: ExtendedIngredient[];
-  id: number | string | undefined;
+  id: number;
   title: string;
   readyInMinutes: number;
   servings: number;
@@ -45,7 +45,7 @@ export interface RecipeInfo {
 }
 
 export interface ExtendedIngredient {
-  id: number | string | undefined;
+  id: number;
   aisle: string;
   image: string;
   name: string;
@@ -69,13 +69,13 @@ export interface Metric {
 }
 
 export interface CustomRecipeLists {
-  id: number | string | undefined;
+  id: number;
   name?: string;
   recipes: Recipe[];
 }
 
 export interface RecipeAlt {
-  id?: number | string | undefined;
+  id?: number;
   title: string;
   ingredients: (string | null)[];
   vegetarian: boolean;

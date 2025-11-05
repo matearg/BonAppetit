@@ -1,0 +1,144 @@
+/*
+ * General styles for the main content area
+*/
+main {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/*
+ * The main "frosted glass" card that holds the search form and results
+*/
+.form-container {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 100%;
+  max-width: 1200px; /* Wider to accommodate search results */
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem; /* Space between form and results */
+
+  /* Smooth fade-in animation */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInSearch 0.5s 0.2s ease-out forwards;
+}
+
+@keyframes fadeInSearch {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * Search form styling
+*/
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.search-form h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.search-form input[type='text'] {
+  font-size: 1.1rem;
+  padding: 14px 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.6);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.search-form input[type='text']::placeholder {
+  color: #999;
+}
+
+.search-form input[type='text']:focus {
+  outline: none;
+  border-color: #a3b8ff;
+  box-shadow: 0 0 0 3px rgba(201, 214, 255, 0.7);
+}
+
+/*
+ * General button styling (for "Buscar")
+*/
+.button {
+  background-color: #f7f7f7;
+  color: #333;
+  border: none;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #c9d6ff;
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/*
+ * Recipe results container
+*/
+.recipes-container {
+  display: grid;
+  /* Responsive grid for recipe cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/*
+ * "Ver recetas similares" button
+*/
+.similars {
+  /* This button spans all columns of the grid */
+  grid-column: 1 / -1;
+  background-color: #512da8; /* Primary action color */
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.similars:hover {
+  background-color: #311b92;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

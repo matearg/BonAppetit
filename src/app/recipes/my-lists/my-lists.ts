@@ -63,13 +63,13 @@ export class MyLists implements OnInit {
     }
   }
 
-  seeListDetails(id: number | string | undefined) {
+  seeListDetails(id: number) {
     if (this.lists.some((u) => u.id === id)) {
       this.router.navigate([[`list/${id}`]]);
     }
   }
 
-  deleteList(id: number | string | undefined) {
+  deleteList(id: number) {
     if (this.lists.some((list) => list.id === id)) {
       this.commonUser.recipeLists = this.lists.filter((list) => list.id !== id);
 

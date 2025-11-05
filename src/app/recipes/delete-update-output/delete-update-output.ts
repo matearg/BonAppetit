@@ -11,15 +11,15 @@ import { RouterModule } from '@angular/router';
 })
 export class DeleteUpdateOutput {
   @Input() recipe!: Recipe | RecipeInfo;
-  @Input() listId!: number | string;
-  @Output() delete = new EventEmitter<number | string | undefined>();
+  @Input() listId!: number;
+  @Output() delete = new EventEmitter<number>();
   @Output() update = new EventEmitter<{
-    listId: number | string | undefined;
-    recipeId: number | string | undefined;
+    listId: number;
+    recipeId: number;
   }>();
   @Output() details = new EventEmitter<{
-    listId: number | string | undefined;
-    recipeId: number | string | undefined;
+    listId: number;
+    recipeId: number;
   }>();
 
   onDelete() {

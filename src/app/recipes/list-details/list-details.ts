@@ -16,7 +16,7 @@ import { Footer } from '../../views/shared/footer/footer';
   styleUrl: './list-details.css',
 })
 export class ListDetails implements OnInit {
-  actvieUser: ActiveUser = {
+  activeUser: ActiveUser = {
     id: 0,
     email: '',
   };
@@ -62,8 +62,8 @@ export class ListDetails implements OnInit {
     if (id) {
       this.userService.getActiveUser().subscribe({
         next: (foundUser) => {
-          this.actvieUser = foundUser[0];
-          this.userService.getUserById(this.actvieUser.id).subscribe({
+          this.activeUser = foundUser[0];
+          this.userService.getUserById(this.activeUser.id).subscribe({
             next: (user) => {
               this.commonUser = user;
               this.list = this.commonUser.recipeLists.find((list: any) => list.id == Number(id));
@@ -81,15 +81,12 @@ export class ListDetails implements OnInit {
     }
   }
 
-  navigateToDetails(event: {
-    listId: number | string | undefined;
-    recipeId: number | string | undefined;
-  }) {
+  navigateToDetails(event: { listId: number; recipeId: number }) {
     const { listId, recipeId } = event;
     this.routes.navigate([`/my-recipe-details/${listId}/${recipeId}`]);
   }
 
-  deleteRecipe(recipeId: number | string | undefined) {
+  deleteRecipe(recipeId: number) {
     if (this.list?.recipes) {
       const index = this.list.recipes.findIndex((recipe) => recipe.id === recipeId);
       if (index !== -1) {
@@ -111,7 +108,7 @@ export class ListDetails implements OnInit {
     }
   }
 
-  onUpdate(event: { listId: number | string | undefined; recipeId: number | string | undefined }) {
+  onUpdate(event: { listId: number; recipeId: number }) {
     const { listId, recipeId } = event;
     if (this.list?.recipes) {
       const recipe = this.list.recipes.find((recipe) => recipe.id === recipeId);
