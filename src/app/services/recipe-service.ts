@@ -9,10 +9,10 @@ import { RandomRecipe } from '../interfaces/random-recipe';
   providedIn: 'root',
 })
 export class RecipeService {
-  constructor() { }
+  constructor() {}
 
   http = inject(HttpClient);
-  private key = environment.tokenLaura2;
+  private key = environment.tokenIma;
   private baseUrl = 'http://localhost:3000/recipes';
 
   getrecipesByIngredients(ingredients: string, number: number): Observable<any> {

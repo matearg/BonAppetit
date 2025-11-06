@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ExtendedIngredient, Ingredients, Recipe, RecipeInfo } from '../../interfaces/recipe';
 import { UserService } from '../../services/user-service';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { User } from '../../interfaces/user';
 import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
+import { forkJoin, Observable, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,12 +17,14 @@ import { Footer } from '../../views/shared/footer/footer';
   templateUrl: './recipe-detail.html',
   styleUrl: './recipe-detail.css',
 })
-export class RecipeDetail implements OnInit {
+export class RecipeDetail implements OnInit, OnDestroy {
+  private mainSub = new Subscription();
   recipe!: RecipeInfo;
   userService = inject(UserService);
   formBuilder = inject(FormBuilder);
   listAddActive: boolean = false;
   router = inject(Router);
+  cdr = inject(ChangeDetectorRef);
 
   constructor(private activatedRoute: ActivatedRoute, private recipeService: RecipeService) {}
 
@@ -41,12 +44,39 @@ export class RecipeDetail implements OnInit {
   });
 
   ngOnInit() {
-    this.obtainUser();
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this.recipeService.getRecipeInfotmation(id).subscribe({
-      next: (data) => (this.recipe = data),
-      error: (error: Error) => console.log('Error loading recipe details', error.message),
+
+    // 1. Observable que busca la receta
+    const recipe$ = this.recipeService.getRecipeInfotmation(id);
+
+    // 2. Observable que busca al usuario (usando nuestro método refactorizado)
+    const user$ = this.obtainUser();
+
+    // 3. forkJoin: Ejecuta ambos en paralelo.
+    // Solo emite un valor cuando AMBOS se completan.
+    const combinedLoad$ = forkJoin({
+      recipeData: recipe$,
+      userData: user$,
     });
+
+    // 4. Hacemos UNA SOLA suscripción y la añadimos a nuestro gestor
+    this.mainSub.add(
+      combinedLoad$.subscribe({
+        next: (results) => {
+          // results es { recipeData: RecipeInfo, userData: User }
+          this.recipe = results.recipeData;
+          this.commonUser = results.userData;
+
+          // ¡Avisamos a Angular UNA SOLA VEZ!
+          this.cdr.markForCheck();
+        },
+        error: (error: Error) => console.log('Error loading page data', error.message),
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.mainSub.unsubscribe();
   }
 
   getInstructions() {
@@ -55,23 +85,14 @@ export class RecipeDetail implements OnInit {
     return cleanText.split('\n').filter((step) => step.trim() !== '');
   }
 
-  obtainUser() {
-    this.userService.getActiveUser().subscribe({
-      next: (user) => {
-        this.activeUser = user[0];
-        this.userService.getUserById(this.activeUser.id).subscribe({
-          next: (user) => {
-            this.commonUser = user;
-          },
-          error: (error: Error) => {
-            console.log(error.message);
-          },
-        });
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+  obtainUser(): Observable<User> {
+    return this.userService.getActiveUser().pipe(
+      switchMap((userArray) => {
+        this.activeUser = userArray[0];
+        // switchMap cambia al siguiente observable
+        return this.userService.getUserById(this.activeUser.id);
+      })
+    );
   }
 
   addRecipe() {
@@ -84,15 +105,19 @@ export class RecipeDetail implements OnInit {
 
     if (selectedList) {
       selectedList.recipes.push(recipe);
-      this.userService.editUser(this.commonUser).subscribe({
-        next: () => {
-          this.alertRecetaAdd();
-          this.router.navigate(['/home']);
-        },
-        error: (error: Error) => {
-          console.log('Error saving recipe:', error.message);
-        },
-      });
+
+      // Añade esta suscripción al gestor principal
+      this.mainSub.add(
+        this.userService.editUser(this.commonUser).subscribe({
+          next: () => {
+            this.alertRecetaAdd();
+            this.router.navigate(['/home']);
+          },
+          error: (error: Error) => {
+            console.log('Error saving recipe:', error.message);
+          },
+        })
+      );
     } else {
       console.error('Selected list not found');
     }

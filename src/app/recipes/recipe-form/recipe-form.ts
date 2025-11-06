@@ -9,10 +9,11 @@ import { User } from '../../interfaces/user';
 import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-form',
-  imports: [HomePageHeader, Footer, ReactiveFormsModule],
+  imports: [HomePageHeader, Footer, ReactiveFormsModule, CommonModule],
   templateUrl: './recipe-form.html',
   styleUrl: './recipe-form.css',
 })

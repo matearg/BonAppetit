@@ -14,12 +14,13 @@
         </p>
       </div>
 
-      <button>Ver recetas</button>
+      <button (click)="getRandomRecipes()">Ver recetas</button>
 
       <div class="cont-recipes">
         @for (item of recipeList; track $index) {
-      <app-recipe-card [recipe]="item" (viewDetails)="navigateToDetails($event)"> </app-recipe-card>
-      }
+        <app-recipe-card [recipe]="item" (viewDetails)="navigateToDetails($event)">
+        </app-recipe-card>
+        }
       </div>
     </section>
   </div>
