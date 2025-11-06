@@ -4,16 +4,16 @@
   <div class="recipe-container">
     <h2 class="recipe-title">{{ recipe.title }}</h2>
     <div class="image-container">
-      <img [src]="recipe.image" alt="Imagen de {{ recipe.title }}" class="recipe-image" />
+      <img [src]="recipe.image" alt="Image of {{ recipe.title }}" class="recipe-image" />
     </div>
 
     <div class="recipe-info">
-      <p><strong>Tiempo de preparación:</strong> {{ recipe.readyInMinutes }} minutos</p>
-      <p><strong>Calificación:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
+      <p><strong>Preparation time:</strong> {{ recipe.readyInMinutes }} minutos</p>
+      <p><strong>Score:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
     </div>
 
     <div class="ingredient-container">
-      <h3>Ingredientes</h3>
+      <h3>Ingredients</h3>
       <div class="ingredient-info">
         <ul class="ingredient-list">
           @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
@@ -28,7 +28,7 @@
     </div>
 
     <div class="instructions-container">
-      <h3>Instrucciones</h3>
+      <h3>Instructions</h3>
       <ul>
         @for (step of getInstructions(); track $index) {
         <li>
@@ -38,7 +38,7 @@
       </ul>
     </div>
 
-    <button class="add-to-list-button" (click)="listAddActive = true">Agregar a una lista</button>
+    <button class="add-to-list-button" (click)="listAddActive = true">Add to a list</button>
     <div class="add-to-list">
       @if(listAddActive) {
       <form [formGroup]="form" (ngSubmit)="addRecipe()">
@@ -49,7 +49,7 @@
             <option [value]="list.id">{{ list.name }}</option>
             }
           </select>
-          <button type="submit" class="add-button">Agregar</button>
+          <button type="submit" class="add-button">Add</button>
         </div>
       </form>
       }

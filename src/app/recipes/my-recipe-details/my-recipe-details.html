@@ -9,12 +9,12 @@
     </div>
 
     <div class="recipe-info">
-      <p><strong>Tiempo de preparación:</strong> {{ recipe.readyInMinutes }} minutos</p>
-      <p><strong>Calificación:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
+      <p><strong>Preparation time:</strong> {{ recipe.readyInMinutes }} minutes</p>
+      <p><strong>Score:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
     </div>
 
     <div class="ingredients-container">
-      <h3>Ingredientes</h3>
+      <h3>Ingredients</h3>
       <div class="ingredients-info">
         <ul class="ingredient-list">
           @for (ingredient of recipe.ingredients; track ingredient) {
@@ -29,7 +29,7 @@
     </div>
 
     <div class="instructions-container">
-      <h3>Instrucciones</h3>
+      <h3>Instructions</h3>
       <ul>
         @for (step of recipeSteps; track $index) {
         <li>{{ step }}</li>
@@ -39,13 +39,11 @@
 
     <div class="form">
       <form [formGroup]="form" (ngSubmit)="saveAnotations()">
-        <div class="anotation-title">Anotaciones</div>
+        <div class="anotation-title">Anotations</div>
         <div class="anotation-input">
-          <textarea name="form" id="anotation" formControlName="anotations">
-Escribe aqui...</textarea
-          >
+          <textarea name="form" id="anotation" formControlName="anotations">Type here...</textarea>
         </div>
-        <button type="submit" [disabled]="form.invalid">Guardar</button>
+        <button type="submit" [disabled]="form.invalid">Save</button>
       </form>
     </div>
   </div>

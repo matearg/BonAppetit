@@ -2,15 +2,15 @@
 <main>
   <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="setIngredients()" class="search-form">
-      <h2>Buscador de recetas</h2>
+      <h2>Recipe Search</h2>
       <input
         type="text"
         name="ingredients"
         id="ingredients"
         formControlName="ingredients"
-        placeholder="Escribe ingredientes..."
+        placeholder="Type ingredients..."
       />
-      <button type="submit" class="button" (click)="recipeContainerActive = true">Buscar</button>
+      <button type="submit" class="button" (click)="recipeContainerActive = true">Search</button>
     </form>
 
     @if (recipeContainerActive) {
@@ -23,7 +23,7 @@
         ></app-recipe-card>
       </div>
       }
-      <button class="similars" (click)="updateRecipes()">Ver recetas similares</button>
+      <button class="similars" (click)="updateRecipes()">See similar recipes</button>
     </div>
     }
   </div>
