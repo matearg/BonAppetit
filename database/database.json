@@ -1,10 +1,5 @@
 {
-  "ActiveUser": [
-    {
-      "id": "e237",
-      "email": "prueba@gmail.com"
-    }
-  ],
+  "ActiveUser": [],
   "Users": [
     {
       "id": "e237",
@@ -246,25 +241,126 @@
                 }
               ],
               "id": 652394
+            },
+            {
+              "vegetarian": false,
+              "vegan": false,
+              "glutenFree": true,
+              "title": "Curried Chicken Roll-Ups",
+              "readyInMinutes": 45,
+              "servings": 4,
+              "image": "https://img.spoonacular.com/recipes/641066-556x370.jpg",
+              "instructions": "Place all ingredients (except tortillas, lettuce, and cream cheese) into a bowl. Stir well, until everything is nicely mixed and the larger chicken pieces have pulled apart.\nLightly toast or warm your tortillas on the stove top.\nScoop out a quarter of your chicken salad mixture and evenly spread it over the top of the tortilla.\nSprinkle a quarter of your lettuce over the chicken salad.\nNow gently, and tightly, roll up your tortilla.\nUse a good serrated knife to gently slice the roll into 4 or 6 pieces.",
+              "spoonacularScore": 38.4609375,
+              "id": 641066,
+              "ingredients": [
+                {
+                  "name": "chicken breast",
+                  "unit": "ounce",
+                  "amount": 10
+                },
+                {
+                  "name": "cucumber",
+                  "unit": "medium",
+                  "amount": 0.5
+                },
+                {
+                  "name": "bell pepper",
+                  "unit": "",
+                  "amount": 0.25
+                },
+                {
+                  "name": "celery stalk",
+                  "unit": "",
+                  "amount": 1
+                },
+                {
+                  "name": "green onion",
+                  "unit": "",
+                  "amount": 1
+                },
+                {
+                  "name": "mayonnaise",
+                  "unit": "tablespoons",
+                  "amount": 3
+                },
+                {
+                  "name": "lime juice",
+                  "unit": "teaspoon",
+                  "amount": 1
+                },
+                {
+                  "name": "curry paste",
+                  "unit": "teaspoon",
+                  "amount": 1
+                },
+                {
+                  "name": "garlic powder",
+                  "unit": "teaspoon",
+                  "amount": 0.5
+                },
+                {
+                  "name": "paprika",
+                  "unit": "teaspoon",
+                  "amount": 0.5
+                },
+                {
+                  "name": "chili powder",
+                  "unit": "Dash",
+                  "amount": 1
+                },
+                {
+                  "name": "salt and pepper",
+                  "unit": "servings",
+                  "amount": 4
+                },
+                {
+                  "name": "grain tortillas",
+                  "unit": "",
+                  "amount": 4
+                },
+                {
+                  "name": "lettuce",
+                  "unit": "cup",
+                  "amount": 1
+                }
+              ]
+            },
+            {
+              "vegetarian": true,
+              "vegan": true,
+              "glutenFree": true,
+              "title": "Green Tomato Salad",
+              "readyInMinutes": 45,
+              "servings": 1,
+              "image": "https://img.spoonacular.com/recipes/645555-556x370.jpg",
+              "instructions": "Slice the tomato into thin round discs.\nRoll the mint and sage leaves into a tight ball and then chop it up finely.\nAdd to the olive oil and sumac to make a dressing.\nDrizzle over the tomato slices",
+              "spoonacularScore": 93.71946716308594,
+              "id": 645555,
+              "ingredients": [
+                {
+                  "name": "tomato",
+                  "unit": "large",
+                  "amount": 1
+                },
+                {
+                  "name": "olive oil",
+                  "unit": "tablespoon",
+                  "amount": 1
+                },
+                {
+                  "name": "sumac powder",
+                  "unit": "teaspoon",
+                  "amount": 1
+                },
+                {
+                  "name": "sage and mint leaves",
+                  "unit": "handful",
+                  "amount": 1
+                }
+              ]
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "7794",
-      "email": "mateo@gmail.com",
-      "password": "mateo123",
-      "recipeLists": [
-        {
-          "id": 0,
-          "name": "Favoritos",
-          "recipes": []
-        },
-        {
-          "id": 2,
-          "name": "rueba",
-          "recipes": []
         }
       ]
     }
