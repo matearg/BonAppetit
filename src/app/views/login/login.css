@@ -50,23 +50,6 @@
   cursor: not-allowed;
 }
 
-.container button.reveal {
-  max-width: fit-content;
-  padding: 10px;
-}
-
-.form-container button.reveal:hover {
-  background-color: #4527a0;
-  transform: translateY(1px);
-}
-
-.form-container button.activeButton {
-  background-color: #4527a0;
-  transform: translateY(1px);
-  color: #fff;
-  box-shadow: 0px 0px 15px #4527a060;
-}
-
 .container form {
   background-color: #fff;
   display: flex;
@@ -198,6 +181,31 @@
   transform: translateX(200%);
 }
 
+.password-container {
+  position: relative;
+  width: 100%;
+  margin: 8px 0;
+}
+.password-container input {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 45px 10px 15px;
+}
+
+.password-container button.reveal {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  margin-top: 0;
+  background-color: transparent;
+  color: #333;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+}
+
 @media (max-width: 780px) {
   :host {
     padding: 20px 12px;
@@ -266,14 +274,20 @@
     box-sizing: border-box;
   }
 
-  .container button.reveal {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Reduce some animations to avoid jumpiness */
   .container .form-container,
   .container .toggle {
     transition: none;
+  }
+
+  .password-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .password-container input {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 45px 12px 14px;
   }
 }
