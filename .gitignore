@@ -46,4 +46,4 @@ Thumbs.db
 environments/*
 
 # Database files
-database/*
+database.json
