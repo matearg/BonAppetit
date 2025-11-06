@@ -67,9 +67,7 @@
     </div>
 
     <div class="data">
-      <label>
-        Instrucciones <textarea formControlName="instrucctions" type="number"></textarea>
-      </label>
+      <label> Instrucciones <textarea formControlName="instructions"></textarea></label>
     </div>
 
     <div class="data">
@@ -83,7 +81,7 @@
       <label for="listId">Seleccione una lista:</label>
       <select id="listId" formControlName="listId">
         <option *ngFor="let list of commonUser.recipeLists" [value]="list.id">
-          {{ list.nombre }}
+          {{ list.name }}
         </option>
       </select>
     </div>

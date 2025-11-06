@@ -1,8 +1,15 @@
 /*
  * General styles for the main content area
 */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 main {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   padding: 3rem 1rem;
   box-sizing: border-box;
@@ -74,9 +81,7 @@ form {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.6);
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
   box-sizing: border-box; /* Ensures padding doesn't break layout */
 }

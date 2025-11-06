@@ -1,9 +1,3 @@
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
-
 <div class="container" [class.active]="isActive">
   <div class="form-container sign-up">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
@@ -18,8 +12,8 @@
       <button
         class="reveal"
         type="button"
-        [class.activeButton]="revealIsActive"
-        (click)="onRevealPassword(registerPassword)"
+        [class.activeButton]="revealRegisterPw"
+        (click)="onRevealPassword(registerPassword, 'register')"
       >
         Ver
       </button>
@@ -35,8 +29,8 @@
       <button
         class="reveal"
         type="button"
-        [class.activeButton]="revealIsActive"
-        (click)="onRevealPassword(password)"
+        [class.activeButton]="revealLoginPw"
+        (click)="onRevealPassword(password, 'login')"
       >
         Ver
       </button>

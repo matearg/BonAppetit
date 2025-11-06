@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActiveUser } from '../../interfaces/active-user';
 import { User } from '../../interfaces/user';
@@ -7,6 +7,7 @@ import { UserService } from '../../services/user-service';
 import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
+import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,8 +15,13 @@ import { Footer } from '../../views/shared/footer/footer';
   templateUrl: './edit-profile.html',
   styleUrl: './edit-profile.css',
 })
-export class EditProfile implements OnInit {
+export class EditProfile implements OnInit, OnDestroy {
   private router = inject(Router);
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private userService = inject(UserService);
+  private cdr = inject(ChangeDetectorRef);
+  private sub = new Subscription();
+
   private activeUser: ActiveUser = {
     id: 0,
     email: '',
@@ -27,35 +33,46 @@ export class EditProfile implements OnInit {
     recipeLists: [],
   };
 
-  private formBuilder: FormBuilder = inject(FormBuilder);
-  private userService = inject(UserService);
-
   editForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.userService.getActiveUser().subscribe({
-      next: (user) => {
-        this.activeUser = user[0];
-        this.userService.getUserById(this.activeUser.id).subscribe({
-          next: (user) => {
+    this.sub.add(
+      // Añade al gestor
+      this.userService
+        .getActiveUser()
+        .pipe(
+          // Usa switchMap para aplanar
+          switchMap((user) => {
+            this.activeUser = user[0];
+            return this.userService.getUserById(this.activeUser.id);
+          }),
+          // Usa tap para asignar y avisar
+          tap((user) => {
             this.commonUser = user;
-            this.editForm.patchValue({
-              email: this.commonUser.email,
-              password: this.commonUser.password,
-            });
-          },
-          error: (error: Error) => {
-            console.log(error.message);
-          },
-        });
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+
+            // Retrasa el patchValue al siguiente ciclo
+            setTimeout(() => {
+              this.editForm.patchValue({
+                email: this.commonUser.email,
+                password: this.commonUser.password,
+              });
+            }, 0);
+
+            this.cdr.markForCheck();
+          })
+        )
+        .subscribe({
+          next: () => console.log('Usuario cargado para editar perfil'),
+          error: (error: Error) => console.log(error.message),
+        })
+    );
   }
 
   editProfile(): void {
@@ -66,16 +83,18 @@ export class EditProfile implements OnInit {
         password: this.editForm.value.password!,
       };
 
-      this.userService.editUser(updatedUser).subscribe({
-        next: () => {
-          this.alertProfileEdit();
-          console.log('Update profile success');
-          this.router.navigate(['profile']);
-        },
-        error: (error: Error) => {
-          console.log('Error on profile update: ', error.message);
-        },
-      });
+      this.sub.add(
+        this.userService.editUser(updatedUser).subscribe({
+          next: () => {
+            this.alertProfileEdit();
+            console.log('Update profile success');
+            this.router.navigate(['profile']);
+          },
+          error: (error: Error) => {
+            console.log('Error on profile update: ', error.message);
+          },
+        })
+      );
     } else {
       console.log('Invalid form');
     }

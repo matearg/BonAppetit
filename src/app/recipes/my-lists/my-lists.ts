@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CustomRecipeLists } from '../../interfaces/recipe';
 import { CustomRecipeListService } from '../../services/custom-recipe-list';
 import { Router, RouterLink } from '@angular/router';
@@ -15,7 +9,7 @@ import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
 import { CommonModule } from '@angular/common';
-import { switchMap, tap } from 'rxjs';
+import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-my-lists',
@@ -23,12 +17,14 @@ import { switchMap, tap } from 'rxjs';
   templateUrl: './my-lists.html',
   styleUrl: './my-lists.css',
 })
-export class MyLists implements OnInit {
+export class MyLists implements OnInit, OnDestroy {
   lists: CustomRecipeLists[] = [];
   customRecipesListService = inject(CustomRecipeListService);
   router = inject(Router);
   userService = inject(UserService);
   cdr = inject(ChangeDetectorRef);
+
+  private sub = new Subscription();
 
   activeUser: ActiveUser = {
     id: 0,
@@ -41,32 +37,32 @@ export class MyLists implements OnInit {
     recipeLists: [],
   };
 
-  ngOnInit(): void {
-    this.userService
-      .getActiveUser()
-      .pipe(
-        // switchMap toma el resultado del primer observable (userArray)
-        // y retorna un *nuevo* observable (la llamada a getUserById)
-        switchMap((userArray) => {
-          this.activeUser = userArray[0];
-          return this.userService.getUserById(this.activeUser.id);
-        }),
-        // tap te permite ejecutar código "de paso" sin afectar el stream
-        tap((user) => {
-          this.commonUser = user;
-          this.lists = this.commonUser.recipeLists;
-          this.showNLists();
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
-          // Todavía necesitas esto si usas OnPush
-          this.cdr.markForCheck();
+  ngOnInit(): void {
+    this.sub.add(
+      this.userService
+        .getActiveUser()
+        .pipe(
+          switchMap((userArray) => {
+            this.activeUser = userArray[0];
+            return this.userService.getUserById(this.activeUser.id);
+          }),
+          tap((user) => {
+            this.commonUser = user;
+            this.lists = this.commonUser.recipeLists;
+            this.showNLists();
+            this.cdr.markForCheck();
+          })
+        )
+        .subscribe({
+          error: (error: Error) => {
+            console.log('Error en el stream de carga:', error.message);
+          },
         })
-      )
-      .subscribe({
-        // Solo necesitas un subscribe y un manejo de error
-        error: (error: Error) => {
-          console.log('Error en el stream de carga:', error.message);
-        },
-      });
+    );
   }
 
   showNLists() {
@@ -81,7 +77,7 @@ export class MyLists implements OnInit {
 
   seeListDetails(id: number) {
     if (this.lists.some((u) => u.id === id)) {
-      this.router.navigate([[`list/${id}`]]);
+      this.router.navigate(['list', id]);
     }
   }
 
@@ -89,15 +85,18 @@ export class MyLists implements OnInit {
     if (this.lists.some((list) => list.id === id)) {
       this.commonUser.recipeLists = this.lists.filter((list) => list.id !== id);
 
-      this.userService.editUser(this.commonUser).subscribe({
-        next: () => {
-          this.lists = [...this.commonUser.recipeLists];
-          this.alertDeleteRecipe();
-        },
-        error: (error: Error) => {
-          console.error('Error on list deletion:', error.message);
-        },
-      });
+      this.sub.add(
+        this.userService.editUser(this.commonUser).subscribe({
+          next: () => {
+            this.lists = [...this.commonUser.recipeLists];
+            this.alertDeleteRecipe();
+            this.cdr.markForCheck();
+          },
+          error: (error: Error) => {
+            console.error('Error on list deletion:', error.message);
+          },
+        })
+      );
     } else {
       console.log('List not found');
     }

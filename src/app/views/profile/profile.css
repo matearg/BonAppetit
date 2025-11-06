@@ -1,6 +1,11 @@
 /*
  * Estilos para la sección principal y el contenedor del perfil
 */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 .main-section {
   display: flex;

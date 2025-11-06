@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { UserService } from '../../services/user-service';
 import { CustomRecipeLists, ExtendedIngredient, RecipeInfo } from '../../interfaces/recipe';
 import { CustomRecipeListService } from '../../services/custom-recipe-list';
 import Swal from 'sweetalert2';
+import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-custom-recipe-list',
@@ -16,7 +17,9 @@ import Swal from 'sweetalert2';
   templateUrl: './custom-recipe-list.html',
   styleUrl: './custom-recipe-list.css',
 })
-export class CustomRecipeList implements OnInit {
+export class CustomRecipeList implements OnInit, OnDestroy {
+  private cdr = inject(ChangeDetectorRef);
+  private sub = new Subscription();
   activeUser: ActiveUser = {
     id: 0,
     email: '',
@@ -38,23 +41,33 @@ export class CustomRecipeList implements OnInit {
   recipeArray: RecipeInfo[] = [];
   ingredientsArray: ExtendedIngredient[] = [];
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.userService.getActiveUser().subscribe({
-      next: (user) => {
-        this.activeUser = user[0];
-        this.userService.getUserById(this.activeUser.id).subscribe({
-          next: (user) => {
+    // --- 4. REFACTORIZA ngOnInit CON BUENAS PRÁCTICAS ---
+    this.sub.add(
+      // Añade esta cadena al gestor
+      this.userService
+        .getActiveUser()
+        .pipe(
+          // Usa switchMap para evitar anidar
+          switchMap((userArray) => {
+            this.activeUser = userArray[0];
+            return this.userService.getUserById(this.activeUser.id);
+          }),
+          // Usa tap para asignar el valor y avisar a Angular
+          tap((user) => {
             this.commonUser = user;
-          },
-          error: (error: Error) => {
-            console.log(error.message);
-          },
-        });
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+            this.cdr.markForCheck(); // ¡Avisa a Angular!
+          })
+        )
+        .subscribe({
+          next: () => console.log('Usuario cargado para CustomRecipeList'),
+          error: (error: Error) => console.log(error.message),
+        })
+    );
   }
 
   constructor() {}
@@ -79,27 +92,35 @@ export class CustomRecipeList implements OnInit {
       })),
     };
     this.commonUser.recipeLists.push(newList);
-    this.userService.editUser(this.commonUser).subscribe({
-      next: () => {
-        console.log('List created succesfully');
-        this.alertRecipeListCreated();
-        this.router.navigate(['/my-lists']);
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+    this.sub.add(
+      // Añade esta suscripción al gestor
+      this.userService.editUser(this.commonUser).subscribe({
+        next: () => {
+          console.log('List created succesfully');
+          this.alertRecipeListCreated();
+          this.router.navigate(['/my-lists']);
+        },
+        error: (error: Error) => {
+          console.log(error.message);
+        },
+      })
+    );
   }
 
   deleteList(id: string) {
-    this.customRecipeListService.deleteList(id).subscribe({
-      next: (list) => {
-        console.log('Deleted list', list);
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+    // --- 6. GESTIONA LA SUSCRIPCIÓN DE deleteList ---
+    this.sub.add(
+      // Añade esta suscripción al gestor
+      this.customRecipeListService.deleteList(id).subscribe({
+        next: (list) => {
+          console.log('Deleted list', list);
+          this.cdr.markForCheck();
+        },
+        error: (error: Error) => {
+          console.log(error.message);
+        },
+      })
+    );
   }
 
   alertRecipeListCreated() {

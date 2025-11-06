@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Recipe } from '../../interfaces/recipe';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user-service';
@@ -8,14 +8,16 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
+import { Subscription, switchMap, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-my-recipe-details',
-  imports: [HomePageHeader, Footer, ReactiveFormsModule],
+  imports: [HomePageHeader, Footer, ReactiveFormsModule, CommonModule],
   templateUrl: './my-recipe-details.html',
   styleUrl: './my-recipe-details.css',
 })
-export class MyRecipeDetails implements OnInit {
+export class MyRecipeDetails implements OnInit, OnDestroy {
   recipe: Recipe = {
     vegetarian: false,
     vegan: false,
@@ -30,6 +32,10 @@ export class MyRecipeDetails implements OnInit {
     anotations: '',
     ingredients: [],
   };
+
+  private cdr = inject(ChangeDetectorRef);
+  private sub = new Subscription();
+  public recipeSteps: string[] = [];
 
   routes = inject(ActivatedRoute);
   listId!: number;
@@ -49,30 +55,36 @@ export class MyRecipeDetails implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.listId = Number(this.routes.snapshot.paramMap.get('listId'));
-    this.recipeId = Number(this.routes.snapshot.paramMap.get('recipeId'));
-    this.searchUser();
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
-  searchUser() {
-    this.userService.getActiveUser().subscribe({
-      next: (user) => {
-        this.activeUser = user[0];
-        this.userService.getUserById(this.activeUser.id).subscribe({
-          next: (commonUser) => {
+  ngOnInit(): void {
+    this.listId = Number(this.routes.snapshot.paramMap.get('idList'));
+    this.recipeId = Number(this.routes.snapshot.paramMap.get('idRecipe'));
+
+    this.sub.add(
+      // Añade al gestor
+      this.userService
+        .getActiveUser()
+        .pipe(
+          // Usa switchMap para aplanar
+          switchMap((user) => {
+            this.activeUser = user[0];
+            return this.userService.getUserById(this.activeUser.id);
+          }),
+          // Usa tap para asignar y avisar a Angular
+          tap((commonUser) => {
             this.commonUser = commonUser;
-            this.showRecipe();
-          },
-          error: (error: Error) => {
-            console.log(error.message);
-          },
-        });
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+            this.showRecipe(); // Llama a tu lógica de mostrar
+            this.cdr.markForCheck();
+          })
+        )
+        .subscribe({
+          next: () => console.log('Receta personal cargada'),
+          error: (error: Error) => console.log(error.message),
+        })
+    );
   }
 
   formBuilder = inject(FormBuilder);
@@ -81,10 +93,10 @@ export class MyRecipeDetails implements OnInit {
   });
 
   showRecipe() {
-    const list = this.commonUser.recipeLists.find((list) => list.id === this.listId);
+    const list = this.commonUser.recipeLists.find((list) => list.id == this.listId);
 
     if (list) {
-      this.recipe = list.recipes.find((recipe) => recipe.id === this.recipeId) || {
+      this.recipe = list.recipes.find((recipe) => recipe.id == this.recipeId) || {
         vegetarian: false,
         vegan: false,
         glutenFree: false,
@@ -97,9 +109,13 @@ export class MyRecipeDetails implements OnInit {
         spoonacularScore: 0,
         ingredients: [],
       };
-      this.form.patchValue({
-        anotations: this.recipe.anotations,
-      });
+      setTimeout(() => {
+        this.form.patchValue({
+          anotations: this.recipe.anotations,
+        });
+      }, 0);
+
+      this.recipeSteps = this.getInstructions();
     } else {
       console.error('List not found');
     }
@@ -126,14 +142,16 @@ export class MyRecipeDetails implements OnInit {
 
     this.recipe.anotations = anotation;
 
-    this.userService.editUser(this.commonUser).subscribe({
-      next: () => {
-        this.alertAnotationSaved();
-      },
-      error: (error: Error) => {
-        console.log('Error saving anotations: ', error.message);
-      },
-    });
+    this.sub.add(
+      this.userService.editUser(this.commonUser).subscribe({
+        next: () => {
+          this.alertAnotationSaved();
+        },
+        error: (error: Error) => {
+          console.log('Error saving anotations: ', error.message);
+        },
+      })
+    );
   }
 
   alertAnotationSaved() {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { RecipeInfo } from '../../interfaces/recipe';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
 import { RecipeCard } from '../recipe-card/recipe-card';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,10 +14,12 @@ import { RecipeCard } from '../recipe-card/recipe-card';
   templateUrl: './recipe-list.html',
   styleUrl: './recipe-list.css',
 })
-export class RecipeList {
+export class RecipeList implements OnDestroy {
   recipeService = inject(RecipeService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
+  cdr = inject(ChangeDetectorRef);
+  private sub = new Subscription();
 
   recipeList: RecipeInfo[] = [];
   ingredients: string = '';
@@ -26,6 +29,10 @@ export class RecipeList {
   form = this.formBuilder.nonNullable.group({
     ingredients: ['', Validators.required],
   });
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
   setIngredients() {
     if (this.form.invalid) {
@@ -39,51 +46,63 @@ export class RecipeList {
   }
 
   listRecipesByIngredients(ingredients: string) {
-    this.recipeService.getrecipesByIngredients(ingredients, 5).subscribe({
-      next: (data) => {
-        console.log(ingredients);
-        console.log(data);
-        this.recipeList = data;
-      },
-      error: (error: Error) => {
-        console.log('Error downloading recipes', error.message);
-      },
-    });
+    // Añade la suscripción al gestor
+    this.sub.add(
+      this.recipeService.getrecipesByIngredients(ingredients, 6).subscribe({
+        next: (data) => {
+          console.log(ingredients);
+          console.log(data);
+          this.recipeList = data;
+          this.cdr.markForCheck(); // Sigue necesitando esto
+        },
+        error: (error: Error) => {
+          console.log('Error downloading recipes', error.message);
+        },
+      })
+    );
   }
 
   updateRecipes() {
     this.modelRecipeId = this.recipeList[0].id;
     const modelId = this.modelRecipeId;
 
-    this.recipeService.getSimilarRecipes(modelId, 5).subscribe({
-      next: (similarRecipes) => {
-        const completeRecipes = similarRecipes.map((recipe: any) =>
-          this.recipeService.getRecipeInfotmation(recipe.id).toPromise()
-        );
+    // Añade la suscripción al gestor
+    this.sub.add(
+      this.recipeService.getSimilarRecipes(modelId, 6).subscribe({
+        next: (similarRecipes) => {
+          const completeRecipes = similarRecipes.map((recipe: any) =>
+            this.recipeService.getRecipeInfotmation(recipe.id).toPromise()
+          );
 
-        Promise.all(completeRecipes)
-          .then((recipes) => {
-            this.recipeList = recipes; // Ahora `listaRecetas` tendrá recetas con imágenes y más detalles
-          })
-          .catch((error) => console.log(error));
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+          Promise.all(completeRecipes)
+            .then((recipes) => {
+              this.recipeList = recipes;
+              this.cdr.markForCheck();
+            })
+            .catch((error) => console.log(error));
+        },
+        error: (error: Error) => {
+          console.log(error.message);
+        },
+      })
+    );
   }
 
   recipe?: RecipeInfo;
   getRecipeInformation(id: number) {
-    this.recipeService.getRecipeInfotmation(id).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.recipe = data;
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+    // Añade la suscripción al gestor
+    this.sub.add(
+      this.recipeService.getRecipeInfotmation(id).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.recipe = data;
+          this.cdr.markForCheck();
+        },
+        error: (error: Error) => {
+          console.log(error.message);
+        },
+      })
+    );
   }
 
   navigateToDetails(id: number) {

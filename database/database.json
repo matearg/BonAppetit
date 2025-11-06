@@ -75,25 +75,6 @@
               ]
             },
             {
-              "id": 1,
-              "title": "Prueba ",
-              "vegetarian": false,
-              "vegan": true,
-              "glutenFree": false,
-              "readyInMinutes": 60,
-              "servings": 1,
-              "instructions": "Prueba instrucciones creadas",
-              "image": "img/logoUltimo.jpeg",
-              "spoonacularScore": 0,
-              "ingredients": [
-                {
-                  "name": "tomate",
-                  "amount": 2,
-                  "unit": "Unidades"
-                }
-              ]
-            },
-            {
               "vegetarian": true,
               "vegan": true,
               "glutenFree": true,
@@ -240,6 +221,31 @@
                   "amount": 0.25
                 }
               ]
+            },
+            {
+              "title": "Receta de prueba",
+              "vegetarian": true,
+              "vegan": false,
+              "glutenFree": false,
+              "readyInMinutes": 10,
+              "servings": 1,
+              "instructions": "Estas son solo instrucciones de prueba",
+              "image": "img/logo.jpeg",
+              "spoonacularScore": 0,
+              "listId": 0,
+              "ingredients": [
+                {
+                  "name": "potato",
+                  "amount": 4,
+                  "unit": "kg"
+                },
+                {
+                  "name": "avocado",
+                  "amount": 500,
+                  "unit": "gr"
+                }
+              ],
+              "id": 652394
             }
           ]
         }

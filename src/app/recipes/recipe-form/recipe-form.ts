@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
 import { UserService } from '../../services/user-service';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
 import { CommonModule } from '@angular/common';
+import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-form',
@@ -17,13 +18,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './recipe-form.html',
   styleUrl: './recipe-form.css',
 })
-export class RecipeForm implements OnInit {
+export class RecipeForm implements OnInit, OnDestroy {
   recipeService = inject(RecipeService);
   userService = inject(UserService);
   formBuilder = inject(FormBuilder);
   router = inject(Router);
   activeRoute = inject(ActivatedRoute);
   recipes: Array<Recipe> = [];
+  private cdr = inject(ChangeDetectorRef);
+  private sub = new Subscription();
 
   listId = 0;
 
@@ -53,23 +56,32 @@ export class RecipeForm implements OnInit {
     recipeLists: [],
   };
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.userService.getActiveUser().subscribe({
-      next: (user) => {
-        this.activeUser = user[0];
-        this.userService.getUserById(this.activeUser.id).subscribe({
-          next: (user) => {
+    this.sub.add(
+      // Añade al gestor
+      this.userService
+        .getActiveUser()
+        .pipe(
+          // Usa switchMap para aplanar
+          switchMap((user) => {
+            this.activeUser = user[0];
+            return this.userService.getUserById(this.activeUser.id);
+          }),
+          // Usa tap para asignar y avisar
+          tap((user) => {
             this.commonUser = user;
-          },
-          error: (error: Error) => {
-            console.log(error.message);
-          },
-        });
-      },
-      error: (error: Error) => {
-        console.log(error.message);
-      },
-    });
+            this.cdr.markForCheck();
+          })
+        )
+        .subscribe({
+          next: () => console.log('Usuario cargado para el formulario'),
+          error: (error: Error) => console.log(error.message),
+        })
+    );
   }
 
   addRecipe() {
@@ -79,27 +91,31 @@ export class RecipeForm implements OnInit {
       ...this.form.getRawValue(),
       ingredients: this.form.get('ingredients')?.value as Ingredients[],
     } as Recipe;
-    const listId = this.form.get('listaId')?.value;
+
+    const listId = this.form.get('listId')?.value;
     const selectedList = this.commonUser.recipeLists.find((list) => list.id === Number(listId));
 
     if (!recipe.image || recipe.image.trim() === '') {
-      recipe.image = 'img/logoUltimo.jpeg';
+      recipe.image = 'img/logo.jpeg';
     }
 
     if (selectedList) {
-      recipe.id = selectedList.recipes.length;
+      // (Pequeña mejora de ID para evitar duplicados si se borra algo)
+      recipe.id = Math.max(0, ...selectedList.recipes.map((r) => r.id || 0)) + 1;
 
       selectedList.recipes.push(recipe);
 
-      this.userService.editUser(this.commonUser).subscribe({
-        next: () => {
-          this.alertCreatedRecipe();
-          this.router.navigate(['mis-listas']);
-        },
-        error: (error: Error) => {
-          console.error('Error saving recipe:', error.message);
-        },
-      });
+      this.sub.add(
+        this.userService.editUser(this.commonUser).subscribe({
+          next: () => {
+            this.alertCreatedRecipe();
+            this.router.navigate(['/my-lists']);
+          },
+          error: (error: Error) => {
+            console.error('Error saving recipe:', error.message);
+          },
+        })
+      );
     } else {
       this.alertListNotFound();
     }

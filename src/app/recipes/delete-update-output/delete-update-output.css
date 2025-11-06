@@ -33,8 +33,16 @@
   padding: 1rem 2rem;
 }
 
-/* The <li> element containing the buttons */
-.text-card li {
+.recipe-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0; /* Espacio solo por debajo */
+  text-align: center;
+}
+
+/* The <div> element containing the buttons */
+.text-card div {
   list-style: none; /* Removes the default bullet point */
   padding: 0;
   margin: 0;

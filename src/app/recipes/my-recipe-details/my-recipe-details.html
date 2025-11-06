@@ -31,7 +31,7 @@
     <div class="instructions-container">
       <h3>Instrucciones</h3>
       <ul>
-        @for (step of getInstructions(); track $index) {
+        @for (step of recipeSteps; track $index) {
         <li>{{ step }}</li>
         }
       </ul>
@@ -41,7 +41,7 @@
       <form [formGroup]="form" (ngSubmit)="saveAnotations()">
         <div class="anotation-title">Anotaciones</div>
         <div class="anotation-input">
-          <textarea name="form" id="anotation" formControlName="anotation">
+          <textarea name="form" id="anotation" formControlName="anotations">
 Escribe aqui...</textarea
           >
         </div>

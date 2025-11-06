@@ -1,6 +1,12 @@
 /*
  * General styles for the main content area
 */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 main {
   display: flex;
   flex-direction: column;
