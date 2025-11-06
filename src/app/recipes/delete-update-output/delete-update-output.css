@@ -1,0 +1,103 @@
+/* Main container for the recipe card */
+.recipe-ind {
+  display: flex;
+  align-items: center; /* Vertically align image and text content */
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden; /* Ensures the image respects the rounded corners */
+  margin: 1rem auto; /* Centering and spacing for when it's in a list */
+  width: 100%;
+  max-width: 800px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for the entire card */
+.recipe-ind:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Style for the image element itself */
+.recipe-ind img {
+  width: 200px; /* Fixed width for the image */
+  height: 150px;
+  object-fit: cover; /* Ensures the image fills the space without distortion */
+}
+
+/* Container for the text and buttons */
+.text-card {
+  flex-grow: 1; /* Allows this container to take up the remaining space */
+  padding: 1rem 2rem;
+}
+
+.recipe-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0; /* Espacio solo por debajo */
+  text-align: center;
+}
+
+/* The <div> element containing the buttons */
+.text-card div {
+  list-style: none; /* Removes the default bullet point */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center;
+  gap: 1rem; /* Space between buttons */
+  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+}
+
+/* General button style, consistent with previous designs */
+.button {
+  background-color: #f7f7f7;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.button:hover {
+  background-color: #c9d6ff;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific styling for the delete button on hover for better UX */
+.button:nth-child(1):hover {
+  background-color: #ef5350; /* A soft red color for delete action */
+  color: white;
+}
+
+/*
+ * Responsive Design for smaller screens
+*/
+@media (max-width: 768px) {
+  .recipe-ind {
+    flex-direction: column; /* Stacks the image on top of the text/buttons */
+  }
+
+  .recipe-ind img {
+    width: 100%; /* Image takes full width of the card */
+    height: 200px;
+  }
+
+  .text-card {
+    padding: 1.5rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

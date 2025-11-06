@@ -1,0 +1,93 @@
+<app-home-page-header></app-home-page-header>
+<main>
+  <form [formGroup]="form" (ngSubmit)="addRecipe()">
+    <h3 class="form-title">Crear receta</h3>
+    <div class="data">
+      <label for="title">Título</label>
+      <input type="text" formControlName="title" />
+    </div>
+
+    <div class="data-box">
+      <label>
+        Vegetariano:
+        <input formControlName="vegetarian" type="checkbox" />
+      </label>
+
+      <label>
+        Vegano:
+        <input formControlName="vegan" type="checkbox" />
+      </label>
+
+      <label>
+        Sin gluten:
+        <input formControlName="glutenFree" type="checkbox" />
+      </label>
+    </div>
+
+    <div class="data">
+      <h3 class="ingredients-title">Ingredientes</h3>
+      <div class="ingredients-container" formArrayName="ingredients">
+        <div
+          *ngFor="let ingredient of ingredients.controls; let i = index"
+          [formGroupName]="i"
+          class="ingredient-item"
+        >
+          <div>
+            <label>
+              Nombre:
+              <input formControlName="name" type="text" />
+            </label>
+            <label>
+              Cantidad:
+              <input formControlName="amount" type="number" min="0.1" />
+            </label>
+            <label>
+              Unidad:
+              <input formControlName="unit" type="text" />
+            </label>
+          </div>
+          <button type="button" class="ingredient-button" (click)="deleteIngredient(i)">
+            Eliminar
+          </button>
+        </div>
+      </div>
+      <button type="button" class="ingredient-button" (click)="addIngredient()">
+        Agregar ingrediente
+      </button>
+    </div>
+
+    <div class="data">
+      <label>
+        Tiempo de preparación (minutos)
+        <input formControlName="readyInMinutes" type="number" />
+      </label>
+    </div>
+
+    <div class="data">
+      <label> Porciones <input formControlName="servings" type="number" /> </label>
+    </div>
+
+    <div class="data">
+      <label> Instrucciones <textarea formControlName="instructions"></textarea></label>
+    </div>
+
+    <div class="data">
+      <label>
+        Imagen (URL)
+        <input type="text" formControlName="image" />
+      </label>
+    </div>
+
+    <div class="data-select">
+      <label for="listId">Seleccione una lista:</label>
+      <select id="listId" formControlName="listId">
+        <option *ngFor="let list of commonUser.recipeLists" [value]="list.id">
+          {{ list.name }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid" class="save-button">Guardar</button>
+  </form>
+</main>
+<footer></footer>

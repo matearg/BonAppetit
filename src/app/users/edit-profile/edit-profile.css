@@ -1,0 +1,141 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInForm 0.5s 0.1s ease-out forwards;
+}
+
+.profile-card {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 100%;
+  max-width: 500px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInForm 0.5s 0.2s ease-out forwards;
+}
+
+@keyframes fadeInForm {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-edit label {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.info-edit input {
+  font-size: 1rem;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.info-edit input:focus {
+  outline: none;
+  border-color: #a3b8ff;
+  box-shadow: 0 0 0 3px rgba(201, 214, 255, 0.7);
+}
+
+.button {
+  background-color: #f7f7f7;
+  color: #333;
+  border: none;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.button:hover {
+  background-color: #c9d6ff;
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 780px) {
+  .main-container {
+    /* Reduce el padding para dar más espacio al contenido */
+    padding: 1rem;
+    justify-content: flex-start; /* Alinea el contenido arriba */
+    padding-top: 2rem;
+  }
+
+  .title {
+    /* Reduce el tamaño del título y el margen inferior */
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-card {
+    /* Reduce el padding interno de la tarjeta */
+    padding: 1.5rem;
+    /* Elimina el efecto de "vidrio" si causa problemas de rendimiento en móviles viejos (opcional) */
+    /* backdrop-filter: none; */
+  }
+
+  .edit-form {
+    /* Reduce el espaciado entre los campos del formulario */
+    gap: 1.5rem;
+  }
+
+  .button {
+    /* Reduce el tamaño del texto y el padding del botón */
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}

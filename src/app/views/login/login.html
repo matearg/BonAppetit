@@ -1,20 +1,40 @@
 <div class="container" [class.active]="isActive">
   <div class="form-container sign-up">
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
       <h1>Crear Cuenta</h1>
-      <input type="text" placeholder="Nombre" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Contraseña" />
-      <button type="button" (click)="activeRegister()">Registrase</button>
+      <input type="email" formControlName="email" placeholder="Email" />
+      <input
+        #registerPassword
+        type="password"
+        formControlName="password"
+        placeholder="Contraseña"
+      />
+      <button
+        class="reveal"
+        type="button"
+        [class.activeButton]="revealRegisterPw"
+        (click)="onRevealPassword(registerPassword, 'register')"
+      >
+        Ver
+      </button>
+      <button type="submit" [disabled]="!registerForm.valid">Registrase</button>
     </form>
   </div>
 
   <div class="form-container sign-in">
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
       <h1>Acceso</h1>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Contraseña" />
-      <button type="button">Acceder</button>
+      <input type="email" formControlName="email" placeholder="Email" />
+      <input #password type="password" formControlName="password" placeholder="Contraseña" />
+      <button
+        class="reveal"
+        type="button"
+        [class.activeButton]="revealLoginPw"
+        (click)="onRevealPassword(password, 'login')"
+      >
+        Ver
+      </button>
+      <button type="submit" [disabled]="!loginForm.valid">Acceder</button>
     </form>
   </div>
 
@@ -22,12 +42,12 @@
     <div class="toggle">
       <div class="toggle-panel toggle-left">
         <h1>Bienvenido nuevamente!</h1>
-        <p>Ingresa con tus datos personales para poder acceder</p>
+        <p>Ingresa con tus datos personales</p>
         <button type="button" (click)="activeLogin()">Acceder</button>
       </div>
       <div class="toggle-panel toggle-right">
         <h1>Hola!</h1>
-        <p>Registrate con tus datos personales para poder acceder</p>
+        <p>Registrate con tus datos personales</p>
         <button type="button" (click)="activeRegister()">Registrase</button>
       </div>
     </div>

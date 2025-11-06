@@ -1,6 +1,6 @@
 # Bon APPetit
 
-<!-- ![Bon APPetit Logo](https://via.placeholder.com/150?text=Bon+APPetit+Logo)-->
+![logo](https://github.com/user-attachments/assets/652ff453-48d1-4a07-a8df-ec9b31770730)
 
 Aplicación de recetas de cocina desarrollada como parte de la Metodología de Sistemas de la Universidad Tecnológica Nacional.
 
@@ -19,6 +19,7 @@ Este proyecto presenta la documentación de requisitos de software para el desar
 Definir detalladamente los requisitos funcionales y no funcionales de la aplicación. Este documento proporciona una descripción completa del sistema propuesto, incluyendo sus funciones, características y restricciones, con el fin de guiar el desarrollo, implementación y verificación del sistema.
 
 Dirigido a:
+
 - El equipo de desarrollo.
 - Los analistas en sistemas.
 - Clientes y Usuarios Finales.
@@ -29,6 +30,7 @@ Dirigido a:
 ## Objetivos del Sistema
 
 La aplicación Bon APPetit tiene como objetivo ofrecer una plataforma accesible para que los usuarios encuentren y organicen recetas basadas en los alimentos que tienen disponibles, fomentando la creatividad y el aprovechamiento de ingredientes. Entre sus metas se incluyen:
+
 - Buscar y filtrar recetas por nombre, ingredientes, tipos de comidas, preferencias de dieta, etc.
 - Permitir calificar recetas para clasificarlas por popularidad o recomendaciones.
 - Guardar recetas en perfiles personales con notas privadas para personalización.
@@ -38,6 +40,7 @@ La aplicación Bon APPetit tiene como objetivo ofrecer una plataforma accesible 
 ## Herramientas Utilizadas
 
 Hasta el momento, los lenguajes que se utilizarán para la creación de la aplicación son:
+
 - Angular
 - JavaScript
 - HTML
@@ -48,6 +51,7 @@ Hasta el momento, los lenguajes que se utilizarán para la creación de la aplic
 ## Definición de Requisitos del Sistema
 
 ### Requisitos Funcionales:
+
 - **RF01**: El sistema debe permitir al usuario realizar altas, bajas y modificaciones (ABM) de su cuenta.
 - **RF02**: El sistema debe permitir al usuario mostrar su información personal y ver su perfil.
 - **RF03**: El sistema debe permitir al usuario realizar ABM de recetas (crear, modificar o eliminar según preferencias).
@@ -59,6 +63,7 @@ Hasta el momento, los lenguajes que se utilizarán para la creación de la aplic
 - **RF09**: El sistema debe permitir al usuario ver los comentarios y anotaciones que ha agregado a sus recetas guardadas.
 
 ### Requisitos No Funcionales:
+
 - **1. Rendimiento**:
   - El sistema debe procesar consultas de búsqueda de recetas en menos de 5 segundos.
   - El sistema debe soportar hasta 1000 usuarios concurrentes sin degradación significativa.
@@ -78,15 +83,19 @@ Hasta el momento, los lenguajes que se utilizarán para la creación de la aplic
 ## Mapa de Impacto
 
 ### Propósito
+
 El Impact Mapping alinea las funcionalidades del sistema con el objetivo de negocio principal, asegurando que cada entregable se enfoque en generar un cambio de comportamiento en el usuario registrado.
 
 ### Objetivo Central
+
 Facilitar que los usuarios encuentren y organicen recetas basadas en los alimentos que tienen disponibles, fomentando la creatividad y el aprovechamiento de ingredientes.
 
 ### Actor Principal
+
 - Usuario registrado.
 
 ### Impactos
+
 1. Puede ingresar los alimentos que tiene y obtener recetas sugeridas.
 2. Puede crear y guardar sus propias recetas.
 3. Puede dar "like" a recetas de la API.
@@ -105,8 +114,9 @@ Facilitar que los usuarios encuentren y organicen recetas basadas en los aliment
 
 1. Clona el repositorio: `git clone <https://github.com/matearg/BonAppetit.git>`.
 2. Instala dependencias: `npm install`.
-3. Ejecuta el servidor de desarrollo: `ng serve`.
-4. Accede a la aplicación en `http://localhost:4200`.
+3. Instala dependencias externas: `npm install sweetalert2`.
+4. Ejecuta el servidor de desarrollo: `ng serve`.
+5. Accede a la aplicación en `http://localhost:4200`.
 
 ---
 

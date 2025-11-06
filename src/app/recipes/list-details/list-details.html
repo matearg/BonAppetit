@@ -1,0 +1,22 @@
+<app-home-page-header></app-home-page-header>
+<main>
+  <h3 class="title">Recetas</h3>
+  <div class="recipe-info">
+    <p class="list-name">{{ list?.name }}</p>
+    <ul>
+      <div class="buttons">
+        @for (recipe of recipesArray; track recipe.id) {
+        <app-delete-update-output
+          [recipe]="recipe"
+          [listId]="list?.id ?? 0"
+          (delete)="deleteRecipe($event)"
+          (update)="onUpdate($event)"
+          (details)="navigateToDetails($event)"
+        >
+        </app-delete-update-output>
+        }
+      </div>
+    </ul>
+  </div>
+</main>
+<footer></footer>

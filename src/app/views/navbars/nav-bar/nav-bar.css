@@ -1,0 +1,37 @@
+.nav-button {
+  color: #512da8;
+  background-color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  margin: 0 0 0 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    opacity 280ms ease,
+    transform 280ms ease;
+}
+
+.nav-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 780px) {
+  .nav-button {
+    padding: 5px 10px;
+    margin: 0 0 0 6px;
+    font-size: 10px;
+    border-radius: 6px;
+    letter-spacing: 0.4px;
+    text-align: center;
+  }
+
+  /* remove the translate hover lift for small screens for steadier touch behaviour */
+  .nav-button:hover {
+    transform: none;
+  }
+}

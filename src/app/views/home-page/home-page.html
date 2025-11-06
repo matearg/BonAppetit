@@ -1,0 +1,29 @@
+<app-home-page-header></app-home-page-header>
+
+<main class="main-section">
+  <app-home-page-menu></app-home-page-menu>
+
+  <div class="container-section">
+    <section>
+      <div class="cont-p">
+        <p>
+          ¿Estás sin ideas para la comida? <br />
+          Acá te tiramos cinco recetas para que te inspires <br />
+          y pruebes algo nuevo <br />
+          ¡A cocinar se ha dicho!
+        </p>
+      </div>
+
+      <button (click)="getRandomRecipes()">Ver recetas</button>
+
+      <div class="cont-recipes">
+        @for (item of recipeList; track $index) {
+        <app-recipe-card [recipe]="item" (viewDetails)="navigateToDetails($event)">
+        </app-recipe-card>
+        }
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer></footer>

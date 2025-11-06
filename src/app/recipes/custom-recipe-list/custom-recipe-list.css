@@ -1,0 +1,130 @@
+/*
+ * General styles for the main content area
+*/
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Ensures it takes up available vertical space */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/*
+ * The main "frosted glass" card that holds the form
+*/
+.main-container {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 100%;
+  max-width: 600px; /* Optimal width for a simple form */
+  text-align: center;
+
+  /* Smooth fade-in animation */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInContainer 0.5s 0.2s ease-out forwards;
+}
+
+@keyframes fadeInContainer {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * Style for the main title
+*/
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 2.5rem;
+}
+
+/*
+ * Form and input styling
+*/
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between input and button */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left; /* Align label to the left */
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-input {
+  font-size: 1.1rem;
+  padding: 14px 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.6);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #a3b8ff; /* Highlight color from your palette */
+  box-shadow: 0 0 0 3px rgba(201, 214, 255, 0.7);
+}
+
+/*
+ * Consistent button styling
+*/
+.submit-button {
+  background-color: #f7f7f7;
+  color: #333;
+  border: none;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin-top: 1rem; /* Extra space above the button */
+}
+
+.submit-button:hover {
+  background-color: #c9d6ff;
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
