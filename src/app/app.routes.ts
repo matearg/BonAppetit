@@ -4,14 +4,12 @@ import { HomePage } from './views/home-page/home-page';
 import { authUsersGuard } from './users/auth-users-guard';
 import { Profile } from './views/profile/profile';
 import { EditProfile } from './users/edit-profile/edit-profile';
-import { MyRecipeDetails } from './recipes/my-recipe-details/my-recipe-details';
 import { ListDetails } from './recipes/list-details/list-details';
 import { CustomRecipeList } from './recipes/custom-recipe-list/custom-recipe-list';
 import { MyLists } from './recipes/my-lists/my-lists';
 import { RecipeDetail } from './recipes/recipe-detail/recipe-detail';
 import { RecipeForm } from './recipes/recipe-form/recipe-form';
 import { RecipeList } from './recipes/recipe-list/recipe-list';
-import { RecipeUpdate } from './recipes/recipe-update/recipe-update';
 
 export const routes: Routes = [
   {
@@ -35,7 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'update-recipe/:idList/:idRecipe',
-    component: RecipeUpdate,
+    component: RecipeForm,
     canActivate: [authUsersGuard],
   },
   {
@@ -70,7 +68,7 @@ export const routes: Routes = [
   },
   {
     path: 'recipe-list-details/:idList/:idRecipe',
-    component: MyRecipeDetails,
+    component: RecipeDetail,
     canActivate: [authUsersGuard],
   },
   {

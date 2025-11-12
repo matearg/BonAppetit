@@ -70,7 +70,7 @@ export class CustomRecipeList implements OnInit, OnDestroy {
     );
   }
 
-  constructor() { }
+  constructor() {}
 
   form = this.formBuilder.nonNullable.group({
     listName: ['', Validators.required],
@@ -80,7 +80,6 @@ export class CustomRecipeList implements OnInit, OnDestroy {
     if (this.form.invalid) return;
     this.listName = this.form.get('listName')?.value || '';
   }
-
 
   listPost() {
     this.setListName();
@@ -141,7 +140,7 @@ export class CustomRecipeList implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Lista creada con exito',
+      title: 'List created successfully',
     });
   }
 }

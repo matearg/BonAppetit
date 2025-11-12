@@ -163,7 +163,7 @@ export class Login implements OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Acceso correcto',
+      title: 'Correct access',
     });
   }
 
@@ -181,13 +181,13 @@ export class Login implements OnDestroy {
     });
     Toast.fire({
       icon: 'error',
-      title: 'Usuario o contraseña incorrectos',
+      title: 'Incorrect username or password',
     });
   }
 
   registerAlertCreated() {
     Swal.fire({
-      title: 'Usuario creado con exito',
+      title: 'User successfully created',
       text: '',
       icon: 'success',
     });
@@ -207,7 +207,7 @@ export class Login implements OnDestroy {
     });
     Toast.fire({
       icon: 'error',
-      title: 'Este correo ya esta en uso',
+      title: 'This email address is already in use',
     });
   }
 }

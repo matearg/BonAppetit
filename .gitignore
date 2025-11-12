@@ -43,5 +43,4 @@ __screenshots__/
 Thumbs.db
 
 # Custom files
-database/database.json
 src/environments
