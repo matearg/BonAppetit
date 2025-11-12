@@ -16,7 +16,7 @@
       <h3>Ingredients</h3>
       <div class="ingredient-info">
         <ul class="ingredient-list">
-          @for (ingredient of recipe.extendedIngredients; track ingredient.id) {
+          @for (ingredient of recipe.ingredients; track ingredient.id) {
           <li>
             {{ ingredient.amount.toFixed(1) }}
             {{ ingredient.name }}
@@ -29,19 +29,24 @@
 
     <div class="instructions-container">
       <h3>Instructions</h3>
+      @if (isInstructionsHtml) {
+      <div [innerHTML]="recipe.instructions"></div>
+      } @else {
       <ul>
-        @for (step of getInstructions(); track $index) {
+        @for (step of recipeSteps; track $index) {
         <li>
           {{ step }}
         </li>
         }
       </ul>
+      }
     </div>
 
+    @if (!isMyRecipe) {
     <button class="add-to-list-button" (click)="listAddActive = true">Add to a list</button>
     <div class="add-to-list">
       @if(listAddActive) {
-      <form [formGroup]="form" (ngSubmit)="addRecipe()">
+      <form [formGroup]="formAddToList" (ngSubmit)="addRecipe()">
         <div class="select-button-container">
           <label for="listId"></label>
           <select id="listId" formControlName="listId">
@@ -54,6 +59,20 @@
       </form>
       }
     </div>
+
+    } @if (isMyRecipe) {
+    <div class="form">
+      <form [formGroup]="formAnotations" (ngSubmit)="saveAnotations()">
+        <div class="anotation-title">Anotations</div>
+        <div class="anotation-input">
+          <textarea name="form" id="anotation" formControlName="anotations">
+            Type here...
+          </textarea>
+        </div>
+        <button type="submit" [disabled]="formAnotations.invalid">Save</button>
+      </form>
+    </div>
+    }
   </div>
   }
 </main>
