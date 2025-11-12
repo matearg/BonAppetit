@@ -116,7 +116,7 @@ export class MyLists implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Lista eliminada con exito',
+      title: 'List successfully deleted',
     });
   }
 }

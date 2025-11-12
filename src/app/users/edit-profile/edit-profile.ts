@@ -114,7 +114,7 @@ export class EditProfile implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Cambios guardados',
+      title: 'Saved profile changes',
     });
   }
 }

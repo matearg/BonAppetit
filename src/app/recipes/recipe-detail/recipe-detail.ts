@@ -267,7 +267,7 @@ export class RecipeDetail implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Receta agregada a la lista',
+      title: 'Recipe added to list',
     });
   }
 
@@ -281,7 +281,7 @@ export class RecipeDetail implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'warning',
-      title: 'La receta ya está en esa lista',
+      title: 'The recipe is already on that list',
     });
   }
 

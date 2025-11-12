@@ -242,7 +242,7 @@ export class RecipeForm implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Receta agregada con exito',
+      title: 'Recipe successfully added',
     });
   }
 
@@ -260,7 +260,7 @@ export class RecipeForm implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Receta modificada con exito',
+      title: 'Recipe successfully modified',
     });
   }
 
@@ -278,7 +278,7 @@ export class RecipeForm implements OnInit, OnDestroy {
     });
     Toast.fire({
       icon: 'error',
-      title: 'Lista no encontrada',
+      title: 'List not found',
     });
   }
 
