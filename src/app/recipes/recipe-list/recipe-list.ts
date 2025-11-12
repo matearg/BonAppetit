@@ -6,7 +6,7 @@ import { RecipeInfo } from '../../interfaces/recipe';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
 import { RecipeCard } from '../recipe-card/recipe-card';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -63,29 +63,34 @@ export class RecipeList implements OnDestroy {
   }
 
   updateRecipes() {
+    if (this.recipeList.length == 0) {
+      console.log('No similar recipes found.');
+      return;
+    }
+
     this.modelRecipeId = this.recipeList[0].id;
     const modelId = this.modelRecipeId;
 
     // Añade la suscripción al gestor
     this.sub.add(
-      this.recipeService.getSimilarRecipes(modelId, 6).subscribe({
-        next: (similarRecipes) => {
-          const completeRecipes = similarRecipes.map((recipe: any) =>
-            this.recipeService.getRecipeInfotmation(recipe.id).toPromise()
-          );
-
-          Promise.all(completeRecipes)
-            .then((recipes) => {
-              this.recipeList = recipes;
-              this.cdr.markForCheck();
-            })
-            .catch((error) => console.log(error));
+      this.recipeService.getSimilarRecipes(modelId, 6).pipe(
+        switchMap((similarRecipes: any[]) => {
+          if (!similarRecipes || similarRecipes.length === 0) {
+            return of([]);
+          }
+          const completeRecipeObservables$ = similarRecipes.map((recipe: any) => this.recipeService.getRecipeInfotmation(recipe.id));
+          return forkJoin(completeRecipeObservables$);
+        })
+      ).subscribe({
+        next: (recipes: RecipeInfo[]) => {
+          this.recipeList = recipes;
+          this.cdr.markForCheck();
         },
         error: (error: Error) => {
-          console.log(error.message);
-        },
+          console.log('updateRecipes Error:', error.message);
+        }
       })
-    );
+    )
   }
 
   recipe?: RecipeInfo;
