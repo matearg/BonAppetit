@@ -42,8 +42,6 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-# Environment files
-environments/*
-
-# Database files
-database.json
+# Custom files
+database/database.json
+src/environments

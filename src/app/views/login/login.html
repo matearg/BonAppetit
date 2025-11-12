@@ -1,54 +1,66 @@
 <div class="container" [class.active]="isActive">
   <div class="form-container sign-up">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
-      <h1>Crear Cuenta</h1>
+      <h1>Create Account</h1>
       <input type="email" formControlName="email" placeholder="Email" />
-      <input
-        #registerPassword
-        type="password"
-        formControlName="password"
-        placeholder="Contraseña"
-      />
-      <button
-        class="reveal"
-        type="button"
-        [class.activeButton]="revealRegisterPw"
-        (click)="onRevealPassword(registerPassword, 'register')"
-      >
-        Ver
-      </button>
-      <button type="submit" [disabled]="!registerForm.valid">Registrase</button>
+      <div class="password-container">
+        <input
+          #registerPassword
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+        <button
+          class="reveal"
+          type="button"
+          [class.activeButton]="revealRegisterPw"
+          (click)="onRevealPassword(registerPassword, 'register')"
+        >
+          @if (!revealRegisterPw) {
+          <span class="material-icons">visibility</span>
+          } @else {
+          <span class="material-icons">visibility_off</span>
+          }
+        </button>
+      </div>
+      <button type="submit" [disabled]="!registerForm.valid">Register</button>
     </form>
   </div>
 
   <div class="form-container sign-in">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
-      <h1>Acceso</h1>
+      <h1>Log in</h1>
       <input type="email" formControlName="email" placeholder="Email" />
-      <input #password type="password" formControlName="password" placeholder="Contraseña" />
-      <button
-        class="reveal"
-        type="button"
-        [class.activeButton]="revealLoginPw"
-        (click)="onRevealPassword(password, 'login')"
-      >
-        Ver
-      </button>
-      <button type="submit" [disabled]="!loginForm.valid">Acceder</button>
+      <div class="password-container">
+        <input #password type="password" formControlName="password" placeholder="Password" />
+        <button
+          class="reveal"
+          type="button"
+          [class.activeButton]="revealLoginPw"
+          (click)="onRevealPassword(password, 'login')"
+        >
+          @if (!revealLoginPw) {
+          <span class="material-icons">visibility</span>
+          } @else {
+          <span class="material-icons">visibility_off</span>
+          }
+        </button>
+      </div>
+      <button type="submit" [disabled]="!loginForm.valid">Enter</button>
     </form>
   </div>
 
   <div class="toggle-container">
     <div class="toggle">
       <div class="toggle-panel toggle-left">
-        <h1>Bienvenido nuevamente!</h1>
-        <p>Ingresa con tus datos personales</p>
-        <button type="button" (click)="activeLogin()">Acceder</button>
+        <h1>Welcome back!</h1>
+        <p>Log in with your personal information</p>
+        <button type="button" (click)="activeLogin()">Enter</button>
       </div>
       <div class="toggle-panel toggle-right">
-        <h1>Hola!</h1>
-        <p>Registrate con tus datos personales</p>
-        <button type="button" (click)="activeRegister()">Registrase</button>
+        <h1>Hello!</h1>
+        <p>Register with your personal information</p>
+        <button type="button" (click)="activeRegister()">Register</button>
       </div>
     </div>
   </div>

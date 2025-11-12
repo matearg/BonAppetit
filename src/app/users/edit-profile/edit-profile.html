@@ -1,19 +1,19 @@
 <app-home-page-header> </app-home-page-header>
 <main class="main-container">
-  <h3 class="title">Editar Perfil</h3>
+  <h3 class="title">Edit Profile</h3>
   <div class="profile-card">
     <form class="edit-form" [formGroup]="editForm" (ngSubmit)="editProfile()">
       <div class="info-edit">
-        <label for="email">Nuevo email</label>
+        <label for="email">New email</label>
         <input type="text" formControlName="email" />
       </div>
 
       <div class="info-edit">
-        <label for="password">Nueva contraseña</label>
+        <label for="password">New password</label>
         <input type="text" formControlName="password" />
       </div>
 
-      <button type="submit" class="button" [disabled]="editForm.invalid">Guardar</button>
+      <button type="submit" class="button" [disabled]="editForm.invalid">Save</button>
     </form>
   </div>
 </main>

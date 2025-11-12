@@ -70,7 +70,7 @@ export class CustomRecipeList implements OnInit, OnDestroy {
     );
   }
 
-  constructor() {}
+  constructor() { }
 
   form = this.formBuilder.nonNullable.group({
     listName: ['', Validators.required],
@@ -81,10 +81,14 @@ export class CustomRecipeList implements OnInit, OnDestroy {
     this.listName = this.form.get('listName')?.value || '';
   }
 
+
   listPost() {
     this.setListName();
+    const existingId = this.commonUser.recipeLists.map((list) => list.id);
+    const maxId = Math.max(-1, ...existingId);
+    const newId = maxId + 1;
     const newList: CustomRecipeLists = {
-      id: this.commonUser.recipeLists.length + 1,
+      id: newId,
       name: this.listName,
       recipes: this.recipeArray.map((recipe) => ({
         ...recipe,

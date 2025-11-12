@@ -1,30 +1,30 @@
 <app-home-page-header></app-home-page-header>
 <main>
   <form [formGroup]="form" (ngSubmit)="updateRecipe()">
-    <h3 class="form-title">Crear receta</h3>
+    <h3 class="form-title">Create recipe</h3>
     <div class="data">
-      <label>Titulo <input type="text" formControlName="title" /></label>
+      <label>Title<input type="text" formControlName="title" /></label>
     </div>
 
     <div class="data-box">
       <label>
-        Vegetariano:
+        Vegetarian
         <input formControlName="vegetarian" type="checkbox" />
       </label>
 
       <label>
-        Vegano:
+        Vegan:
         <input formControlName="vegan" type="checkbox" />
       </label>
 
       <label>
-        Sin gluten:
+        Gluten Free:
         <input formControlName="glutenFree" type="checkbox" />
       </label>
     </div>
 
     <div class="data">
-      <h3 class="ingredients-title">Ingredientes</h3>
+      <h3 class="ingredients-title">Ingredients</h3>
       <div class="ingredients-container" formArrayName="ingredients">
         <div
           *ngFor="let ingredient of ingredients.controls; let i = index"
@@ -33,52 +33,52 @@
         >
           <div>
             <label>
-              Nombre:
+              Name:
               <input formControlName="name" type="text" />
             </label>
             <label>
-              Cantidad:
+              Amount:
               <input formControlName="amount" type="number" min="0.1" />
             </label>
             <label>
-              Unidad:
+              Unit:
               <input formControlName="unit" type="text" />
             </label>
           </div>
           <button type="button" class="ingredient-button" (click)="deleteIngredient(i)">
-            Eliminar
+            Delete
           </button>
         </div>
       </div>
       <button type="button" class="ingredient-button" (click)="addIngredient()">
-        Agregar ingrediente
+        Add ingredient
       </button>
     </div>
 
     <div class="data">
       <label>
-        Tiempo de preparación (minutos)
+        Preparation time (minutes)
         <input formControlName="readyInMinutes" type="number" />
       </label>
     </div>
 
     <div class="data">
-      <label> Porciones <input formControlName="servings" type="number" /> </label>
+      <label> Servings <input formControlName="servings" type="number" /> </label>
     </div>
 
     <div class="data">
-      <label> Instrucciones <textarea formControlName="instructions"></textarea></label>
+      <label> Instructions <textarea formControlName="instructions"></textarea></label>
     </div>
 
     <div class="data">
       <label>
-        Imagen (URL)
+        Image (URL)
         <input type="text" formControlName="image" />
       </label>
     </div>
 
     <div class="data-select">
-      <label for="listId">Seleccione una lista:</label>
+      <label for="listId">Select a list:</label>
       <select id="listId" formControlName="listId">
         <option *ngFor="let list of commonUser.recipeLists" [value]="list.id">
           {{ list.name }}
@@ -86,7 +86,7 @@
       </select>
     </div>
 
-    <button type="submit" [disabled]="form.invalid" class="save-button">Guardar</button>
+    <button type="submit" [disabled]="form.invalid" class="save-button">Save</button>
   </form>
 </main>
 <footer></footer>

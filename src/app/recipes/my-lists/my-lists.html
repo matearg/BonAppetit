@@ -1,9 +1,9 @@
 <app-home-page-header></app-home-page-header>
 <main class="main-container">
   <div class="content">
-    <h3 class="gerenal-title">Mis recetarios</h3>
+    <h3 class="gerenal-title">My recipe books</h3>
     <div class="container">
-      <button [routerLink]="['/add-list']" class="button">Crear nuevo recetario</button>
+      <button [routerLink]="['/add-list']" class="button">Create new recipe book</button>
     </div>
 
     @if (lists.length > 0) {
@@ -12,15 +12,15 @@
         @for (list of lists; track $index) {
         <li class="list-item">
           <p class="list-name">{{ list.name }}</p>
-          <button class="button" (click)="seeListDetails(list.id)">Ver recetas</button>
-          <button class="button" (click)="deleteList(list.id)">Eliminar recetario</button>
+          <button class="button" (click)="seeListDetails(list.id)">See recipes</button>
+          <button class="button" (click)="deleteList(list.id)">Delete recipe book</button>
         </li>
         }
       </ul>
     </div>
     } @else {
     <div class="no-list-container">
-      <p class="no-lists">No tienes listas personalizadas creadas.</p>
+      <p class="no-lists">You don't have any custom lists created.</p>
     </div>
     }
   </div>
