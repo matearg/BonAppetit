@@ -9,7 +9,16 @@ import { User } from '../../interfaces/user';
 import Swal from 'sweetalert2';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
-import { forkJoin, Observable, Subscription, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  forkJoin,
+  Observable,
+  of,
+  Subscription,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -112,11 +121,9 @@ export class RecipeDetail implements OnInit, OnDestroy {
         this.processInstructions(); // Procesamos instrucciones
       } else {
         console.error('Recipe not found');
-        // Opcional: Redirigir si la receta no se encuentra
       }
     } else {
       console.error('List not found');
-      // Opcional: Redirigir si la lista no se encuentra
     }
   }
 
@@ -149,8 +156,25 @@ export class RecipeDetail implements OnInit, OnDestroy {
   obtainUser(): Observable<User> {
     return this.userService.getActiveUser().pipe(
       switchMap((userArray) => {
-        this.activeUser = userArray[0];
+        const activeUser = userArray[0]; // Comprueba el usuario antes de asignarlo
+
+        if (!activeUser) {
+          // Hay token pero no hay sesión en la BD.
+          console.error(
+            'Inconsistent authentication state: The token exists but ActiveUser is not in the database.'
+          );
+          this.router.navigate(['']);
+          return throwError(() => new Error('No active user session was found.'));
+        }
+
+        // Si llegamos aca, el usuario es válido
+        this.activeUser = activeUser;
         return this.userService.getUserById(this.activeUser.id);
+      }),
+      catchError((err) => {
+        console.error('Error in obtainUser:', err.message);
+        this.router.navigate(['']);
+        return of(null as any);
       })
     );
   }
