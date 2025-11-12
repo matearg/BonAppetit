@@ -53,7 +53,7 @@ export class MyRecipeDetails implements OnInit, OnDestroy {
     recipeLists: [],
   };
 
-  constructor() {}
+  constructor() { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
