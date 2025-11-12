@@ -47,3 +47,5 @@ environments/*
 
 # Database files
 database/database.json
+src/environments/environments.development.ts
+src/environments/environments.ts
