@@ -218,13 +218,14 @@
               ]
             },
             {
+              "id": 652394,
               "title": "Receta de prueba",
               "vegetarian": true,
               "vegan": false,
               "glutenFree": false,
               "readyInMinutes": 10,
               "servings": 1,
-              "instructions": "Estas son solo instrucciones de prueba",
+              "instructions": "Estas son instrucciones de prueba",
               "image": "img/logo.jpeg",
               "spoonacularScore": 0,
               "listId": 0,
@@ -239,8 +240,7 @@
                   "amount": 500,
                   "unit": "gr"
                 }
-              ],
-              "id": 652394
+              ]
             }
           ]
         }
