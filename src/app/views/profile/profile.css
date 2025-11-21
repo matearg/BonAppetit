@@ -4,13 +4,12 @@
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .main-section {
   display: flex;
   flex-grow: 1; /* Ocupa el espacio vertical disponible */
-  height: 100vh;
 }
 
 .container-section {
