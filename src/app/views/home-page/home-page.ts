@@ -7,19 +7,19 @@ import { Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe-service';
 import { UserService } from '../../services/user-service';
 import { ActiveUser } from '../../interfaces/active-user';
-import { Recipe } from '../../interfaces/random-recipe';
-import { RecipeCard } from '../../recipes/recipe-card/recipe-card';
+import { Recipe } from '../../interfaces/recipe'; // Usamos la nueva interfaz
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
-  imports: [HomePageMenu, HomePageHeader, Footer, RecipeCard, CommonModule],
+  standalone: true,
+  imports: [HomePageMenu, HomePageHeader, Footer, CommonModule], // Quitamos RecipeCard
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
 export class HomePage implements OnInit, OnDestroy {
   private sub?: Subscription;
-  private ruotes = inject(Router);
+  private router = inject(Router);
   private service = inject(RecipeService);
   private userService = inject(UserService);
   private cdr = inject(ChangeDetectorRef);
@@ -30,58 +30,65 @@ export class HomePage implements OnInit, OnDestroy {
   };
 
   recipeList: Array<Recipe> = [];
-
-  // 1. AÑADE UNA NUEVA PROPIEDAD PARA EL BOTÓN
   private refreshSub?: Subscription;
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
-    this.refreshSub?.unsubscribe(); // 2. LIMPIA AMBAS SUSCRIPCIONES
+    this.refreshSub?.unsubscribe();
   }
 
   ngOnInit(): void {
-    // 3. ESTE ES EL NUEVO 'ngOnInit'
     this.sub = this.userService
       .auth()
       .pipe(
-        // Primero, manejamos al usuario
         tap((activeUser) => {
           if (activeUser) {
             this.user = activeUser;
           }
         }),
-        // Segundo, SIEMPRE cambiamos a las recetas
         switchMap(() => {
-          return this.service.getRandomRecipe(6);
+          // En lugar del viejo Spoonacular, hacemos una búsqueda genérica a nuestra IA/YouTube
+          const prompt = 'recetas de comida fáciles, rápidas y muy deliciosas';
+          return this.service.getYouTubeRecipes(prompt);
         }),
-        // Tercero, manejamos los datos de las recetas
-        tap((data) => {
-          console.log(data);
-          this.recipeList = data.recipes;
-          this.cdr.markForCheck(); // Actualizamos la vista
-        })
       )
       .subscribe({
-        next: () => {
-          console.log('Usuario y recetas cargados, vista actualizada.');
+        next: (data: any[]) => {
+          // Mapeamos los videos de YouTube al formato Recipe
+          this.recipeList = data.map((v) => ({
+            id: v.videoId,
+            title: v.title,
+            image: v.thumbnailUrl,
+            anotations: '',
+          }));
+          this.cdr.markForCheck();
         },
         error: (error: Error) => {
-          console.log('Error en la cadena de carga:', error.message);
+          console.log('Error en la carga:', error.message);
         },
       });
   }
 
-  // 4. ARREGLA 'getRandomRecipes' PARA NO TENER FUGAS
   getRandomRecipes() {
-    // Cancela cualquier petición anterior del botón
     this.refreshSub?.unsubscribe();
 
-    // Crea una nueva suscripción solo para el botón
-    this.refreshSub = this.service.getRandomRecipe(6).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.recipeList = data.recipes;
+    // Array de búsquedas aleatorias para que el botón "More recipes" muestre cosas distintas
+    const randomPrompts = [
+      'recetas vegetarianas increíbles',
+      'comida mexicana casera',
+      'pastas italianas fáciles',
+      'postres sin horno',
+    ];
+    const randomPrompt = randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
 
+    this.refreshSub = this.service.getYouTubeRecipes(randomPrompt).subscribe({
+      next: (data: any[]) => {
+        this.recipeList = data.map((v) => ({
+          id: v.videoId,
+          title: v.title,
+          image: v.thumbnailUrl,
+          anotations: '',
+        }));
         this.cdr.markForCheck();
       },
       error: (error: Error) => {
@@ -90,7 +97,10 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
-  navigateToDetails(id: number) {
-    this.ruotes.navigate([`recipes-details/${id}`]);
+  navigateToDetails(recipe: Recipe) {
+    // Navegamos pasando la info en el state, igual que en recipe-list
+    this.router.navigate([`recipes-details/${recipe.id}`], {
+      state: { videoData: { videoId: recipe.id, title: recipe.title, thumbnailUrl: recipe.image } },
+    });
   }
 }

@@ -10,48 +10,42 @@
   background: linear-gradient(to right, #e2e2e2, #c9d6ff);
 }
 
-/* Main section container */
 .container-section {
   display: flex;
-  justify-content: center; /* Center content horizontally */
-  padding: 1.5rem; /* Top/bottom and horizontal spacing */
+  justify-content: center;
+  padding: 1.5rem;
 }
 
-/* Section that wraps all content */
 .container-section section {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers child elements horizontally */
+  align-items: center;
   width: 100%;
-  max-width: 1200px; /* Maximum width for content on large screens */
-  gap: 2rem; /* Vertical gap between text, button and recipes */
+  max-width: 1200px;
+  gap: 2rem;
 }
 
-/* Container and style for the intro paragraph */
 .cont-p {
-  text-align: center; /* Center the text */
+  text-align: center;
   padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Soft shadow */
-  backdrop-filter: blur(8px); /* Background blur effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-
-  /* Entrance animation similar to the previous one */
   opacity: 0;
   transform: translateY(-20px);
   animation: fadeInText 0.5s 0.2s ease-out forwards;
 }
 
 .cont-p p {
-  margin: 0; /* Remove default paragraph margin */
-  font-size: 1.25rem; /* Readable font size */
-  line-height: 1.6; /* Line height */
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.6;
   color: #333;
   font-weight: 500;
 }
 
-/* Keyframe for the text animation (if a similar one doesn't exist yet) */
 @keyframes fadeInText {
   to {
     opacity: 1;
@@ -59,7 +53,6 @@
   }
 }
 
-/* Style for the "View recipes" button */
 .container-section button {
   background-color: #f7f7f7;
   color: #333;
@@ -73,31 +66,68 @@
   letter-spacing: 0.5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  animation: fadeInText 0.5s 0.4s ease-out forwards; /* Animation with a bit more delay */
-  opacity: 0; /* Initial state for the animation */
-  transform: translateY(-20px); /* Initial state for the animation */
+  animation: fadeInText 0.5s 0.4s ease-out forwards;
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
-/* Hover effect for the button */
 .container-section button:hover {
-  background-color: #c9d6ff; /* Color from the original gradient */
+  background-color: #c9d6ff;
   color: #fff;
-  transform: translateY(-5px); /* Lifts the button */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Effect when clicking the button */
 .container-section button:active {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Container for the recipe cards */
-.cont-recipes {
+/* Grilla de videos de YouTube */
+.video-grid {
   display: grid;
-  /* Creates flexible columns. They'll adjust between 300px and 1fr (fraction of the space) */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem; /* Gap between the cards */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
   width: 100%;
-  padding-top: 1rem; /* Additional top spacing above the cards */
+  padding-top: 1rem;
+}
+
+.video-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.video-thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.video-info {
+  padding: 1rem;
+}
+
+.video-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
 }

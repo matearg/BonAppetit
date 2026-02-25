@@ -8,7 +8,7 @@
       <div class="cont-p">
         <p>
           Are you out of ideas for food? <br />
-          Here are five recipes to inspire you <br />
+          Here are some recipes to inspire you <br />
           and try something new <br />
           Let's get cooking!
         </p>
@@ -16,10 +16,14 @@
 
       <button (click)="getRandomRecipes()">More recipes</button>
 
-      <div class="cont-recipes">
-        @for (item of recipeList; track $index) {
-        <app-recipe-card [recipe]="item" (viewDetails)="navigateToDetails($event)">
-        </app-recipe-card>
+      <div class="video-grid">
+        @for (item of recipeList; track item.id) {
+          <div class="video-card" (click)="navigateToDetails(item)">
+            <img [src]="item.image" [alt]="item.title" class="video-thumbnail" />
+            <div class="video-info">
+              <h3 class="video-title">{{ item.title }}</h3>
+            </div>
+          </div>
         }
       </div>
     </section>

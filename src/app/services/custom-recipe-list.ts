@@ -13,7 +13,6 @@ export class CustomRecipeListService {
 
   http = inject(HttpClient);
 
-  // Obtener todas las listas
   getLists(): Observable<CustomRecipeLists[]> {
     return this.http.get<CustomRecipeLists[]>(this.url);
   }
@@ -22,7 +21,6 @@ export class CustomRecipeListService {
     return this.http.get<CustomRecipeLists>(`${this.url}/${id}`);
   }
 
-  // Crear una nueva lista
   addList(lista: CustomRecipeLists): Observable<CustomRecipeLists> {
     return this.http.post<CustomRecipeLists>(this.url, lista);
   }
@@ -31,12 +29,10 @@ export class CustomRecipeListService {
     return this.http.post<CustomRecipeLists>(this.url, lista);
   }
 
-  // Actualizar una lista
   updateList(id: string, lista: CustomRecipeLists): Observable<CustomRecipeLists> {
     return this.http.put<CustomRecipeLists>(`${this.url}/${id}`, lista);
   }
 
-  // Eliminar una lista
   deleteList(id: string): Observable<CustomRecipeLists> {
     return this.http.delete<CustomRecipeLists>(`${this.url}/${id}`);
   }

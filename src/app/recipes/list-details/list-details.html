@@ -1,22 +1,31 @@
 <app-home-page-header></app-home-page-header>
 <main>
-  <h3 class="title">Recipes</h3>
-  <div class="recipe-info">
-    <p class="list-name">{{ list?.name }}</p>
-    <ul>
-      <div class="buttons">
-        @for (recipe of recipesArray; track recipe.id) {
-        <app-delete-update-output
-          [recipe]="recipe"
-          [listId]="list?.id ?? 0"
-          (delete)="deleteRecipe($event)"
-          (update)="onUpdate($event)"
-          (details)="navigateToDetails($event)"
-        >
-        </app-delete-update-output>
+  <div class="form-container">
+    <h2>{{ listName }}</h2>
+
+    @if (recipes.length > 0) {
+      <div class="video-grid">
+        @for (recipe of recipes; track recipe.id) {
+          <div class="video-card" (click)="goToDetails(recipe.id)">
+            <img
+              [src]="recipe.image ? recipe.image : 'img/logo.jpeg'"
+              [alt]="recipe.title"
+              class="video-thumbnail"
+            />
+            <div class="video-info">
+              <h3 class="video-title">{{ recipe.title }}</h3>
+              @if (recipe.isCustom) {
+                <span style="font-size: 0.8rem; color: #512da8; font-weight: bold"
+                  >Receta Propia</span
+                >
+              }
+            </div>
+          </div>
         }
       </div>
-    </ul>
+    } @else {
+      <p style="text-align: center; font-size: 1.2rem">No hay recetas guardadas en esta lista.</p>
+    }
   </div>
 </main>
 <footer></footer>

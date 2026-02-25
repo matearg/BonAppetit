@@ -1,230 +1,82 @@
-/*
- * General styles for the main content area
-*/
 :host {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-
 main {
   display: flex;
-  flex-grow: 1;
   justify-content: center;
-  padding: 3rem 1rem;
+  flex-grow: 1;
+  padding: 2rem;
   box-sizing: border-box;
 }
 
-/*
- * The main "frosted glass" card, applied to the form itself
-*/
-form {
+.form-container {
   background-color: rgba(255, 255, 255, 0.75);
-  padding: 2.5rem 3rem;
+  padding: 2.5rem;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.25);
   width: 100%;
-  max-width: 800px; /* Wider for a complex form */
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* Consistent spacing between form sections */
-
-  /* Smooth fade-in animation */
+  align-items: center;
   opacity: 0;
   transform: translateY(-20px);
-  animation: fadeInForm 0.5s 0.2s ease-out forwards;
+  animation: fadeIn 0.5s 0.2s ease-out forwards;
 }
 
-@keyframes fadeInForm {
+@keyframes fadeIn {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/*
- * Style for the main title "Crear receta"
-*/
-.form-title {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-  margin: 0;
-}
-
-/*
- * General container for a form field (label + input)
-*/
-.data {
+.search-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+.search-form h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
 }
 
-.data label {
+.search-form input[type='text'],
+.search-form textarea,
+.search-form select {
   font-size: 1.1rem;
-  color: #555;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column; /* Stacks label text above input */
-  gap: 0.75rem;
-}
-
-.data input[type='text'],
-.data input[type='number'],
-.data textarea {
-  font-size: 1rem;
-  padding: 12px 15px;
+  padding: 14px 18px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.6);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
   width: 100%;
-  box-sizing: border-box; /* Ensures padding doesn't break layout */
-}
-
-.data textarea {
-  min-height: 120px;
-  resize: vertical;
+  max-width: 500px;
+  box-sizing: border-box;
   font-family: inherit;
 }
 
-.data input:focus,
-.data textarea:focus {
+.search-form input:focus,
+.search-form textarea:focus,
+.search-form select:focus {
   outline: none;
   border-color: #a3b8ff;
   box-shadow: 0 0 0 3px rgba(201, 214, 255, 0.7);
 }
 
-/*
- * Checkbox container
-*/
-.data-box {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 1rem;
-  border-radius: 12px;
-}
-
-.data-box label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-}
-
-.data-box input[type='checkbox'] {
-  width: 1.2rem;
-  height: 1.2rem;
-  cursor: pointer;
-}
-
-/*
- * Ingredients Section
-*/
-.ingredients-title {
-  font-size: 1.5rem;
-  margin: 0;
-  color: #333;
-  border-bottom: 2px solid #c9d6ff;
-  padding-bottom: 0.5rem;
-}
-
-.ingredients-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.ingredient-item {
-  display: flex;
-  align-items: flex-end; /* Aligns button with bottom of inputs */
-  gap: 1rem;
-  background-color: rgba(255, 255, 255, 0.4);
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.ingredient-item > div {
-  display: flex;
-  flex-grow: 1;
-  gap: 1rem;
-}
-
-.ingredient-item label {
-  flex: 1; /* Each field takes equal space */
-  min-width: 100px;
-}
-
-/*
- * Add/Delete Ingredient Buttons
-*/
-.ingredient-button {
-  background-color: #f7f7f7;
-  color: #333;
-  border: none;
-  padding: 10px 15px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap; /* Prevents text wrap */
-}
-
-.ingredient-button:hover {
-  background-color: #c9d6ff;
-  color: white;
-}
-
-/* Specific style for the delete button */
-.ingredient-item .ingredient-button {
-  background-color: #f7f7f7;
-}
-
-.ingredient-item .ingredient-button:hover {
-  background-color: #ef5350; /* Red on hover */
-  color: white;
-}
-
-/*
- * Select Dropdown
-*/
-.data-select {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.data-select label {
-  font-size: 1.1rem;
-  color: #555;
-  font-weight: 500;
-}
-
-.data-select select {
-  font-size: 1.1rem;
-  padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-}
-
-/*
- * Final Save Button
-*/
-.save-button {
-  background-color: #512da8; /* Primary action color */
+.button {
+  background-color: #512da8;
   color: white;
   border: none;
   padding: 14px 24px;
@@ -233,33 +85,28 @@ form {
   border-radius: 8px;
   cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  width: 100%;
+  max-width: 500px;
 }
-
-.save-button:hover {
+.button:hover {
   background-color: #311b92;
   transform: translateY(-4px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
-
-.save-button:disabled {
+.button:disabled {
   background-color: #e0e0e0;
   color: #999;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
-/* Responsive adjustments for ingredient item */
-@media (max-width: 768px) {
-  .ingredient-item {
-    flex-direction: column;
-    align-items: stretch;
+@media screen and (max-width: 768px) {
+  main {
+    padding: 1rem;
   }
-  .ingredient-item > div {
-    flex-direction: column;
+  .form-container {
+    padding: 1.5rem;
   }
 }

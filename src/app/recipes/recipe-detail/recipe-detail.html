@@ -1,79 +1,77 @@
 <app-home-page-header></app-home-page-header>
 <main>
-  @if (recipe) {
-  <div class="recipe-container">
-    <h2 class="recipe-title">{{ recipe.title }}</h2>
-    <div class="image-container">
-      <img [src]="recipe.image" alt="Image of {{ recipe.title }}" class="recipe-image" />
-    </div>
+  <div class="detail-container">
+    <h2>{{ recipe.title }}</h2>
 
-    <div class="recipe-info">
-      <p><strong>Preparation time:</strong> {{ recipe.readyInMinutes }} minutos</p>
-      <p><strong>Score:</strong> {{ recipe.spoonacularScore.toFixed(2) }} / 100</p>
-    </div>
-
-    <div class="ingredient-container">
-      <h3>Ingredients</h3>
-      <div class="ingredient-info">
-        <ul class="ingredient-list">
-          @for (ingredient of recipe.ingredients; track ingredient.id) {
-          <li>
-            {{ ingredient.amount.toFixed(1) }}
-            {{ ingredient.name }}
-            {{ ingredient.unit }}
-          </li>
+    @if (!recipe.isCustom) {
+      <div
+        class="video-wrapper"
+        style="
+          position: relative;
+          padding-bottom: 56.25%;
+          height: 0;
+          overflow: hidden;
+          border-radius: 12px;
+          margin-bottom: 2rem;
+        "
+      >
+        <iframe
+          [src]="videoUrl"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+          frameborder="0"
+          allowfullscreen
+        >
+        </iframe>
+      </div>
+    } @else {
+      <div
+        class="custom-recipe-content"
+        style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem"
+      >
+        <h3>Ingredientes</h3>
+        <ul>
+          @for (ing of recipe.ingredients; track $index) {
+            <li>{{ ing }}</li>
           }
         </ul>
+        <h3 style="margin-top: 1.5rem">Instrucciones</h3>
+        <p style="white-space: pre-line; line-height: 1.6">{{ recipe.instructions }}</p>
       </div>
-    </div>
-
-    <div class="instructions-container">
-      <h3>Instructions</h3>
-      @if (isInstructionsHtml) {
-      <div [innerHTML]="recipe.instructions"></div>
-      } @else {
-      <ul>
-        @for (step of recipeSteps; track $index) {
-        <li>
-          {{ step }}
-        </li>
-        }
-      </ul>
-      }
-    </div>
+    }
 
     @if (!isMyRecipe) {
-    <button class="add-to-list-button" (click)="listAddActive = true">Add to a list</button>
-    <div class="add-to-list">
-      @if(listAddActive) {
-      <form [formGroup]="formAddToList" (ngSubmit)="addRecipe()">
-        <div class="select-button-container">
-          <label for="listId"></label>
-          <select id="listId" formControlName="listId">
-            @for (list of commonUser.recipeLists; track list.id) {
-            <option [value]="list.id">{{ list.name }}</option>
-            }
-          </select>
-          <button type="submit" class="add-button">Add</button>
-        </div>
-      </form>
-      }
-    </div>
+      <div class="add-to-list-section">
+        <button class="button" (click)="listAddActive = !listAddActive">Add to a list</button>
 
-    } @if (isMyRecipe) {
-    <div class="form">
-      <form [formGroup]="formAnotations" (ngSubmit)="saveAnotations()">
-        <div class="anotation-title">Anotations</div>
-        <div class="anotation-input">
-          <textarea name="form" id="anotation" formControlName="anotations">
-            Type here...
-          </textarea>
-        </div>
-        <button type="submit" [disabled]="formAnotations.invalid">Save</button>
-      </form>
-    </div>
+        @if (listAddActive) {
+          <form [formGroup]="formAddToList" (ngSubmit)="addRecipe()" class="add-form">
+            <label for="listId">Select a list:</label>
+            <select id="listId" formControlName="listId">
+              <option value="0" disabled selected>Select a list</option>
+              @for (list of commonUser.recipeLists; track $index) {
+                <option [value]="list.id">{{ list.name }}</option>
+              }
+            </select>
+            <button type="submit" class="button" [disabled]="formAddToList.invalid">Save</button>
+          </form>
+        }
+      </div>
+    } @else {
+      <div class="anotations-section">
+        <h3>My Anotations</h3>
+        <form [formGroup]="formAnotations" (ngSubmit)="saveAnotations()" class="anotation-form">
+          <textarea
+            id="anotations"
+            formControlName="anotations"
+            placeholder="Write your notes here..."
+            rows="4"
+          ></textarea>
+          <button type="submit" class="button" [disabled]="formAnotations.invalid">
+            Save Notes
+          </button>
+        </form>
+      </div>
     }
   </div>
-  }
 </main>
 <footer></footer>

@@ -32,11 +32,6 @@ export const routes: Routes = [
     canActivate: [authUsersGuard],
   },
   {
-    path: 'update-recipe/:idList/:idRecipe',
-    component: RecipeForm,
-    canActivate: [authUsersGuard],
-  },
-  {
     path: 'recipes',
     component: RecipeList,
     canActivate: [authUsersGuard],
@@ -67,7 +62,7 @@ export const routes: Routes = [
     canActivate: [authUsersGuard],
   },
   {
-    path: 'recipe-list-details/:idList/:idRecipe',
+    path: 'recipes-details/:idList/:idRecipe',
     component: RecipeDetail,
     canActivate: [authUsersGuard],
   },
