@@ -20,13 +20,17 @@ export class RecipeForm implements OnInit, OnDestroy {
   userService = inject(UserService);
   router = inject(Router);
   private sub = new Subscription();
-  commonUser!: User;
+  commonUser: User = {
+    email: '',
+    password: '',
+    recipeLists: [],
+  };
 
   form = this.formBuilder.group({
     title: ['', Validators.required],
     ingredients: ['', Validators.required],
     instructions: ['', Validators.required],
-    listId: [0, [Validators.required, Validators.min(1)]],
+    listId: ['', Validators.required],
   });
 
   ngOnInit() {
@@ -46,8 +50,7 @@ export class RecipeForm implements OnInit, OnDestroy {
     if (this.form.invalid) return;
 
     const formValue = this.form.value;
-    const selectedList = this.commonUser.recipeLists.find((l) => l.id == formValue.listId);
-
+    const selectedList = this.commonUser.recipeLists.find((l) => l.id === Number(formValue.listId));
     if (!selectedList) return;
 
     // Creamos el objeto de receta personalizada

@@ -36,7 +36,7 @@
         formControlName="listId"
         style="width: 100%; max-width: 500px; padding: 14px; border-radius: 8px"
       >
-        <option value="0" disabled selected>Guardar en la lista...</option>
+        <option value="" disabled selected>Guardar en la lista...</option>
         @for (list of commonUser.recipeLists; track list.id) {
           <option [value]="list.id">{{ list.name }}</option>
         }

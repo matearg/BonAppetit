@@ -1,10 +1,5 @@
 {
-  "ActiveUser": [
-    {
-      "id": "e237",
-      "email": "prueba@gmail.com"
-    }
-  ],
+  "ActiveUser": [],
   "Users": [
     {
       "id": "e237",
@@ -14,6 +9,43 @@
         {
           "id": 0,
           "name": "Favoritos",
+          "recipes": [
+            {
+              "id": "rGCgvJwjExc",
+              "title": "Galletas de Mantequilla (solo 3 Ingredientes) Fáciles y Rápidas!",
+              "image": "https://i.ytimg.com/vi/rGCgvJwjExc/hqdefault.jpg",
+              "anotations": "Buenas \n"
+            },
+            {
+              "id": "eL2aUnhvWFo",
+              "title": "Reemplaza al pan con esta receta saludable!  #viral #recetas #shorts",
+              "image": "https://i.ytimg.com/vi/eL2aUnhvWFo/hqdefault.jpg",
+              "anotations": ""
+            },
+            {
+              "id": "custom-1772565822916",
+              "title": "Nueva receta",
+              "image": "img/logo.jpeg",
+              "isCustom": true,
+              "ingredients": [
+                "ingrediente",
+                "ingrediente",
+                "ingrediente",
+                "ingrediente",
+                "ingrediente",
+                "ingrediente",
+                "ingrediente",
+                "ingrediente",
+                "ingrediente"
+              ],
+              "instructions": "ingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingrediente ingredienteingredienteingredienteingredienteingredienteingredienteingrediente ingredienteingredienteingredienteingredienteingrediente",
+              "anotations": ""
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "name": "Nueva Lista de Recetas",
           "recipes": []
         }
       ]

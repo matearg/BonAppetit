@@ -65,7 +65,7 @@ export class RecipeDetail implements OnInit, OnDestroy {
             this.loadUserRecipe(listId, recipeIdParam);
             if (this.recipe) {
               this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-                `https://www.youtube.com/embed/${this.recipe.id}`,
+                `https://www.youtube-nocookie.com/embed/${this.recipe.id}`,
               );
             }
             this.cdr.markForCheck();
@@ -94,7 +94,7 @@ export class RecipeDetail implements OnInit, OnDestroy {
       }
 
       this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        `https://www.youtube.com/embed/${this.recipe.id}`,
+        `https://www.youtube-nocookie.com/embed/${this.recipe.id}`,
       );
 
       this.mainSub.add(
