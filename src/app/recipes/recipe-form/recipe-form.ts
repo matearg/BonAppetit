@@ -1,301 +1,133 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { RecipeService } from '../../services/recipe-service';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router'; // Inyectamos ActivatedRoute
 import { UserService } from '../../services/user-service';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Ingredients, Recipe } from '../../interfaces/recipe';
-import { ActiveUser } from '../../interfaces/active-user';
 import { User } from '../../interfaces/user';
+import { Recipe } from '../../interfaces/recipe';
 import Swal from 'sweetalert2';
+import { Subscription, switchMap } from 'rxjs';
 import { HomePageHeader } from '../../views/headers/home-page-header/home-page-header';
 import { Footer } from '../../views/shared/footer/footer';
-import { CommonModule } from '@angular/common';
-import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-form',
-  imports: [HomePageHeader, Footer, ReactiveFormsModule, CommonModule],
+  imports: [HomePageHeader, Footer, ReactiveFormsModule],
   templateUrl: './recipe-form.html',
   styleUrl: './recipe-form.css',
 })
 export class RecipeForm implements OnInit, OnDestroy {
-  recipeService = inject(RecipeService);
-  userService = inject(UserService);
   formBuilder = inject(FormBuilder);
+  userService = inject(UserService);
   router = inject(Router);
-  activeRoute = inject(ActivatedRoute);
-  recipes: Array<Recipe> = [];
-  private cdr = inject(ChangeDetectorRef);
+  route = inject(ActivatedRoute); // Para leer la URL
   private sub = new Subscription();
 
-  isEditMode = false;
-  private listId: number | null = null;
-  private recipeId: number | null = null;
-  private recipe?: Recipe;
+  commonUser: User = { email: '', password: '', recipeLists: [] };
 
-  form = this.formBuilder.nonNullable.group({
-    id: [0],
+  // Variables para el modo edición
+  isEditMode = false;
+  editRecipeId = '';
+  originalListId = 0;
+
+  form = this.formBuilder.group({
     title: ['', Validators.required],
-    vegetarian: [false, Validators.required], // Tipo boolean
-    vegan: [false, Validators.required], // Tipo boolean
-    glutenFree: [false, Validators.required], // Tipo boolean
-    readyInMinutes: [0, [Validators.required, Validators.min(1)]], // Tipo number
-    servings: [1, [Validators.required, Validators.min(1)]], // Tipo number
+    ingredients: ['', Validators.required],
     instructions: ['', Validators.required],
-    image: [''],
-    spoonacularScore: [0],
-    listId: [0, Validators.required],
-    ingredients: this.formBuilder.array([]),
+    listId: ['', Validators.required],
   });
 
-  activeUser: ActiveUser = {
-    id: 0,
-    email: '',
-  };
-
-  commonUser: User = {
-    email: '',
-    password: '',
-    recipeLists: [],
-  };
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
-  ngOnInit(): void {
-    const listIdParam = this.activeRoute.snapshot.paramMap.get('idList');
-    const recipeIdParam = this.activeRoute.snapshot.paramMap.get('idRecipe');
-
-    if (listIdParam && recipeIdParam) {
-      this.isEditMode = true;
-      this.listId = Number(listIdParam);
-      this.recipeId = Number(recipeIdParam);
-    }
-
+  ngOnInit() {
     this.sub.add(
-      // Añade al gestor
       this.userService
         .getActiveUser()
-        .pipe(
-          // Usa switchMap para aplanar
-          switchMap((user) => {
-            this.activeUser = user[0];
-            return this.userService.getUserById(this.activeUser.id);
-          }),
-          // Usa tap para asignar y avisar
-          tap((user) => {
-            this.commonUser = user;
-            if (this.isEditMode) {
-              this.getRecipeUpdate();
-            }
-            this.cdr.markForCheck();
-          })
-        )
-        .subscribe({
-          next: () => console.log('Usuario cargado para el formulario'),
-          error: (error: Error) => console.log(error.message),
-        })
+        .pipe(switchMap((users) => this.userService.getUserById(users[0].id)))
+        .subscribe((user) => {
+          this.commonUser = user;
+          this.checkEditMode(); // Verificamos si es edición después de cargar el usuario
+        }),
     );
   }
 
-  getRecipeUpdate() {
-    console.log('User lists:', this.commonUser.recipeLists);
-    const selectedList = this.commonUser.recipeLists.find((list) => list.id == this.listId);
-    console.log('Selected list:', selectedList);
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
-    if (selectedList) {
-      const selectedRecipe = selectedList.recipes.find((recipe) => recipe.id == this.recipeId);
-      console.log('Selected recipe:', selectedRecipe);
+  checkEditMode() {
+    const idList = this.route.snapshot.paramMap.get('idList');
+    const idRecipe = this.route.snapshot.paramMap.get('idRecipe');
 
-      if (selectedRecipe) {
-        this.recipe = selectedRecipe;
-        this.form.patchValue({
-          title: this.recipe.title,
-          vegetarian: this.recipe.vegetarian,
-          vegan: this.recipe.vegan,
-          glutenFree: this.recipe.glutenFree,
-          readyInMinutes: this.recipe.readyInMinutes,
-          servings: this.recipe.servings,
-          instructions: this.recipe.instructions,
-          image: this.recipe.image,
-          spoonacularScore: this.recipe.spoonacularScore,
-          listId: this.listId ?? 0,
-        });
+    if (idList && idRecipe) {
+      this.isEditMode = true;
+      this.originalListId = Number(idList);
+      this.editRecipeId = idRecipe;
 
-        const ingredientsFormArray = this.form.get('ingredients') as FormArray;
-        ingredientsFormArray.clear();
-        this.recipe.ingredients.forEach((ingredient) => {
-          ingredientsFormArray.push(this.createIngredientFormGroup(ingredient));
-        });
-      } else {
-        console.log('Recipe not found');
-        this.isEditMode = false;
+      const list = this.commonUser.recipeLists.find((l) => l.id === this.originalListId);
+      if (list) {
+        const recipe = list.recipes.find((r) => r.id === this.editRecipeId);
+        if (recipe) {
+          // Rellenamos el formulario con los datos existentes
+          this.form.patchValue({
+            title: recipe.title,
+            ingredients: recipe.ingredients?.join('\n') || '', // Convertimos array a texto
+            instructions: recipe.instructions || '',
+            listId: this.originalListId.toString(),
+          });
+          // Bloqueamos el selector de lista para evitar mover la receta entre listas y simplificar la lógica
+          this.form.get('listId')?.disable();
+        }
       }
-    } else {
-      console.log('List not found');
-      this.isEditMode = false;
     }
   }
 
-  createIngredientFormGroup(ingredient: Ingredients): FormGroup {
-    return this.formBuilder.group({
-      name: [ingredient.name || '', Validators.required],
-      amount: [ingredient.amount || '', Validators.required],
-      unit: [ingredient.unit || '', Validators.required],
-    });
-  }
-
-  saveRecipe() {
+  onSubmit() {
     if (this.form.invalid) return;
+
+    // getRawValue() incluye campos disabled (como el listId en modo edición)
+    const formValue = this.form.getRawValue();
+
     if (this.isEditMode) {
-      this.updateRecipe();
-    } else {
-      this.addRecipe();
-    }
-  }
-
-  private addRecipe() {
-    const recipe = {
-      ...this.form.getRawValue(),
-      ingredients: this.form.get('ingredients')?.value as Ingredients[],
-    } as Recipe;
-
-    const listId = this.form.get('listId')?.value;
-    const selectedList = this.commonUser.recipeLists.find((list) => list.id === Number(listId));
-
-    if (!recipe.image || recipe.image.trim() === '') {
-      recipe.image = 'img/logo.jpeg';
-    }
-
-    if (selectedList) {
-      // (Pequeña mejora de ID para evitar duplicados si se borra algo)
-      recipe.id = Math.max(0, ...selectedList.recipes.map((r) => r.id || 0)) + 1;
-      selectedList.recipes.push(recipe);
-
-      this.sub.add(
-        this.userService.editUser(this.commonUser).subscribe({
-          next: () => {
-            this.alertCreatedRecipe();
-            this.router.navigate(['/my-lists']);
-          },
-          error: (error: Error) => {
-            console.error('Error saving recipe:', error.message);
-          },
-        })
-      );
-    } else {
-      this.alertListNotFound();
-    }
-  }
-
-  updateRecipe() {
-    if (this.form.invalid || this.recipeId === null || this.listId === null) return;
-
-    const recipeFormValue = this.form.getRawValue();
-    const updatedRecipe: Recipe = {
-      ...recipeFormValue,
-      id: this.recipeId,
-      ingredients: recipeFormValue.ingredients.map((ingredient: any) => ({
-        name: ingredient.name,
-        amount: ingredient.amount,
-        unit: ingredient.unit,
-      })),
-    };
-
-    const selectedList = this.commonUser.recipeLists.find((list) => list.id == this.listId);
-    if (selectedList) {
-      const recipeIndex = selectedList.recipes.findIndex((recipe) => recipe.id == this.recipeId);
-      if (recipeIndex !== -1) {
-        selectedList.recipes[recipeIndex] = updatedRecipe; // Reemplazamos la receta
-
-        this.sub.add(
-          this.userService.editUser(this.commonUser).subscribe({
-            next: () => {
-              this.alertModifiedRecipe();
-              this.router.navigate(['my-lists']);
-            },
-            error: (error: Error) => {
-              console.error('Error updating recipe:', error.message);
-            },
-          })
-        );
-      } else {
-        console.error('Recipe not found');
+      // Actualizamos la receta existente
+      const list = this.commonUser.recipeLists.find((l) => l.id === this.originalListId);
+      if (list) {
+        const recipeIndex = list.recipes.findIndex((r) => r.id === this.editRecipeId);
+        if (recipeIndex !== -1) {
+          list.recipes[recipeIndex] = {
+            ...list.recipes[recipeIndex],
+            title: formValue.title!,
+            ingredients: formValue.ingredients!.split('\n'), // Convertimos texto a array
+            instructions: formValue.instructions!,
+          };
+        }
       }
     } else {
-      console.error('List not found');
+      // Lógica de creación original
+      const selectedList = this.commonUser.recipeLists.find(
+        (l) => l.id === Number(formValue.listId),
+      );
+      if (!selectedList) return;
+
+      const newRecipe: Recipe = {
+        id: 'custom-' + Date.now().toString(),
+        title: formValue.title!,
+        image: 'img/logo.jpeg',
+        isCustom: true,
+        ingredients: formValue.ingredients!.split('\n'),
+        instructions: formValue.instructions!,
+        anotations: '',
+      };
+      selectedList.recipes.push(newRecipe);
     }
-  }
 
-  alertCreatedRecipe() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: 'success',
-      title: 'Recipe successfully added',
-    });
-  }
-
-  alertModifiedRecipe() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: 'success',
-      title: 'Recipe successfully modified',
-    });
-  }
-
-  alertListNotFound() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      },
-    });
-    Toast.fire({
-      icon: 'error',
-      title: 'List not found',
-    });
-  }
-
-  get ingredients() {
-    return this.form.get('ingredients') as FormArray;
-  }
-
-  addIngredient() {
-    const ingredientForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      amount: [0, [Validators.required, Validators.min(0.1)]],
-      unit: ['', Validators.required],
-    });
-    this.ingredients.push(ingredientForm);
-  }
-
-  deleteIngredient(index: number) {
-    this.ingredients.removeAt(index);
+    this.sub.add(
+      this.userService.editUser(this.commonUser).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: this.isEditMode ? 'Receta actualizada' : 'Receta creada',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        this.router.navigate(['/my-lists']);
+      }),
+    );
   }
 }

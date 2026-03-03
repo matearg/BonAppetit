@@ -2,7 +2,8 @@
 
 ![logo](https://github.com/user-attachments/assets/652ff453-48d1-4a07-a8df-ec9b31770730)
 
-Aplicación de recetas de cocina desarrollada como parte de la Metodología de Sistemas de la Universidad Tecnológica Nacional.
+Aplicación de recetas de cocina desarrollada como parte de la materia Metodología de sistemas, Universidad Tecnológica Nacional.
+Integrantes: Imanol Sayago - Mateo Arcidiacono.
 
 ¡Creaciones y mucho sabor!
 
@@ -10,15 +11,15 @@ Aplicación de recetas de cocina desarrollada como parte de la Metodología de S
 
 ## Introducción
 
-Este proyecto presenta la documentación de requisitos de software para el desarrollo de una aplicación de recetas de cocina. La aplicación tiene como objetivo ofrecer a los usuarios una plataforma intuitiva y accesible, donde podrán buscar recetas, guardar sus favoritas y crear nuevas recetas desde cualquier dispositivo con conexión a internet.
+Este documento presenta la documentación de requisitos de software para el desarrollo de una aplicación de recetas de cocina. La aplicación tiene como objetivo principal ofrecer a los usuarios una plataforma intuitiva y accesible, donde podrán buscar recetas, guardar sus favoritas y crear nuevas recetas desde cualquier dispositivo con conexión a internet.
 
 ---
 
 ## Propósito
 
-Definir detalladamente los requisitos funcionales y no funcionales de la aplicación. Este documento proporciona una descripción completa del sistema propuesto, incluyendo sus funciones, características y restricciones, con el fin de guiar el desarrollo, implementación y verificación del sistema.
+Definir detalladamente los requisitos funcionales y no funcionales de la aplicación. Este documento proporciona una descripción completa del sistema propuesto, incluidas sus funciones, características y restricciones, con el fin de guiar el desarrollo, implementación y verificación del sistema.
 
-Dirigido a:
+**Dirigido a:**
 
 - El equipo de desarrollo.
 - Los analistas en sistemas.
@@ -27,19 +28,17 @@ Dirigido a:
 
 ---
 
-## Objetivos del Sistema
+## Ámbito y Perspectiva del Sistema
 
-La aplicación Bon APPetit tiene como objetivo ofrecer una plataforma accesible para que los usuarios encuentren y organicen recetas basadas en los alimentos que tienen disponibles, fomentando la creatividad y el aprovechamiento de ingredientes. Entre sus metas se incluyen:
+El sistema funcionará de manera independiente, pero integrará el consumo de una API externa para acceder a su catálogo de recetas. Se ha seleccionado la API **YouTube Data API v3** debido a la posibilidad de acceder a un extenso repertorio de recetas y la facilidad que ofrece para realizar búsquedas. Esta API se utilizará para obtener videos de recetas basadas en la búsqueda en lenguaje natural gestionadas por la API **Gemini-2.5-Flash**.
 
-- Buscar y filtrar recetas por nombre, ingredientes, tipos de comidas, preferencias de dieta, etc.
-- Permitir calificar recetas para clasificarlas por popularidad o recomendaciones.
-- Guardar recetas en perfiles personales con notas privadas para personalización.
+Bon APPetit no incluirá funcionalidades de red social, por lo que las interacciones entre usuarios serán mínimas. Cada usuario podrá agregar comentarios propios a las recetas que tenga guardadas, pero esos comentarios no serán visibles por otros usuarios.
 
 ---
 
 ## Herramientas Utilizadas
 
-Hasta el momento, los lenguajes que se utilizarán para la creación de la aplicación son:
+Hasta el momento los lenguajes que se utilizarán para la creación de la aplicación serán:
 
 - Angular
 - JavaScript
@@ -52,74 +51,65 @@ Hasta el momento, los lenguajes que se utilizarán para la creación de la aplic
 
 ### Requisitos Funcionales:
 
-- **RF01**: El sistema debe permitir al usuario realizar altas, bajas y modificaciones (ABM) de su cuenta.
-- **RF02**: El sistema debe permitir al usuario mostrar su información personal y ver su perfil.
-- **RF03**: El sistema debe permitir al usuario realizar ABM de recetas (crear, modificar o eliminar según preferencias).
-- **RF04**: El sistema debe permitir al usuario listar recetas.
-- **RF05**: El sistema debe permitir al usuario filtrar recetas basadas en preferencias alimentarias (veganas, vegetarianas, sin gluten, etc.).
-- **RF06**: El sistema debe permitir al usuario crear listas personalizadas con diferentes preferencias o categorías.
-- **RF07**: El sistema debe permitir al usuario cargar una foto propia para acompañar su receta.
-- **RF08**: El sistema debe permitir al usuario agregar comentarios o anotaciones personales a las recetas guardadas.
-- **RF09**: El sistema debe permitir al usuario ver los comentarios y anotaciones que ha agregado a sus recetas guardadas.
+- **RF01:** El sistema debe permitir al usuario realizar altas, bajas y modificaciones (ABM) de su cuenta.
+- **RF02:** El sistema debe permitir al usuario mostrar su información personal y ver su perfil.
+- **RF03:** El sistema debe permitir al usuario realizar ABM de recetas, es decir, crear nuevas recetas, modificarlas o eliminarlas según sus preferencias.
+- **RF04:** El sistema debe permitir al usuario listar recetas.
+- **RF05:** El sistema debe permitir al usuario buscar las recetas en base a preferencias alimentarias específicas, como dietas veganas, vegetarianas, sin gluten, alimentos específicos, entre otras.
+- **RF06:** El sistema debe permitir al usuario crear listas personalizadas con diferentes preferencias, como recetas u otras categorías creadas por el usuario.
+- **RF07:** El sistema debe permitir al usuario cargar una foto propia a su perfil personal.
+- **RF08:** El sistema debe permitir al usuario agregar comentarios o anotaciones personales a las recetas que haya guardado en su lista.
+- **RF09:** El sistema debe permitir al usuario ver los comentarios y anotaciones que ha agregado a sus recetas guardadas.
+- **RF10:** El sistema debe permitir visualizar los videos de las recetas en la propia página.
+- **RF11:** El sistema debe permitir al usuario ver otras recetas recomendadas al finalizar la receta seleccionada.
+- **RF12:** El sistema debe permitir al usuario realizar búsquedas en base a ingredientes, nombres de recetas, tipos de dietas.
+- **RF13:** El sistema debe permitir al usuario realizar búsquedas en base a lenguaje natural a modo de “prompt” de inteligencia artificial.
 
 ### Requisitos No Funcionales:
 
-- **1. Rendimiento**:
-  - El sistema debe procesar consultas de búsqueda de recetas en menos de 5 segundos.
-  - El sistema debe soportar hasta 1000 usuarios concurrentes sin degradación significativa.
-- **2. Escalabilidad**:
-  - El sistema debe ser escalable para soportar un aumento en la base de datos hasta 1 millón de recetas sin afectar el tiempo de respuesta.
-- **3. Usabilidad**:
-  - La interfaz de usuario debe ser intuitiva y accesible, permitiendo que un usuario sin experiencia técnica realice operaciones básicas en menos de 3 minutos.
-- **4. Compatibilidad**:
-  - La aplicación debe ser compatible con los navegadores más usados (Chrome, Firefox, Edge, Safari) en sus últimas 3 versiones.
-- **5. Mantenimiento y Extensibilidad**:
-  - El sistema debe estar diseñado con una arquitectura modular para facilitar la integración de nuevas funcionalidades.
-- **6. Persistencia**:
-  - El sistema debe utilizar un sistema de persistencia de datos para guardar usuarios, recetas, listas, etc.
+- **1. Rendimiento:** El sistema debe ser capaz de procesar consultas de búsqueda de recetas en menos de 5 segundos. Debe soportar hasta 1000 usuarios concurrentes sin degradación significativa en el rendimiento.
+- **2. Escalabilidad:** El sistema debe ser escalable para soportar un aumento en la base de datos de hasta 1 millón de recetas sin afectar el tiempo de respuesta.
+- **3. Usabilidad:** La interfaz de usuario debe ser intuitiva y accesible, permitiendo que un usuario sin experiencia técnica pueda realizar las operaciones básicas en menos de 3 minutos.
+- **4. Compatibilidad:** La aplicación debe ser compatible con los navegadores más usados (Chrome, Firefox, Edge, Safari) en sus últimas 3 versiones.
+- **5. Mantenimiento y Extensibilidad:** El sistema debe estar diseñado con una arquitectura modular para facilitar la integración de nuevas funcionalidades sin afectar las existentes.
+- **6. Persistencia:** El sistema debe utilizar un sistema de persistencia de datos para guardar los datos, usuarios, recetas, listas, etc.
 
 ---
 
 ## Mapa de Impacto
 
-### Propósito
-
-El Impact Mapping alinea las funcionalidades del sistema con el objetivo de negocio principal, asegurando que cada entregable se enfoque en generar un cambio de comportamiento en el usuario registrado.
-
-### Objetivo Central
-
+**Objetivo Central:**
 Facilitar que los usuarios encuentren y organicen recetas basadas en los alimentos que tienen disponibles, fomentando la creatividad y el aprovechamiento de ingredientes.
 
-### Actor Principal
+**Actor Principal:**
+Usuario registrado.
 
-- Usuario registrado.
-
-### Impactos
+**Impactos Esperados:**
 
 1. Puede ingresar los alimentos que tiene y obtener recetas sugeridas.
 2. Puede crear y guardar sus propias recetas.
-3. Puede dar "like" a recetas de la API.
-4. Puede crear listas personalizadas de recetas.
-5. Puede explorar recetas basadas en su historial o gustos.
-
----
-
-## Modelo Conceptual
-
-(El modelo conceptual incluye un diagrama UML con entidades como Usuario, Receta, Lista de Recetas, Ingrediente, Categoría Receta, y Categoría Ingrediente, con relaciones como "Tiene", "Contiene", y "Distinguido por".)
+3. Puede realizar búsquedas en lenguaje natural.
+4. Puede crear listas personalizadas de recetas (por ejemplo, "favoritas", "para el finde", etc.).
+5. Puede explorar recetas basadas en sus gustos.
 
 ---
 
 ## Instalación y Ejecución
 
-1. Clona el repositorio: `git clone <https://github.com/matearg/BonAppetit.git>`.
-2. Instala dependencias: `npm install`.
-3. Instala dependencias externas: `npm install sweetalert2`.
-4. Ejecuta el servidor de desarrollo: `ng serve`.
-5. Accede a la aplicación en `http://localhost:4200`.
+**Backend**
 
----
+1. Clona el repositorio del backend: `git clone https://github.com/matearg/BonAppetit-back.git`.
+2. Ingresa al directorio: `cd BonAppetit-back`.
+3. Instala dependencias: `npm install`.
+4. Ejecuta el servidor: `node server.js`.
+5. Sal del directorio: `cd ..`.
 
-## Contribuciones
+**Frontend**
 
-Este proyecto es parte de un trabajo académico. Contribuciones son bienvenidas siguiendo las pautas de la documentación.
+1. Clona el repositorio: `git clone https://github.com/matearg/BonAppetit.git`.
+2. Ingresa al directorio: `cd BonAppetit`.
+3. Instala dependencias: `npm install`.
+4. Instala dependencias externas: `npm install sweetalert2`.
+5. Ejecuta base de datos: `json-server database/database.json`.
+6. Ejecuta el servidor de desarrollo: `ng serve`.
+7. Accede a la aplicación en `http://localhost:4200`.

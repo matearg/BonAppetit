@@ -1,95 +1,51 @@
 <app-home-page-header></app-home-page-header>
 <main>
-  <form [formGroup]="form" (ngSubmit)="saveRecipe()">
-    <h3 class="form-title">{{ isEditMode ? 'Modify recipe' : 'Create Recipe' }}</h3>
-    <div class="data">
-      <label for="title">Title</label>
-      <input type="text" formControlName="title" />
-    </div>
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="search-form" style="width: 100%">
+      <h2>{{ isEditMode ? 'Edit recipe' : 'Create custom recipe' }}</h2>
 
-    <div class="data-box">
-      <label>
-        Vegetarian:
-        <input formControlName="vegetarian" type="checkbox" />
-      </label>
+      <input type="text" formControlName="title" placeholder="Recipe title..." />
 
-      <label>
-        Vegan:
-        <input formControlName="vegan" type="checkbox" />
-      </label>
+      <textarea
+        formControlName="ingredients"
+        placeholder="Ingredients (one per line)..."
+        rows="5"
+        style="
+          width: 100%;
+          max-width: 500px;
+          padding: 14px;
+          border-radius: 8px;
+          font-family: inherit;
+        "
+      ></textarea>
 
-      <label>
-        Gluten Free:
-        <input formControlName="glutenFree" type="checkbox" />
-      </label>
-    </div>
+      <textarea
+        formControlName="instructions"
+        placeholder="Instructions..."
+        rows="6"
+        style="
+          width: 100%;
+          max-width: 500px;
+          padding: 14px;
+          border-radius: 8px;
+          font-family: inherit;
+        "
+      ></textarea>
 
-    <div class="data">
-      <h3 class="ingredients-title">Ingredients</h3>
-      <div class="ingredients-container" formArrayName="ingredients">
-        <div
-          *ngFor="let ingredient of ingredients.controls; let i = index"
-          [formGroupName]="i"
-          class="ingredient-item"
-        >
-          <div>
-            <label>
-              Name:
-              <input formControlName="name" type="text" />
-            </label>
-            <label>
-              Amount:
-              <input formControlName="amount" type="number" min="0.1" />
-            </label>
-            <label>
-              Unit:
-              <input formControlName="unit" type="text" />
-            </label>
-          </div>
-          <button type="button" class="ingredient-button" (click)="deleteIngredient(i)">
-            Delete
-          </button>
-        </div>
-      </div>
-      <button type="button" class="ingredient-button" (click)="addIngredient()">
-        Add ingredient
-      </button>
-    </div>
-
-    <div class="data">
-      <label>
-        Preparation time (minutes)
-        <input formControlName="readyInMinutes" type="number" />
-      </label>
-    </div>
-
-    <div class="data">
-      <label> Servings <input formControlName="servings" type="number" /> </label>
-    </div>
-
-    <div class="data">
-      <label> Instructions <textarea formControlName="instructions"></textarea></label>
-    </div>
-
-    <div class="data">
-      <label>
-        Image (URL)
-        <input type="text" formControlName="image" />
-      </label>
-    </div>
-
-    <div class="data-select">
-      <label for="listId">Select a list:</label>
-      <select id="listId" formControlName="listId">
-        <option *ngFor="let list of commonUser.recipeLists" [value]="list.id">
-          {{ list.name }}
-        </option>
+      <select
+        formControlName="listId"
+        style="width: 100%; max-width: 500px; padding: 14px; border-radius: 8px"
+      >
+        <option value="" disabled selected>Save on the list...</option>
+        @for (list of commonUser.recipeLists; track list.id) {
+          <option [value]="list.id">{{ list.name }}</option>
+        }
       </select>
-    </div>
 
-    <button type="submit" [disabled]="form.invalid" class="save-button">
-      {{ isEditMode ? 'Save changes' : 'Save' }}
-    </button>
-  </form>
+      <button type="submit" class="button" [disabled]="form.invalid">
+        {{ isEditMode ? 'Update recipe' : 'Create and save' }}
+      </button>
+    </form>
+  </div>
 </main>
 <footer></footer>

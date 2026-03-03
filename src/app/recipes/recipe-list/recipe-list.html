@@ -1,30 +1,39 @@
 <app-home-page-header></app-home-page-header>
 <main>
   <div class="form-container">
-    <form [formGroup]="form" (ngSubmit)="setIngredients()" class="search-form">
-      <h2>Recipe Search</h2>
+    <form [formGroup]="form" (ngSubmit)="searchVideos()" class="search-form">
+      <h2>Encuentra Recetas en YouTube</h2>
       <input
         type="text"
-        name="ingredients"
-        id="ingredients"
-        formControlName="ingredients"
-        placeholder="Type ingredients..."
+        formControlName="searchQuery"
+        placeholder="Ej: Quiero una cena ligera con pollo..."
       />
-      <button type="submit" class="button" (click)="recipeContainerActive = true">Search</button>
+      <button type="submit" class="button" [disabled]="isSearching">
+        @if (isSearching) {
+          Searching...
+        } @else {
+          Search
+        }
+      </button>
     </form>
 
-    @if (recipeContainerActive) {
-    <div class="recipes-container">
-      @for (item of recipeList; track $index) {
-      <div>
-        <app-recipe-card
-          [recipe]="item"
-          (viewDetails)="navigateToDetails($event)"
-        ></app-recipe-card>
+    @if (isSearching) {
+      <div class="loading-message">
+        <p>Searching best videos for you...</p>
       </div>
-      }
-      <button class="similars" (click)="updateRecipes()">See similar recipes</button>
-    </div>
+    }
+
+    @if (videoList.length > 0) {
+      <div class="video-grid">
+        @for (video of videoList; track video.videoId) {
+          <div class="video-card" (click)="goToVideo(video)">
+            <img [src]="video.thumbnailUrl" [alt]="video.title" class="video-thumbnail" />
+            <div class="video-info">
+              <h3 class="video-title">{{ video.title }}</h3>
+            </div>
+          </div>
+        }
+      </div>
     }
   </div>
 </main>
