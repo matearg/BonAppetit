@@ -29,13 +29,13 @@
           class="custom-recipe-content"
           style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem"
         >
-          <h3>Ingredientes</h3>
+          <h3>Ingredients</h3>
           <ul>
             @for (ing of recipe.ingredients; track $index) {
               <li>{{ ing }}</li>
             }
           </ul>
-          <h3 style="margin-top: 1.5rem">Instrucciones</h3>
+          <h3 style="margin-top: 1.5rem">Instructions</h3>
           <p
             style="
               white-space: pre-line;
@@ -46,12 +46,6 @@
           >
             {{ recipe.instructions }}
           </p>
-
-          <div style="margin-top: 2rem; display: flex; justify-content: flex-end">
-            <button (click)="goToEditRecipe()" class="button" style="max-width: 200px">
-              Edit recipe
-            </button>
-          </div>
         </div>
       }
 
@@ -63,7 +57,7 @@
             <form [formGroup]="formAddToList" (ngSubmit)="addRecipe()" class="add-form">
               <label for="listId">Select a list:</label>
               <select id="listId" formControlName="listId">
-                <option value="0" disabled selected>Select a list</option>
+                <option value="" disabled selected>Select a list</option>
                 @for (list of commonUser.recipeLists; track $index) {
                   <option [value]="list.id">{{ list.name }}</option>
                 }
@@ -86,6 +80,22 @@
               Save Notes
             </button>
           </form>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; justify-content: flex-end; gap: 1rem">
+          <button
+            (click)="deleteRecipe()"
+            class="button"
+            style="background-color: #d32f2f; max-width: 200px"
+          >
+            Delete recipe
+          </button>
+
+          @if (recipe.isCustom) {
+            <button (click)="goToEditRecipe()" class="button" style="max-width: 200px">
+              Edit recipe
+            </button>
+          }
         </div>
       }
     </div>
