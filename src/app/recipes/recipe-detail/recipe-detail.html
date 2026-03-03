@@ -36,7 +36,22 @@
             }
           </ul>
           <h3 style="margin-top: 1.5rem">Instrucciones</h3>
-          <p style="white-space: pre-line; line-height: 1.6">{{ recipe.instructions }}</p>
+          <p
+            style="
+              white-space: pre-line;
+              line-height: 1.6;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
+            "
+          >
+            {{ recipe.instructions }}
+          </p>
+
+          <div style="margin-top: 2rem; display: flex; justify-content: flex-end">
+            <button (click)="goToEditRecipe()" class="button" style="max-width: 200px">
+              Edit recipe
+            </button>
+          </div>
         </div>
       }
 
@@ -76,7 +91,7 @@
     </div>
   } @else {
     <div class="loading-message" style="margin-top: 3rem">
-      <p>Cargando receta...</p>
+      <p>Loading recipe...</p>
     </div>
   }
 </main>

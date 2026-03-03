@@ -1,5 +1,10 @@
 {
-  "ActiveUser": [],
+  "ActiveUser": [
+    {
+      "id": "e237",
+      "email": "prueba@gmail.com"
+    }
+  ],
   "Users": [
     {
       "id": "e237",
@@ -24,29 +29,24 @@
             },
             {
               "id": "custom-1772565822916",
-              "title": "Nueva receta",
+              "title": "New Recipe",
               "image": "img/logo.jpeg",
               "isCustom": true,
               "ingredients": [
-                "ingrediente",
-                "ingrediente",
-                "ingrediente",
-                "ingrediente",
+                "ingredient1",
+                "ingredient2",
+                "ingredient3",
+                "ingredient4",
                 "ingrediente",
                 "ingrediente",
                 "ingrediente",
                 "ingrediente",
                 "ingrediente"
               ],
-              "instructions": "ingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingrediente ingredienteingredienteingredienteingredienteingredienteingredienteingrediente ingredienteingredienteingredienteingredienteingrediente",
+              "instructions": "ingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteingredienteenteingredienteingrediente editado ingredienteingredienteingredienteingredienteingredienteingredienteingrediente ingredienteingredienteingredienteingredienteingrediente",
               "anotations": ""
             }
           ]
-        },
-        {
-          "id": 1,
-          "name": "Nueva Lista de Recetas",
-          "recipes": []
         }
       ]
     }
