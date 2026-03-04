@@ -4,6 +4,50 @@
   <div class="profile-card">
     <form class="edit-form" [formGroup]="editForm" (ngSubmit)="editProfile()">
       <div class="info-edit">
+        <label for="profileImage">Profile Image</label>
+        <input
+          type="file"
+          id="profileImage"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          style="background: none; border: none; padding: 0"
+        />
+      </div>
+
+      @if (selectedImageBase64 !== '') {
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+          "
+        >
+          <img
+            [src]="selectedImageBase64"
+            alt="Preview"
+            style="
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+              object-fit: cover;
+              border: 2px solid white;
+            "
+          />
+
+          <button
+            type="button"
+            class="button"
+            style="background-color: #d32f2f; padding: 8px 16px; font-size: 0.9rem"
+            (click)="removeProfileImage()"
+          >
+            Remove Image
+          </button>
+        </div>
+      }
+
+      <div class="info-edit">
         <label for="email">New email</label>
         <input type="text" formControlName="email" />
       </div>
