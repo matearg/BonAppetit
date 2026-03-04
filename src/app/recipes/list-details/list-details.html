@@ -16,7 +16,7 @@
               <h3 class="video-title">{{ recipe.title }}</h3>
               @if (recipe.isCustom) {
                 <span style="font-size: 0.8rem; color: #512da8; font-weight: bold"
-                  >Receta Propia</span
+                  >Custom recipe</span
                 >
               }
             </div>
@@ -24,7 +24,7 @@
         }
       </div>
     } @else {
-      <p style="text-align: center; font-size: 1.2rem">No hay recetas guardadas en esta lista.</p>
+      <p style="text-align: center; font-size: 1.2rem">No recipes on this list.</p>
     }
   </div>
 </main>

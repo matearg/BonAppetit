@@ -10,16 +10,16 @@
       />
       <button type="submit" class="button" [disabled]="isSearching">
         @if (isSearching) {
-          Buscando...
+          Searching...
         } @else {
-          Buscar
+          Search
         }
       </button>
     </form>
 
     @if (isSearching) {
       <div class="loading-message">
-        <p>Buscando los mejores videos para ti...</p>
+        <p>Searching best videos for you...</p>
       </div>
     }
 

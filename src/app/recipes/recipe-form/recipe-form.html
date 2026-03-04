@@ -2,13 +2,13 @@
 <main>
   <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="search-form" style="width: 100%">
-      <h2>Crear Receta Personalizada</h2>
+      <h2>{{ isEditMode ? 'Edit recipe' : 'Create custom recipe' }}</h2>
 
-      <input type="text" formControlName="title" placeholder="Título de la receta..." />
+      <input type="text" formControlName="title" placeholder="Recipe title..." />
 
       <textarea
         formControlName="ingredients"
-        placeholder="Ingredientes (uno por línea)..."
+        placeholder="Ingredients (one per line)..."
         rows="5"
         style="
           width: 100%;
@@ -21,7 +21,7 @@
 
       <textarea
         formControlName="instructions"
-        placeholder="Instrucciones paso a paso..."
+        placeholder="Instructions..."
         rows="6"
         style="
           width: 100%;
@@ -36,13 +36,15 @@
         formControlName="listId"
         style="width: 100%; max-width: 500px; padding: 14px; border-radius: 8px"
       >
-        <option value="" disabled selected>Guardar en la lista...</option>
+        <option value="" disabled selected>Save on the list...</option>
         @for (list of commonUser.recipeLists; track list.id) {
           <option [value]="list.id">{{ list.name }}</option>
         }
       </select>
 
-      <button type="submit" class="button" [disabled]="form.invalid">Crear y Guardar</button>
+      <button type="submit" class="button" [disabled]="form.invalid">
+        {{ isEditMode ? 'Update recipe' : 'Create and save' }}
+      </button>
     </form>
   </div>
 </main>

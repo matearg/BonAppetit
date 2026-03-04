@@ -66,6 +66,7 @@ export const routes: Routes = [
     component: RecipeDetail,
     canActivate: [authUsersGuard],
   },
+  { path: 'update-recipe/:idList/:idRecipe', component: RecipeForm, canActivate: [authUsersGuard] },
   {
     path: '**',
     redirectTo: '',

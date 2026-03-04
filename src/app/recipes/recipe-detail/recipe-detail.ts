@@ -40,6 +40,8 @@ export class RecipeDetail implements OnInit, OnDestroy {
   formAddToList = this.formBuilder.nonNullable.group({ listId: [0, Validators.required] });
   formAnotations = this.formBuilder.group({ anotations: ['', Validators.required] });
 
+  currentListId: string | null = null;
+
   // 2. Atrapar los datos del router directamente en el constructor
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,6 +55,8 @@ export class RecipeDetail implements OnInit, OnDestroy {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     const listIdParam = this.activatedRoute.snapshot.paramMap.get('idList');
     const recipeIdParam = this.activatedRoute.snapshot.paramMap.get('idRecipe');
+
+    this.currentListId = listIdParam;
 
     if (listIdParam && recipeIdParam) {
       this.isMyRecipe = true;
@@ -161,6 +165,55 @@ export class RecipeDetail implements OnInit, OnDestroy {
         }),
       );
     }
+  }
+
+  goToEditRecipe() {
+    if (this.currentListId && this.recipe) {
+      this.router.navigate(['/update-recipe', this.currentListId, this.recipe.id]);
+    }
+  }
+
+  deleteRecipe() {
+    if (!this.currentListId || !this.recipe) return;
+
+    Swal.fire({
+      title: 'Remove recipe?',
+      text: 'It will get removed from your list.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#999',
+      confirmButtonText: 'Yes, Remove',
+      cancelButtonText: 'No, Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const listId = Number(this.currentListId);
+        const list = this.commonUser.recipeLists.find((l) => l.id === listId);
+
+        if (list) {
+          // Filtramos el array para excluir la receta actual
+          list.recipes = list.recipes.filter((r) => r.id !== this.recipe.id);
+
+          this.mainSub.add(
+            this.userService.editUser(this.commonUser).subscribe({
+              next: () => {
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Removed recipe',
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                // Redirigimos al usuario de vuelta a su lista
+                this.router.navigate(['/list', listId]);
+              },
+              error: (err) => console.error('Error al eliminar', err),
+            }),
+          );
+        }
+      }
+    });
   }
 
   saveAnotations() {
