@@ -3,7 +3,7 @@
 <main class="main-section">
   <div class="container-section">
     <div class="profile-card">
-      <img src="{{ profileImage }}" alt="" />
+      <img [src]="commonUser.profileImage || profileImage" alt="User Profile Picture" />
       <div class="general-info">
         <div class="personal-info">
           <p class="text-info">Email:</p>

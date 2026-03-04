@@ -38,6 +38,8 @@ export class EditProfile implements OnInit, OnDestroy {
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
+  selectedImageBase64: string | null = null;
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
@@ -63,6 +65,7 @@ export class EditProfile implements OnInit, OnDestroy {
                 email: this.commonUser.email,
                 password: this.commonUser.password,
               });
+              this.selectedImageBase64 = this.commonUser.profileImage || null;
             }, 0);
 
             this.cdr.markForCheck();
@@ -81,6 +84,7 @@ export class EditProfile implements OnInit, OnDestroy {
         ...this.commonUser,
         email: this.editForm.value.email!,
         password: this.editForm.value.password!,
+        profileImage: this.selectedImageBase64 || this.commonUser.profileImage,
       };
 
       this.sub.add(
@@ -97,6 +101,18 @@ export class EditProfile implements OnInit, OnDestroy {
       );
     } else {
       console.log('Invalid form');
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImageBase64 = e.target.result;
+        this.cdr.markForCheck(); // Avisamos a Angular del cambio para la vista previa
+      };
+      reader.readAsDataURL(file); // Convierte el archivo a Base64
     }
   }
 
