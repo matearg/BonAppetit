@@ -37,8 +37,7 @@ export class EditProfile implements OnInit, OnDestroy {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
-
-  selectedImageBase64: string | null = null;
+  selectedImageBase64: string = '';
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -65,16 +64,16 @@ export class EditProfile implements OnInit, OnDestroy {
                 email: this.commonUser.email,
                 password: this.commonUser.password,
               });
-              this.selectedImageBase64 = this.commonUser.profileImage || null;
+              this.selectedImageBase64 = this.commonUser.profileImage || '';
             }, 0);
 
             this.cdr.markForCheck();
-          })
+          }),
         )
         .subscribe({
           next: () => console.log('Usuario cargado para editar perfil'),
           error: (error: Error) => console.log(error.message),
-        })
+        }),
     );
   }
 
@@ -84,7 +83,7 @@ export class EditProfile implements OnInit, OnDestroy {
         ...this.commonUser,
         email: this.editForm.value.email!,
         password: this.editForm.value.password!,
-        profileImage: this.selectedImageBase64 || this.commonUser.profileImage,
+        profileImage: this.selectedImageBase64 !== '' ? this.selectedImageBase64 : undefined,
       };
 
       this.sub.add(
@@ -97,7 +96,7 @@ export class EditProfile implements OnInit, OnDestroy {
           error: (error: Error) => {
             console.log('Error on profile update: ', error.message);
           },
-        })
+        }),
       );
     } else {
       console.log('Invalid form');
@@ -114,6 +113,13 @@ export class EditProfile implements OnInit, OnDestroy {
       };
       reader.readAsDataURL(file); // Convierte el archivo a Base64
     }
+  }
+
+  removeProfileImage() {
+    this.selectedImageBase64 = '';
+    const fileInput = document.getElementById('profileImage') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+    this.cdr.markForCheck();
   }
 
   alertProfileEdit() {
